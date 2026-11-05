@@ -108,18 +108,19 @@ export function routeMesh(pts, color, wide = 1) {
       transparent: true,
       depthWrite: false,
       side: THREE.DoubleSide,
-      uniforms: { uTime: U.uTime, uCol: { value: col }, uLen: { value: L }, uStart },
+      uniforms: { uTime: U.uTime, uNight: U.uNight, uCol: { value: col }, uLen: { value: L }, uStart },
       vertexShader:
         'varying vec2 vU; void main(){ vU = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-      fragmentShader: `uniform float uTime; uniform vec3 uCol; uniform float uLen; uniform float uStart; varying vec2 vU;
-      void main(){ float across = clamp(1.0 - abs(vU.x - 0.5) * 2.0, 0.0, 1.0);   // clamped: pow() of a tiny negative is NaN, which bloom smears into black blocks
+      fragmentShader: `uniform float uTime; uniform float uNight; uniform vec3 uCol; uniform float uLen; uniform float uStart; varying vec2 vU;
+      void main(){ float across = clamp(1.0 - abs(vU.x - 0.5) * 2.0, 0.0, 1.0);
+        vec3 col = mix(uCol * uCol * 0.75, uCol, uNight);   // by day the ground is light: a deeper colour, so the route stands out   // clamped: pow() of a tiny negative is NaN, which bloom smears into black blocks
         ${
           core
             ? `float chev = step(0.55, fract((vU.y - abs(vU.x - 0.5) * 4.0) / 7.0 - uTime * 1.4));
           float flick = 0.82 + 0.18 * sin(uTime * 23.0 + vU.y * 0.7) * sin(uTime * 7.0);
           float grow = smoothstep(0.0, 6.0, (uTime - uStart) * max(uLen / 1.6, 160.0) - vU.y);
-          gl_FragColor = vec4(mix(uCol, vec3(1.0), chev * 0.55) * flick, (0.55 + 0.45 * chev) * smoothstep(0.0, 0.25, across) * grow);`
-            : 'float a = pow(across, 1.6) * (0.38 + 0.12 * sin(uTime * 4.0)) * smoothstep(0.0, 6.0, (uTime - uStart) * max(uLen / 1.6, 160.0) - vU.y); gl_FragColor = vec4(uCol, a);'
+          gl_FragColor = vec4(mix(col, vec3(1.0), chev * mix(0.2, 0.55, uNight)) * flick, (mix(0.9, 0.55, uNight) + 0.45 * chev) * smoothstep(0.0, 0.25, across) * grow);`
+            : 'float a = pow(across, 1.6) * (0.38 + 0.12 * sin(uTime * 4.0)) * mix(1.5, 1.0, uNight) * smoothstep(0.0, 6.0, (uTime - uStart) * max(uLen / 1.6, 160.0) - vU.y); gl_FragColor = vec4(col, a);'
         } }`,
     });
   const lift = p.map((q) => [q[0], q[1], (q[2] ?? 0) + 1.4]);
@@ -130,9 +131,9 @@ export function routeMesh(pts, color, wide = 1) {
       0,
     ),
     new THREE.MeshBasicMaterial({
-      color: col.clone().multiplyScalar(0.45),
+      color: col.clone().multiplyScalar(0.35),
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.75,
       depthWrite: false,
     }),
   );
@@ -142,7 +143,7 @@ export function routeMesh(pts, color, wide = 1) {
     new THREE.Mesh(
       ribbon(
         lift.map((q) => [q[0], q[1], q[2] + 0.05]),
-        4.6 * wide,
+        5.6 * wide,
         0,
       ),
       mat(4.6, true),
@@ -154,6 +155,10 @@ export function routeMesh(pts, color, wide = 1) {
     14,
   );
   g.add(beads);
+  // drawn after the see-through city, so the faded buildings never wash over the route
+  g.traverse((o) => {
+    o.renderOrder = 10;
+  });
   const cum = cumulative(p);
   g.userData.tick = (time) => {
     const shown = Math.min(L, (time - uStart.value) * Math.max(L / 1.6, 160));

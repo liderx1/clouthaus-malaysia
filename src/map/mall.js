@@ -154,7 +154,7 @@ const pulse = new THREE.Mesh(
     float w2 = fract(uTime * 0.35 + 0.5); ringA += smoothstep(th, 0.0, abs(r - w2)) * (1.0 - w2);
     float halo = smoothstep(1.0, 0.45, r) * smoothstep(0.38, 0.6, r) * (0.34 + 0.1 * sin(uTime * 2.2)) * (1.0 - uNight * 0.7);
     vec3 col = ${HI ? `vec3(${HI.r.toFixed(3)}, ${HI.g.toFixed(3)}, ${HI.b.toFixed(3)})` : 'mix(vec3(1.0, 0.0, 0.5), vec3(1.0, 0.42, 0.15), uNight)'};   // main.highlight, else fluorescent magenta by day, warm orange by night
-    gl_FragColor = vec4(col, uK * clamp(ringA * mix(1.6, 0.6, uNight) + halo * mix(1.5, 1.0, uNight) + uDim * 0.4 * ringA, 0.0, 0.95)); }`,
+    gl_FragColor = vec4(col, (uK < 0.999 ? uK * (1.0 - uDim) : uK) * clamp(ringA * mix(1.6, 0.6, uNight) + halo * mix(1.5, 1.0, uNight) + uDim * 0.4 * ringA, 0.0, 0.95)); }`,
   }),
 );
 pulse.rotation.x = -Math.PI / 2;
@@ -234,7 +234,7 @@ export function updateHalo(/** @type {THREE.Camera} */ cam, /** @type {number} *
   const k = (1 + 0.03 * Math.sin(time * 0.9)) * (night ? 1 : 1.25);
   s.scale.set(MALL_H * 0.95 * HALO.size * k, MALL_H * 1.45 * HALO.size * k, 1);
   s.material.color.copy(HALO.day).lerp(HALO.night, n);
-  s.material.opacity = night ? 0.5 : 0.42;
+  s.material.opacity = (night ? 0.5 : 0.42) * Math.max(0, 1 - 1.5 * U.uDim.value); // gone while a route or the exits are shown
   if (s.material.map !== (night ? HALO.tex : HALO.dayTex)) {
     s.material.map = night ? HALO.tex : HALO.dayTex;
     s.material.blending = night ? THREE.AdditiveBlending : THREE.NormalBlending;
