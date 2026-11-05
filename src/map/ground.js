@@ -6,7 +6,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 /* ---------- ground & land use ---------- */
 const groundMat = dimmable(new THREE.MeshStandardMaterial({ color: 0xb9b7ae, roughness: 0.95 }), 'ground');
-export const ground = new THREE.Mesh(new THREE.CircleGeometry(2400, 96), groundMat);
+export const ground = new THREE.Mesh(new THREE.CircleGeometry(3200, 96), groundMat);
 ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
 scene.add(ground);
@@ -161,6 +161,7 @@ const withZ = (r) => r.p.map((q) => [q[0], q[1], roadZ(r)]);
     walk = [],
     curb = [];
   for (const r of OSM.roads) {
+    if (r.tunnel) continue; // underground roads and passages through buildings are not drawn
     const w = RW[r.t] ?? 5,
       p = withZ(r);
     if (FOOT.has(r.t)) walk.push(metres(ribbon(p, w, 0.16), w));

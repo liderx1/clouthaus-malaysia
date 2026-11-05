@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OSM } from './data.js';
-import { cumulative, sampleAt } from './geo.js';
+import { chainLines } from './core/geometry.js';
+import { cumulative, polyLen, sampleAt } from './geo.js';
 import { ribbon } from './ground.js';
 import { dimmable, scene } from './stage.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
@@ -33,13 +34,14 @@ const offsetLine = (p, off) =>
 
 /* ---------- MRT viaduct (double track), platforms, two Kajang Line trains ---------- */
 export const RAIL_Z = 13;
-const mrtLines = OSM.rails.filter((r) => r.t === 'subway' && r.p.length > 20);
-{
+// elevated metro only: lines in tunnels (OSM tunnel=yes or a negative layer) are drawn as a coloured trace on the ground
+const mrtLines = OSM.rails.filter((r) => r.t === 'subway' && !r.tunnel && r.p.length > 20);
+viaduct: {
   const beams = [],
     piers = [],
     rails = [],
     walls = [];
-  for (const r of OSM.rails.filter((r) => r.t === 'subway' || r.t === 'platform')) {
+  for (const r of OSM.rails.filter((r) => (r.t === 'subway' || r.t === 'platform') && !r.tunnel)) {
     const plat = r.t === 'platform',
       z = plat ? RAIL_Z - 0.6 : RAIL_Z,
       W = plat ? 6 : 9.6;
@@ -85,6 +87,7 @@ const mrtLines = OSM.rails.filter((r) => r.t === 'subway' && r.p.length > 20);
       }
     }
   }
+  if (!beams.length) break viaduct; // no elevated metro in the area (it may all run in tunnels)
   const concrete = dimmable(
     new THREE.MeshStandardMaterial({ color: 0xd9d6cf, roughness: 0.75, side: THREE.DoubleSide }),
     'via',
@@ -173,6 +176,137 @@ export const TRAIN = (() => {
       return g;
     });
     return { cars, p, cum, L: cum.at(-1), dir: k ? -1 : 1, phase: k * 0.5 };
+  });
+  return { trains, win };
+})();
+
+/* ---------- underground lines: a coloured trace on the ground, so the network still reads from above ---------- */
+// official line colours in Kuala Lumpur (Kelana Jaya red, Putrajaya yellow, Kajang green); others take the OSM colour or grey
+/** @type {[RegExp, number][]} */
+const LINE_COL = [
+  [/kelana jaya/i, 0xd50032],
+  [/putrajaya/i, 0xf5c400],
+  [/kajang/i, 0x0a8a3a],
+  [/ampang|sri petaling/i, 0xe57200],
+  [/monorail|monorel/i, 0x7dba00],
+];
+export const lineColour = (r) =>
+  LINE_COL.find(([re]) => re.test(r.name ?? ''))?.[1] ?? (r.colour ? new THREE.Color(r.colour).getHex() : 0x8a8f95);
+{
+  const byCol = new Map();
+  for (const r of OSM.rails.filter((r) => r.tunnel && r.t !== 'platform' && r.p.length > 1)) {
+    const c = lineColour(r);
+    (byCol.get(c) || byCol.set(c, []).get(c)).push(
+      ribbon(
+        r.p.map((q) => [q[0], q[1], 0.22]),
+        2.4,
+        0,
+        false,
+      ),
+    );
+  }
+  for (const [c, list] of byCol) {
+    const m = new THREE.Mesh(
+      mergeGeometries(list),
+      dimmable(
+        new THREE.MeshBasicMaterial({
+          color: c,
+          transparent: true,
+          opacity: 0.55,
+          depthWrite: false,
+          polygonOffset: true,
+          polygonOffsetFactor: -4,
+        }),
+        'tunnel',
+      ),
+    );
+    m.renderOrder = 1;
+    scene.add(m);
+  }
+}
+
+/* ---------- monorail: a concrete guideway beam per track on single piers, with 4-car trains ---------- */
+export const MONO_Z = 11;
+const monoWays = OSM.rails.filter((r) => r.t === 'monorail' && !r.tunnel);
+/** the two tracks as continuous lines (OSM splits them at every bridge) */
+const monoTracks = chainLines(monoWays.map((r) => r.p))
+  .filter((p) => polyLen(p) > 200)
+  .slice(0, 2);
+if (monoWays.length) {
+  const beams = [],
+    piers = [];
+  for (const r of monoWays) {
+    const p = r.p.map((q) => [q[0], q[1], MONO_Z]);
+    beams.push(
+      ribbon(p, 0.9, 0, false),
+      ribbon(
+        p.map((q) => [q[0], q[1], q[2] - 1.6]),
+        0.9,
+        0,
+        false,
+      ),
+    );
+    for (const sg of [1, -1]) {
+      const side = ribbon(offsetLine(p, sg * 0.45), 0.02, 0, false),
+        pos = side.attributes.position;
+      for (let i = 0; i < pos.count; i += 2) pos.setY(i, pos.getY(i) - 1.6);
+      side.computeVertexNormals();
+      beams.push(side);
+    }
+    const cum = cumulative(r.p);
+    for (let s = 6; s < cum.at(-1); s += 28) {
+      const q = sampleAt(r.p, cum, s);
+      piers.push(new THREE.CylinderGeometry(0.55, 0.7, MONO_Z - 1.6, 10).translate(q.x, (MONO_Z - 1.6) / 2, -q.y));
+    }
+  }
+  const concrete = dimmable(
+    new THREE.MeshStandardMaterial({ color: 0xd4d1ca, roughness: 0.7, side: THREE.DoubleSide }),
+    'mono',
+  );
+  const m1 = new THREE.Mesh(mergeGeometries(beams.map((g) => (g.deleteAttribute('uv'), g))), concrete);
+  const m2 = new THREE.Mesh(
+    mergeGeometries(piers.map((g) => (g.deleteAttribute('uv'), g.index ? g.toNonIndexed() : g))),
+    concrete,
+  );
+  m1.castShadow = m2.castShadow = true;
+  scene.add(m1, m2);
+}
+// KL Monorail style: white body straddling the beam, dark window band, green stripe, rounded cab ends
+export const MONO = (() => {
+  if (!monoTracks.length) return null;
+  const car = (cab) =>
+    mergeGeometries([
+      rbox(2.8, 3.0, 11.6, 0.5, 0, 1.0, 0, 0xf1f2f0),
+      box(2.84, 0.9, 10.2, 0, 1.55, 0, 0x1d2731),
+      box(2.86, 0.22, 11.2, 0, 0.6, 0, 0x7dba00),
+      box(1.4, 1.4, 11, 0, -1.0, 0, 0x6f757b),
+      ...(cab ? [rbox(2.6, 1.6, 1.2, 0.5, 0, 1.4, 5.8, 0x1d2731)] : []),
+    ]);
+  const body = dimmable(
+    new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.4, roughness: 0.35 }),
+    'mtrain',
+  );
+  const win = new THREE.MeshStandardMaterial({
+    color: 0x1a2533,
+    emissive: 0xffe2b0,
+    emissiveIntensity: 0,
+    roughness: 0.2,
+  });
+  const winGeo = box(2.88, 0.7, 9.6, 0, 1.55, 0, 0xffffff);
+  const gc = car(true),
+    g0 = car(false);
+  const trains = monoTracks.map((p, k) => {
+    const cum = cumulative(p);
+    const cars = [0, 1, 2, 3].map((i) => {
+      const g = new THREE.Group();
+      const m = new THREE.Mesh(i === 0 || i === 3 ? gc : g0, body);
+      if (i === 3) m.rotation.y = Math.PI;
+      g.add(m, new THREE.Mesh(winGeo, win));
+      g.castShadow = true;
+      scene.add(g);
+      return g;
+    });
+    return { cars, p, cum, L: cum.at(-1), dir: k ? -1 : 1, phase: 0.3 + k * 0.4 };
   });
   return { trains, win };
 })();

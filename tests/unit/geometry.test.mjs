@@ -49,3 +49,42 @@ test('seeded random is repeatable and in [0, 1)', () => {
   assert.ok(xs.every((x) => x >= 0 && x < 1));
   assert.ok(hash(3) >= 0 && hash(3) < 1 && hash(3) === hash(3));
 });
+
+test('chainLines joins pieces end to end, flipping reversed ones', async () => {
+  const { chainLines } = await import('../../src/map/core/geometry.js');
+  const out = chainLines([
+    [
+      [10, 0],
+      [20, 0],
+    ],
+    [
+      [0, 0],
+      [10, 0],
+    ],
+    [
+      [30, 0],
+      [20.5, 0],
+    ],
+    [
+      [100, 100],
+      [101, 100],
+    ],
+  ]);
+  assert.equal(out.length, 2);
+  assert.deepEqual(
+    out[0].map((q) => q[0]),
+    [0, 10, 20, 30],
+  );
+  assert.equal(polyLen(out[1]), 1);
+});
+
+test('roundedRect: size, winding and which way the long side faces', async () => {
+  const { roundedRect } = await import('../../src/map/core/geometry.js');
+  const r = roundedRect(0, 0, 50, 20, 4, 90); // long side faces east
+  assert.ok(area(r) > 0, 'counter-clockwise');
+  const xs = r.map((q) => q[0]),
+    ys = r.map((q) => q[1]);
+  assert.ok(Math.abs(Math.max(...xs) - 10) < 0.01 && Math.abs(Math.min(...xs) + 10) < 0.01, 'depth along east–west');
+  assert.ok(Math.abs(Math.max(...ys) - 25) < 0.01, 'length along north–south');
+  assert.ok(Math.abs(area(r)) < 50 * 20 && Math.abs(area(r)) > 50 * 20 - 4 * 4 * 4, 'corners are rounded off');
+});

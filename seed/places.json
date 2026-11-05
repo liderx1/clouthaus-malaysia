@@ -1,99 +1,27 @@
 {
  "entrances": [
   {
-   "id": "mrt",
-   "kind": "mrt",
-   "name": {
-    "en": "MRT link bridge (Level 1)",
-    "zh": "MRT 连接天桥（一楼）",
-    "ms": "Jambatan MRT (Tingkat 1)"
-   },
-   "x": 76.3,
-   "y": -86.9,
-   "z": 9
-  },
-  {
-   "id": "main",
+   "id": "lobby",
    "kind": "main",
    "name": {
-    "en": "Main entrance · Jalan Cheras",
-    "zh": "主入口 · Jalan Cheras",
-    "ms": "Pintu utama · Jalan Cheras"
+    "en": "CloutHaus main lobby (indicative)",
+    "zh": "CloutHaus 主大堂（示意）",
+    "zh-TW": "CloutHaus 主大廳（示意）"
    },
-   "x": 59.5,
-   "y": -1.4,
+   "x": 21.8,
+   "y": -0.4,
    "z": 0
   },
   {
-   "id": "bus",
-   "kind": "bus",
-   "name": {
-    "en": "Bus & drop-off entrance",
-    "zh": "巴士与接送入口",
-    "ms": "Pintu bas & turun penumpang"
-   },
-   "x": 80.3,
-   "y": -68.1,
-   "z": 0
-  },
-  {
-   "id": "west",
-   "kind": "side",
-   "name": {
-    "en": "West entrance",
-    "zh": "西侧入口",
-    "ms": "Pintu barat"
-   },
-   "x": -77.5,
-   "y": 52.0,
-   "z": 0
-  },
-  {
-   "id": "parkA",
+   "id": "park",
    "kind": "parking",
    "name": {
-    "en": "Car park entrance A",
-    "zh": "停车场入口 A",
-    "ms": "Pintu parkir A"
+    "en": "Car park entrance (indicative)",
+    "zh": "停车场入口（示意）",
+    "zh-TW": "停車場入口（示意）"
    },
-   "x": 45.9,
-   "y": -107.9,
-   "z": 0
-  },
-  {
-   "id": "parkD",
-   "kind": "parking",
-   "name": {
-    "en": "Car park entrance D",
-    "zh": "停车场入口 D",
-    "ms": "Pintu parkir D"
-   },
-   "x": -7.5,
-   "y": 208.9,
-   "z": 0
-  },
-  {
-   "id": "parkW1",
-   "kind": "parking",
-   "name": {
-    "en": "Car park entrance (west)",
-    "zh": "停车场入口（西）",
-    "ms": "Pintu parkir (barat)"
-   },
-   "x": -92.5,
-   "y": 109.1,
-   "z": 0
-  },
-  {
-   "id": "parkW2",
-   "kind": "parking",
-   "name": {
-    "en": "Car park exit (west)",
-    "zh": "停车场出口（西）",
-    "ms": "Pintu keluar parkir (barat)"
-   },
-   "x": -84.7,
-   "y": 76.3,
+   "x": 17.0,
+   "y": 25.3,
    "z": 0
   }
  ],
@@ -101,136 +29,35 @@
   {
    "id": "e1",
    "name": {
-    "en": "Emergency exit 1",
-    "zh": "紧急出口 1",
-    "ms": "Pintu kecemasan 1"
+    "en": "Emergency exit (indicative)",
+    "zh": "紧急出口（示意）",
+    "zh-TW": "緊急出口（示意）"
    },
-   "x": 3.2,
-   "y": 179.0
+   "x": -18.0,
+   "y": 5.5
   },
   {
    "id": "e2",
    "name": {
-    "en": "Emergency exit 2",
-    "zh": "紧急出口 2",
-    "ms": "Pintu kecemasan 2"
+    "en": "Emergency exit (indicative)",
+    "zh": "紧急出口（示意）",
+    "zh-TW": "緊急出口（示意）"
    },
-   "x": -91.9,
-   "y": 104.9
-  },
-  {
-   "id": "e3",
-   "name": {
-    "en": "Emergency exit 3",
-    "zh": "紧急出口 3",
-    "ms": "Pintu kecemasan 3"
-   },
-   "x": -50.4,
-   "y": -37.3
-  },
-  {
-   "id": "e4",
-   "name": {
-    "en": "Emergency exit 4",
-    "zh": "紧急出口 4",
-    "ms": "Pintu kecemasan 4"
-   },
-   "x": -4.3,
-   "y": -105.1
-  },
-  {
-   "id": "e5",
-   "name": {
-    "en": "Emergency exit 5",
-    "zh": "紧急出口 5",
-    "ms": "Pintu kecemasan 5"
-   },
-   "x": 33.4,
-   "y": 82.3
+   "x": 7.5,
+   "y": -28.0
   }
  ],
  "assembly": [
   {
    "id": "a1",
    "name": {
-    "en": "Assembly point",
-    "zh": "紧急集合点",
-    "ms": "Tempat berhimpun"
+    "en": "Assembly point (indicative)",
+    "zh": "紧急集合点（示意）",
+    "zh-TW": "緊急集合點（示意）"
    },
-   "x": 21.0,
-   "y": -250.0
+   "x": 53.8,
+   "y": 4.1
   }
  ],
- "routes": [
-  {
-   "id": "mrt",
-   "mode": "walk",
-   "start": "",
-   "x": 172.2,
-   "y": -230.5,
-   "z": 12,
-   "to": "mrt",
-   "label": {
-    "en": "By MRT",
-    "zh": "搭 MRT",
-    "ms": "Naik MRT"
-   },
-   "note": {
-    "en": "Taman Mutiara (Kajang Line) → covered link bridge → Level 1",
-    "zh": "Taman Mutiara 站（加影线）→ 有盖天桥 → 直达一楼",
-    "ms": "Taman Mutiara (Laluan Kajang) → jambatan berbumbung → Tingkat 1"
-   }
-  },
-  {
-   "id": "bus",
-   "mode": "walk",
-   "start": "",
-   "x": 96.5,
-   "y": -63.0,
-   "z": 0,
-   "to": "bus",
-   "label": {
-    "en": "By bus",
-    "zh": "搭巴士",
-    "ms": "Naik bas"
-   },
-   "note": {
-    "en": "Bus stop “Ekocheras Mall” on Jalan Cheras, a few steps from the entrance",
-    "zh": "Jalan Cheras 上的“Ekocheras Mall”巴士站，下车即到",
-    "ms": "Hentian bas “Ekocheras Mall” di Jalan Cheras"
-   }
-  },
-  {
-   "id": "carN",
-   "mode": "drive",
-   "start": "jalan-cheras-north",
-   "to": "parkA",
-   "label": {
-    "en": "By car · from KL",
-    "zh": "开车 · 从市区",
-    "ms": "Kereta · dari KL"
-   },
-   "note": {
-    "en": "Jalan Cheras southbound → car park entrance A",
-    "zh": "Jalan Cheras 往南 → 停车场入口 A",
-    "ms": "Jalan Cheras arah selatan → pintu parkir A"
-   }
-  },
-  {
-   "id": "carS",
-   "mode": "drive",
-   "start": "jalan-cheras-south",
-   "to": "parkA",
-   "label": {
-    "en": "By car · from Kajang",
-    "zh": "开车 · 从加影",
-    "ms": "Kereta · dari Kajang"
-   },
-   "note": {
-    "en": "Jalan Cheras northbound → car park entrance A",
-    "zh": "Jalan Cheras 往北 → 停车场入口 A",
-    "ms": "Jalan Cheras arah utara → pintu parkir A"
-   }
-  }
- ]
+ "routes": []
 }

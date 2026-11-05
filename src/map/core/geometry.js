@@ -74,3 +74,76 @@ export const cumulative = (p) =>
     ),
     [],
   );
+/**
+ * Join polylines that meet end to end (within tol metres) into the longest continuous lines, flipping pieces where
+ * needed: OpenStreetMap splits a rail line into many short ways (bridges, layers), and a train needs one track to run on.
+ * @param {Pt[][]} lines
+ * @param {number} [tol]
+ * @returns {Pt[][]} the joined lines, longest first
+ */
+export function chainLines(lines, tol = 1.5) {
+  const left = lines.filter((p) => p.length > 1).map((p) => [...p]);
+  const near = (/** @type {Pt} */ a, /** @type {Pt} */ b) => Math.hypot(a[0] - b[0], a[1] - b[1]) <= tol;
+  /** @type {Pt[][]} */
+  const out = [];
+  while (left.length) {
+    let cur = /** @type {Pt[]} */ (left.shift());
+    for (let grew = true; grew;) {
+      grew = false;
+      for (let i = 0; i < left.length; i++) {
+        const p = left[i],
+          a = cur[0],
+          z = cur[cur.length - 1];
+        let next = null;
+        if (near(z, p[0])) next = cur.concat(p.slice(1));
+        else if (near(z, p[p.length - 1])) next = cur.concat([...p].reverse().slice(1));
+        else if (near(a, p[p.length - 1])) next = p.slice(0, -1).concat(cur);
+        else if (near(a, p[0])) next = [...p].reverse().slice(0, -1).concat(cur);
+        if (next) {
+          cur = next;
+          left.splice(i, 1);
+          grew = true;
+          break;
+        }
+      }
+    }
+    out.push(cur);
+  }
+  return out.sort((a, b) => polyLen(b) - polyLen(a));
+}
+/**
+ * A rounded-rectangle footprint, counter-clockwise: w metres along its long axis, d across, corner radius r, turned so
+ * that the long side's outward normal faces `bearing` (degrees clockwise from north). For a main building whose
+ * OpenStreetMap outline is only a rough sketch, drawn instead from the published floor plan (site.config.json → main.footprint).
+ * @param {number} cx @param {number} cy @param {number} w @param {number} d @param {number} r @param {number} bearing
+ * @param {number} [seg] points per corner
+ * @returns {Pt[]}
+ */
+export function roundedRect(cx, cy, w, d, r, bearing, seg = 6) {
+  const rr = Math.max(0, Math.min(r, w / 2, d / 2)),
+    hw = w / 2 - rr,
+    hd = d / 2 - rr;
+  /** @type {Pt[]} */
+  const local = [];
+  // corners in local axes: u along the long side, v toward the facing side
+  for (const [ux, vy, a0] of /** @type {[number, number, number][]} */ ([
+    [hw, hd, 0],
+    [-hw, hd, Math.PI / 2],
+    [-hw, -hd, Math.PI],
+    [hw, -hd, (3 * Math.PI) / 2],
+  ]))
+    for (let k = 0; k <= seg; k++) {
+      const a = a0 + ((Math.PI / 2) * k) / seg;
+      local.push([ux + rr * Math.cos(a), vy + rr * Math.sin(a)]);
+    }
+  // the local +v axis points to `bearing`; +u is 90° clockwise from it
+  const b = (bearing * Math.PI) / 180,
+    vx = Math.sin(b),
+    vyN = Math.cos(b),
+    ux = Math.cos(b),
+    uy = -Math.sin(b);
+  return local.map(([u, v]) => [
+    Math.round((cx + u * ux + v * vx) * 100) / 100,
+    Math.round((cy + u * uy + v * vyN) * 100) / 100,
+  ]);
+}

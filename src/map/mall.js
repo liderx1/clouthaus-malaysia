@@ -21,7 +21,8 @@ const mallMat = windowShader(
   }),
   true,
 );
-const mallGeo = buildingGeometry([{ ...MALL, h: MALL_H, type: 'commercial', kId: 6 }]);
+export const TOWER = CONFIG.main.style === 'tower';
+const mallGeo = buildingGeometry([{ ...MALL, h: MALL_H, type: 'commercial', kId: TOWER ? 7 : 6, exact: TOWER }]);
 {
   const c = mallGeo.attributes.color;
   const w = new THREE.Color(CONFIG.main.facade ?? '#F1E9DC'),
@@ -34,6 +35,7 @@ mallMesh.castShadow = mallMesh.receiveShadow = true;
 mallGroup.add(mallMesh);
 export const MR = ring(MALL.p);
 export const mallC = MR.reduce((a, q) => [a[0] + q[0] / MR.length, a[1] + q[1] / MR.length], [0, 0]);
+const TOWER_CROWN = CONFIG.main.tower?.crown ?? 8;
 const mallRad = Math.max(...MR.map((q) => Math.hypot(q[0] - mallC[0], q[1] - mallC[1])));
 /** roofs of covered walkways (site extras), hidden while a route or the exits are shown so the route stays visible */
 export const LINK_ROOF = [];
@@ -44,7 +46,7 @@ export const LINK_ROOF = [];
   c.width = 1024;
   c.height = 512;
   const x = c.getContext('2d');
-  x.fillStyle = '#8F9193';
+  x.fillStyle = TOWER ? '#1E2A36' : '#8F9193';
   x.fillRect(0, 0, 1024, 512);
   x.fillStyle = 'rgba(255,255,255,.08)';
   for (let i = 0; i < 1024; i += 64) x.fillRect(i, 0, 2, 512);
@@ -88,12 +90,12 @@ export const LINK_ROOF = [];
   // one panel over the main entrance, plus one on every other long facade so the name reads from all sides
   const sign = (px, py, nx, ny, w) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, w / 2), logoMat);
-    m.position.set(px + nx * 0.6, 13.5, -(py + ny * 0.6));
+    m.position.set(px + nx * 0.6, TOWER ? MALL_H - (TOWER_CROWN + w / 2) - 2 : 13.5, -(py + ny * 0.6));
     m.rotation.y = Math.atan2(nx, -ny);
     m.renderOrder = 2;
     mallGroup.add(m);
   };
-  sign(a[0] + dx * k, a[1] + dy * k, nx, ny, 22);
+  sign(a[0] + dx * k, a[1] + dy * k, nx, ny, TOWER ? Math.min(24, L * 0.6) : 22);
   MR.map((q, i) => [i, Math.hypot(MR[(i + 1) % MR.length][0] - q[0], MR[(i + 1) % MR.length][1] - q[1])])
     .filter(([i]) => i !== e)
     .sort((u, v) => v[1] - u[1])

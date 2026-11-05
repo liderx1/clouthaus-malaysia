@@ -2,120 +2,84 @@
   "en": {
     "items": [
       {
-        "image": "/images/feat-experience.svg",
-        "title": "A real shopping experience, at the heart of Cheras",
-        "desc": "Where nature meets technology: classical design with a contemporary twist, 15 minutes from downtown KL.",
-        "link": "/#about",
-        "floor": "",
-        "subtitle": "Open daily · 10:00am – 10:00pm"
-      },
-      {
-        "image": "/images/feat-food-street.svg",
-        "title": "Food Street: the authentic flavours of Cheras",
-        "desc": "Ipoh ais kopi, hotpot, sushi, nasi lemak and desserts. Dozens of places to eat on LG alone.",
+        "image": "/images/clouthaus/sky-pool.webp",
+        "title": "A 25 m infinity pool facing the Twin Towers",
+        "desc": "The 63A rooftop: sky pool, jacuzzi, floating lounge, BBQ and Clout Bar.",
         "link": "/#stores",
-        "floor": "LG",
-        "subtitle": "Lower Ground Floor"
+        "floor": "63A",
+        "subtitle": "Level 63A · rooftop"
       },
       {
-        "image": "/images/feat-mrt.svg",
-        "title": "Walk straight in from MRT Taman Mutiara",
-        "desc": "A covered, elevated bridge takes you from the station into the mall, rain or shine.",
+        "image": "/images/clouthaus/floor-plan-lvl17-32.webp",
+        "title": "15 types from 549 to 1,216 sq ft",
+        "desc": "Types A to N plus L1, 1 to 3 bedrooms, four dual-key types and three garden units on level 9.",
+        "link": "/#stores",
+        "floor": "",
+        "subtitle": "Typical floor, levels 17–32"
+      },
+      {
+        "image": "/images/clouthaus/sky-lounge.webp",
+        "title": "Sky lounges on level 33",
+        "desc": "Family and sky lounges, sky bar, karaoke, reading lounge and a playland for the children.",
+        "link": "/#stores",
+        "floor": "33",
+        "subtitle": "Level 33 · Explore & relax"
+      },
+      {
+        "image": "/images/clouthaus/city-view.webp",
+        "title": "Walk to KLCC, Suria and the park",
+        "desc": "Suria KLCC about 6 minutes, KLCC Park about 11 minutes and Pavilion about 15 minutes on foot.",
         "link": "/#visit",
         "floor": "",
-        "subtitle": "First Floor link bridge"
-      },
-      {
-        "image": "/images/feat-cinema.svg",
-        "title": "Golden movie experience at GSC",
-        "desc": "Total movie entertainment in the best halls, with the best customer service.",
-        "link": "/#stores",
-        "floor": "2",
-        "subtitle": "Second Floor"
-      },
-      {
-        "image": "/images/feat-mid-autumn.svg",
-        "title": "Mid-Autumn Lantern Nights",
-        "desc": "Lantern displays, mooncake gifting and family activities around the Concourse.",
-        "link": "/#news",
-        "floor": "",
-        "subtitle": "12 Sep – 4 Oct 2026"
-      },
-      {
-        "image": "/images/feat-family.svg",
-        "title": "Family fun days, every weekend",
-        "desc": "Fun Scape, Big Kidz, Baby Shark Bounce Wonderland and Toy World keep the little ones busy.",
-        "link": "/#stores",
-        "floor": "2",
-        "subtitle": "Second Floor"
-      }
-    ]
-  },
-  "ms": {
-    "items": [
-      {
-        "title": "Pengalaman membeli-belah sebenar, di tengah-tengah Cheras",
-        "desc": "Di mana alam bertemu teknologi: reka bentuk klasik dengan sentuhan kontemporari, 15 minit dari pusat bandar KL.",
-        "subtitle": "Dibuka setiap hari · 10:00pg – 10:00mlm"
-      },
-      {
-        "title": "Food Street: rasa asli Cheras",
-        "desc": "Ais kopi Ipoh, hotpot, sushi, nasi lemak dan pencuci mulut. Berpuluh-puluh tempat makan di LG sahaja.",
-        "subtitle": "Tingkat Bawah Tanah"
-      },
-      {
-        "title": "Masuk terus dari MRT Taman Mutiara",
-        "desc": "Jejantas berbumbung membawa anda dari stesen terus ke pusat beli-belah, hujan atau panas.",
-        "subtitle": "Jejantas penghubung Tingkat 1"
-      },
-      {
-        "title": "Pengalaman menonton istimewa di GSC",
-        "desc": "Hiburan filem sepenuhnya di dewan terbaik, dengan layanan pelanggan terbaik.",
-        "subtitle": "Tingkat 2"
-      },
-      {
-        "title": "Malam Tanglung Pertengahan Musim Luruh",
-        "desc": "Pameran tanglung, hadiah kuih bulan dan aktiviti keluarga di sekitar Concourse.",
-        "subtitle": "12 Sep – 4 Okt 2026"
-      },
-      {
-        "title": "Hari keseronokan keluarga, setiap hujung minggu",
-        "desc": "Fun Scape, Big Kidz, Baby Shark Bounce Wonderland dan Toy World memastikan si kecil sentiasa seronok.",
-        "subtitle": "Tingkat 2"
+        "subtitle": "Jalan P. Ramlee, KL City Centre"
       }
     ]
   },
   "zh": {
     "items": [
       {
-        "title": "位于蕉赖心脏地带的真实购物体验",
-        "desc": "自然与科技交汇之地，经典设计融入现代元素，距吉隆坡市中心仅15分钟。",
-        "subtitle": "每日营业 · 上午10时至晚上10时"
+        "title": "面向双峰塔的 25 米无边际泳池",
+        "desc": "63A 楼顶：空中泳池、按摩池、漂浮休憩区、烧烤区与 Clout 酒吧。",
+        "subtitle": "63A 楼 · 顶楼"
       },
       {
-        "title": "美食街：正宗蕉赖风味",
-        "desc": "怡保冰咖啡、火锅、寿司、椰浆饭和甜品，光是 LG 层就有数十家餐饮店。",
-        "subtitle": "底层（LG）"
+        "title": "15 种户型，549 至 1,216 平方英尺",
+        "desc": "A 至 N 及 L1 型，一至三房，4 种双钥匙户型及 9 楼 3 个花园单位。",
+        "subtitle": "标准层 17–32 楼"
       },
       {
-        "title": "从 MRT Taman Mutiara 站直达商场",
-        "desc": "有盖高架天桥从车站直通商场，风雨无阻。",
-        "subtitle": "一楼连接天桥"
+        "title": "33 楼空中酒廊",
+        "desc": "家庭与空中酒廊、空中酒吧、卡拉OK、阅读室及儿童游乐场。",
+        "subtitle": "33 楼 · 亲子与休闲"
       },
       {
-        "title": "GSC 金牌观影体验",
-        "desc": "一流影厅，搭配一流服务，带来全方位的观影享受。",
-        "subtitle": "二楼"
+        "title": "步行到 KLCC、阳光广场与公园",
+        "desc": "步行约 6 分钟到阳光广场，约 11 分钟到 KLCC 公园，约 15 分钟到 Pavilion。",
+        "subtitle": "Jalan P. Ramlee，吉隆坡城中城"
+      }
+    ]
+  },
+  "zh-TW": {
+    "items": [
+      {
+        "title": "正面雙子星塔的 25 公尺無邊際泳池",
+        "desc": "63A 樓頂：空中泳池、按摩池、漂浮休憩區、烤肉區與 Clout 酒吧。",
+        "subtitle": "63A 樓 · 頂樓"
       },
       {
-        "title": "中秋灯笼之夜",
-        "desc": "中庭一带举办灯笼展、月饼礼品与亲子活动。",
-        "subtitle": "2026年9月12日 – 10月4日"
+        "title": "15 種房型，549 至 1,216 平方英尺",
+        "desc": "A 至 N 與 L1 型，一至三房，4 種雙鑰匙房型與 9 樓 3 戶花園單位。",
+        "subtitle": "標準層 17–32 樓"
       },
       {
-        "title": "每个周末，亲子欢乐日",
-        "desc": "Fun Scape、Big Kidz、Baby Shark Bounce Wonderland 与 Toy World，让孩子们玩得尽兴。",
-        "subtitle": "二楼"
+        "title": "33 樓空中酒廊",
+        "desc": "家庭與空中酒廊、空中酒吧、卡拉 OK、閱讀室與兒童遊樂場。",
+        "subtitle": "33 樓 · 親子與休閒"
+      },
+      {
+        "title": "步行到 KLCC、陽光廣場與公園",
+        "desc": "步行約 6 分鐘到陽光廣場，約 11 分鐘到 KLCC 公園，約 15 分鐘到 Pavilion。",
+        "subtitle": "Jalan P. Ramlee，吉隆坡城中城"
       }
     ]
   }

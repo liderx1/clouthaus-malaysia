@@ -314,7 +314,16 @@ for (const [l, o] of Object.entries(CONFIG.text ?? {})) {
   if (o.why) T[l].why = o.why;
   if (o.storeText) T[l].storeText = (name, floor, unit) => fill(o.storeText, { name, floor, unit });
   if (o.floors) T[l].floors = { ...T[l].floors, ...o.floors };
+  // any other interface wording (e.g. "stores" → "unit types" for a residence); {n} is the count where a line has one
+  for (const [k, v] of Object.entries(o.ui ?? {}))
+    T[l][k] = typeof T.en[k] === 'function' ? (/** @type {number} */ n) => fill(v, { n }) : v;
 }
+// the site's own store categories (site.config.json → categories) replace the mall ones, in every language
+if (CONFIG.categories)
+  for (const l of Object.keys(T))
+    T[l].storeCats = Object.fromEntries(
+      CONFIG.categories.map((/** @type {any} */ c) => [c.value, c.label?.[l] ?? c.label?.en ?? c.value]),
+    );
 try {
   const l = localStorage.getItem('eko-lang');
   S.lang = T[l] && CONFIG.locales.includes(l) ? l : CONFIG.locales[0];

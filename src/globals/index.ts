@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { abs } from '../fields/preview'
 import { editorsOnly } from '../access'
+import { SITE_CONFIG } from '../lib/site'
 
 const SETTINGS = 'Settings · 设定'
 const social = (name: string, label: string) => ({ name, label, type: 'group' as const, fields: [
@@ -31,7 +32,7 @@ export const Seo: GlobalConfig = {
         { name: 'title', label: 'Page title', type: 'text', localized: true, required: true, maxLength: 70, admin: { description: 'About 50–60 characters. Shown in the browser tab and in Google.' } },
         { name: 'description', label: 'Meta description', type: 'textarea', localized: true, maxLength: 170, admin: { description: 'About 120–160 characters. The grey text under the title in Google.' } },
         { name: 'ogImage', label: 'Share image (1200 × 630)', type: 'upload', relationTo: 'media', admin: { description: 'Shown when the link is shared on WhatsApp, Facebook, LINE…' } },
-        { name: 'siteUrl', label: 'Website address', type: 'text', defaultValue: 'https://ekocheras-mall-redesign.vercel.app', admin: { description: 'The main address, used for the canonical link and the sitemap.' } },
+        { name: 'siteUrl', label: 'Website address', type: 'text', defaultValue: (SITE_CONFIG as any).test?.liveUrl ?? '', admin: { description: 'The main address, used for the canonical link and the sitemap.' } },
         { name: 'noindex', label: 'Hide from search engines (noindex)', type: 'checkbox', defaultValue: true, admin: { description: 'Keep ticked while the site is a preview. Untick on launch day.' } },
       ] },
       { label: 'Analytics', fields: [

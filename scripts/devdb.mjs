@@ -4,7 +4,7 @@ const pg = new EmbeddedPostgres({ databaseDir: './.pgdata', user: 'payload', pas
 import fs from 'node:fs'
 if (!fs.existsSync('./.pgdata/PG_VERSION')) await pg.initialise()
 await pg.start()
-try { await pg.createDatabase('ekocheras') } catch { /* already exists */ }
-console.log('Local Postgres ready: postgres://payload:payload@localhost:54329/ekocheras')
+try { await pg.createDatabase('site') } catch { /* already exists */ }
+console.log('Local Postgres ready: postgres://payload:payload@localhost:54329/site')
 process.on('SIGINT', async () => { await pg.stop(); process.exit(0) })
 setInterval(() => {}, 1 << 30)

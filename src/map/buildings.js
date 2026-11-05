@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { CONFIG } from './config.js';
 import { MALL, MALL_H, MALL_R, OSM, ring } from './data.js';
 import { area, hash, hexCol, inPoly } from './geo.js';
 import { tex } from './ground.js';
@@ -86,7 +87,7 @@ export function bInfo(b) {
         industrial: 9,
         warehouse: 9,
       }[typ] ?? (A < 110 ? 6.6 : A < 260 ? 7.6 : A < 900 ? 10 : A < 3000 ? 13 : 16);
-  h *= 0.92 + seed * 0.16;
+  if (!b.exact) h *= 0.92 + seed * 0.16; // the main building keeps its real height
   const tallish = h > 26,
     house =
       !tallish &&
@@ -251,6 +252,27 @@ export function buildingGeometry(list) {
   g.setIndex(idx);
   return g;
 }
+/* main.style "tower": floor height, podium, crown and the lit amenity floors (main.tower), baked into the shader */
+const TOWER = CONFIG.main.style === 'tower';
+const TWC = CONFIG.main.tower ?? {};
+const f1 = (/** @type {number} */ v) => Number(v).toFixed(2);
+const glsl = (/** @type {string} */ hex) => {
+  const c = new THREE.Color(hex);
+  return `vec3(${c.r.toFixed(3)}, ${c.g.toFixed(3)}, ${c.b.toFixed(3)})`;
+};
+const TW = {
+  fh: f1(TWC.floorHeight ?? 3.6),
+  podium: f1(TWC.podium ?? 0),
+  crown: f1(TWC.crown ?? 8),
+  glass: glsl(TWC.glass ?? '#3A4A58'),
+  fin: glsl(TWC.fin ?? '#E8E9EA'),
+  bands: (TWC.bands ?? [])
+    .map(
+      (/** @type {number[]} */ [a, b]) =>
+        `bandGlow = max(bandGlow, step(${f1(a)}, vWall.y) * step(vWall.y, ${f1(b)}));`,
+    )
+    .join(' '),
+};
 export function windowShader(mat, mall = false) {
   mat.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, { uNight: U.uNight, uTime: U.uTime, uDim: U.uDim, uCalm: U.uCalm });
@@ -295,7 +317,26 @@ export function windowShader(mat, mall = false) {
           diffuseColor.rgb = mix(mix(vec3(0.86, 0.87, 0.88), vec3(0.42, 0.50, 0.56), g), vec3(0.97), max(slab, fin));
           diffuseColor.rgb *= 1.0 - rec * 0.35; win = g * (1.0 - max(slab, fin)) * step(4.0, vWall.y);
         }
-        if (kind > 5.5 && wall > 0.5) {                               // EkoCheras Mall, as on Street View (2024)
+        float bandGlow = 0.0;
+        if (kind > 6.5 && wall > 0.5) {                               // main.style "tower": curtain wall with a fin at every floor
+          float fh = ${TW.fh}; float fy = fract(vWall.y / fh); float col = fract(vWall.x / 1.6);
+          float fin = step(fy, 0.1);                                  // the slab edge / sun fin along each floor
+          float mull = step(col, 0.05);
+          vec3 glass = mix(${TW.glass}, ${TW.glass} * 1.45, 0.25 + 0.5 * h31(vec3(floor(vWall.x / 1.6), floor(vWall.y / fh), 9.0)));
+          vec3 c = mix(glass, ${TW.fin}, max(fin, mull * 0.55));
+          float podium = step(vWall.y, ${TW.podium});
+          c = mix(c, mix(vec3(0.10, 0.11, 0.12), ${TW.fin}, step(fract(vWall.y / 4.2), 0.05)), podium);
+          ${TW.bands}
+          // the sky-gap amenity floors: recessed dark glass behind columns, warm light inside
+          float colm = step(fract(vWall.x / 9.0), 0.16);
+          c = mix(c, mix(vec3(0.06, 0.06, 0.07), ${TW.fin}, colm), bandGlow);
+          float crown = step(vInfo.x - ${TW.crown}, vWall.y);
+          c = mix(c, mix(${TW.fin} * 1.1, glass * 0.8, step(0.4, fract(vWall.y / 1.1))), crown);
+          diffuseColor.rgb = c;
+          win = (1.0 - max(fin, mull)) * (1.0 - podium) * (1.0 - crown) * (1.0 - bandGlow * colm);
+          shopGlow = podium * step(vWall.y, 5.0); signGlow = crown * 0.6 + fin * (1.0 - podium) * 0.05; tealGlow = bandGlow * (1.0 - colm);
+        }
+        if (kind > 5.5 && kind < 6.5 && wall > 0.5) {                 // EkoCheras Mall, as on Street View (2024)
           float sc = floor(vWall.x / 1.15);
           vec3 orange = mix(vec3(0.93, 0.50, 0.20), vec3(0.97, 0.66, 0.38), h31(vec3(sc, 2.0, 3.0)));
           vec3 c = mix(vec3(0.95, 0.91, 0.85), orange, step(0.36, h31(vec3(sc, 7.0, 1.0))));
@@ -315,7 +356,7 @@ export function windowShader(mat, mall = false) {
           shopGlow = gf * step(0.4, vWall.y); signGlow = sg; tealGlow = teal;
         }
         roughnessFactor = mix(roughnessFactor, 0.12, win);
-        float lit = step(0.58, h31(vec3(floor(vWall.x / sp), floor(vWall.y / fl), floor(vInfo.y * 97.0))));
+        float lit = step(kind > 6.5 ? 0.76 : 0.58, h31(vec3(floor(vWall.x / sp), floor(vWall.y / fl), floor(vInfo.y * 97.0))));
         vec3 warm = mix(vec3(1.0, 0.74, 0.42), vec3(0.85, 0.92, 1.0), step(0.8, h31(vec3(floor(vWall.y / fl), vInfo.y, 3.0))));`,
         )
         .replace(
@@ -325,13 +366,16 @@ export function windowShader(mat, mall = false) {
         .replace(
           '#include <emissivemap_fragment>',
           `#include <emissivemap_fragment>
-        totalEmissiveRadiance += step(5.5, kind) * (win * lit * 0.3 + shopGlow * 0.5) * uNight * warm * 1.1 * (1.0 - uDim * 0.85 * step(kind, 5.5)) + step(5.5, kind) * uNight * (signGlow * vec3(1.0, 0.85, 0.7) * 0.9 + tealGlow * vec3(0.2, 0.75, 0.8) * 0.5);
+        totalEmissiveRadiance += step(5.5, kind) * (win * lit * 0.3 + shopGlow * 0.5) * uNight * warm * 1.1 * (1.0 - uDim * 0.85 * step(kind, 5.5)) + step(5.5, kind) * uNight * (signGlow * vec3(1.0, 0.85, 0.7) * 0.9 + tealGlow * mix(vec3(0.2, 0.75, 0.8), vec3(1.0, 0.78, 0.5), step(6.5, kind)) * 0.5);
         ${
-          mall
-            ? `float strip = wall * (1.0 - smoothstep(0.0, 0.07, abs(fract(vWall.y / 4.4) - 0.5) * 2.0 - 0.86) );
+          mall && TOWER
+            ? `float scan = smoothstep(0.0, 3.0, 3.0 - abs(vWall.y - fract(uTime * 0.12) * (vInfo.x + 6.0)));
+        totalEmissiveRadiance += wall * vec3(1.0, 0.45, 0.16) * scan * (0.05 * uNight + uDim * 0.6);`
+            : mall
+              ? `float strip = wall * (1.0 - smoothstep(0.0, 0.07, abs(fract(vWall.y / 4.4) - 0.5) * 2.0 - 0.86) );
         float scan = smoothstep(0.0, 1.6, 1.6 - abs(vWall.y - fract(uTime * 0.18) * (vInfo.x + 6.0)));
         totalEmissiveRadiance += wall * vec3(1.0, 0.45, 0.16) * (strip * (0.35 * uNight + 0.25 * uDim) + scan * (0.05 * uNight + uDim * 0.7));`
-            : ''
+              : ''
         }`,
         )
         .replace(
@@ -350,7 +394,7 @@ const PARTS = OSM.buildings
   .map((b) => ring(b.p).reduce((a, q, i, r) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]));
 const seenFoot = new Set();
 const others = OSM.buildings.filter((b) => {
-  if (b === MALL) return false;
+  if (b === MALL || b.id === MALL.id) return false;
   const r = ring(b.p);
   if (onMall(r) && bInfo(b).h <= MALL_H + 4) return false;
   if (!b.part && PARTS.some((c) => inPoly(c[0], c[1], r))) return false;

@@ -12,7 +12,7 @@ const lampHeads = [];
 {
   const poles = [];
   for (const r of OSM.roads) {
-    if (!['trunk', 'primary', 'secondary', 'tertiary'].includes(r.t) || r.bridge) continue;
+    if (!['trunk', 'primary', 'secondary', 'tertiary'].includes(r.t) || r.bridge || r.tunnel) continue;
     const w = RW[r.t],
       cum = cumulative(r.p);
     for (let s = 14; s < cum.at(-1); s += 34) {
@@ -132,6 +132,21 @@ const VEH = {
     ],
   },
 };
+// food-delivery riders, a fixture of KL streets: a motorbike with the rider in the company's colour and an insulated box
+const rider = (jacket, boxCol) => [
+  wheel(0.3, 0.1, 0, 0.3, 0.66, TYRE),
+  wheel(0.3, 0.1, 0, 0.3, -0.66, TYRE),
+  box(0.62, 0.05, 0.05, 0, 1.25, 0.45, CHROME),
+  box(0.44, 0.6, 0.32, 0, 1.45, -0.05, jacket),
+  solid(new THREE.SphereGeometry(0.17, 10, 8).translate(0, 1.93, 0), jacket),
+  box(0.12, 0.45, 0.12, 0.17, 0.95, 0.25, 0x2e3742),
+  box(0.12, 0.45, 0.12, -0.17, 0.95, 0.25, 0x2e3742),
+  rbox(0.56, 0.5, 0.52, 0.05, 0, 1.3, -0.62, boxCol),
+  box(0.16, 0.1, 0.05, 0, 0.95, 0.63, HEAD),
+  box(0.14, 0.08, 0.05, 0, 0.9, -0.6, TAIL),
+];
+VEH.grab = { len: 2, v: 1.05, body: VEH.moto.body, det: () => rider(0x00b14f, 0x00a84a) };
+VEH.panda = { len: 2, v: 1.05, body: VEH.moto.body, det: () => rider(0xd70f64, 0xe21b70) };
 const PAINT = [
   '#F4F4F2',
   '#F4F4F2',
@@ -147,21 +162,37 @@ const PAINT = [
 const CARS = [];
 {
   const ways = OSM.roads.filter(
-    (r) => ['trunk', 'trunk_link', 'primary', 'secondary', 'tertiary'].includes(r.t) && polyLen(r.p) > 60,
+    (r) =>
+      ['motorway', 'trunk', 'trunk_link', 'primary', 'secondary', 'tertiary'].includes(r.t) &&
+      !r.tunnel &&
+      polyLen(r.p) > 60,
   );
   for (const r of ways) {
     const cum = cumulative(r.p),
       L = cum.at(-1),
       z = roadZ(r);
     const dirs = r.oneway ? [1] : [1, -1];
-    const lanes = r.t === 'trunk' ? 2 : 1;
+    const big = r.t === 'trunk' || r.t === 'motorway',
+      lanes = big ? 2 : 1;
     for (const dir of dirs)
       for (let lane = 0; lane < lanes; lane++) {
-        const n = Math.max(1, Math.floor(L / ((r.t === 'trunk' ? 26 : 55) * (MOBILE ? 2.2 : 1))));
+        const n = Math.max(1, Math.floor(L / ((big ? 26 : 55) * (MOBILE ? 2.2 : 1))));
         for (let i = 0; i < n; i++) {
           const u = rand();
           const type =
-            u < 0.3 ? 'moto' : u < 0.62 ? 'sedan' : u < 0.8 ? 'suv' : u < 0.93 || r.t !== 'trunk' ? 'mpv' : 'bus';
+            u < 0.2
+              ? 'moto'
+              : u < 0.27
+                ? 'grab'
+                : u < 0.3
+                  ? 'panda'
+                  : u < 0.62
+                    ? 'sedan'
+                    : u < 0.8
+                      ? 'suv'
+                      : u < 0.93 || !big
+                        ? 'mpv'
+                        : 'bus';
           const base = (RW[r.t] / 4) * (r.oneway ? (lane ? 0.5 : -0.5) : 0.6 + lane * 0.9) * (r.oneway ? 1 : dir);
           CARS.push({
             type,
@@ -171,8 +202,8 @@ const CARS = [];
             z,
             dir,
             s: rand() * L,
-            v: (r.t === 'trunk' ? 12 : 8) * (0.8 + rand() * 0.4) * VEH[type].v,
-            off: base + (type === 'moto' ? (rand() - 0.5) * 1.2 : 0),
+            v: (big ? 12 : 8) * (0.8 + rand() * 0.4) * VEH[type].v,
+            off: base + (VEH[type].len < 3 ? (rand() - 0.5) * 1.2 : 0),
             i: 0,
           });
         }
@@ -198,7 +229,16 @@ for (const [type, d] of Object.entries(VEH)) {
   );
   list.forEach((c, i) => {
     c.i = i;
-    body.setColorAt(i, new THREE.Color(type === 'bus' ? '#F4F4F2' : PAINT[(i * 7 + type.length) % PAINT.length]));
+    body.setColorAt(
+      i,
+      new THREE.Color(
+        type === 'bus'
+          ? '#F4F4F2'
+          : type === 'grab' || type === 'panda'
+            ? '#2B2F33'
+            : PAINT[(i * 7 + type.length) % PAINT.length],
+      ),
+    );
   });
   scene.add(body, det);
   FLEET[type] = { body, det, list };
@@ -235,7 +275,7 @@ export function moveCars(dt, night) {
     _m.compose(_v, _q, _s);
     F.body.setMatrixAt(c.i, _m);
     F.det.setMatrixAt(c.i, _m);
-    const w = c.type === 'moto' ? 0.15 : c.type === 'bus' ? 1.3 : 1;
+    const w = VEH[c.type].len < 3 ? 0.15 : c.type === 'bus' ? 1.3 : 1;
     _v.set(x + fx * half, c.z + 0.85, -(y + fy * half));
     _m.compose(_v, _q, night ? _s.set(w, 1, 1) : _0);
     head.setMatrixAt(k, _m);

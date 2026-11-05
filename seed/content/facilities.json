@@ -2,142 +2,64 @@
   "en": {
     "items": [
       {
-        "icon": "atm",
-        "name": "ATMs",
-        "where": "South – Lower Ground Floor & South – First Floor"
-      },
-      {
-        "icon": "baby",
-        "name": "Baby Room",
-        "where": "Private nursing room with hot/cold water and diaper-changing table. Every floor except G & LG North."
-      },
-      {
-        "icon": "stroller",
-        "name": "Baby Stroller",
-        "where": "Available at the Information Counter, Ground Floor Concourse"
-      },
-      {
-        "icon": "carwash",
-        "name": "Car Wash",
-        "where": "Drop off your car while you shop. Basement 1 (B1-01)"
-      },
-      {
         "icon": "parking",
-        "name": "Cashless Car Park",
-        "where": "All parking floors"
-      },
-      {
-        "icon": "wc",
-        "name": "Disabled Washroom",
-        "where": "Every floor"
+        "name": "Car park",
+        "where": "262 bays: 253 in the automated system and 9 conventional owner bays. Bays are rented, not sold with the home (except nine units)."
       },
       {
         "icon": "wifi",
-        "name": "Free Wi-Fi",
-        "where": "Stay connected on every floor"
-      },
-      {
-        "icon": "alert",
-        "name": "Panic Button",
-        "where": "In every parking area. Press for help in an emergency."
-      },
-      {
-        "icon": "surau",
-        "name": "Surau",
-        "where": "Second Floor, near DZI Kingdom"
+        "name": "Security",
+        "where": "Car plate recognition, facial recognition at the lift lobbies, Desfire access cards, CCTV in the lift cars and parcel boxes outside the mailroom."
       },
       {
         "icon": "wheel",
-        "name": "Wheelchair",
-        "where": "Available at the Information Counter, Ground Floor Concourse"
-      }
-    ]
-  },
-  "ms": {
-    "items": [
-      {
-        "name": "ATM",
-        "where": "Selatan – Tingkat Bawah Tanah & Selatan – Tingkat 1"
+        "name": "Lifts in three zones",
+        "where": "9 passenger lifts (3 per zone) plus a service and fire lift; all zones stop at the level 33 and 33A facilities."
       },
       {
-        "name": "Bilik Bayi",
-        "where": "Bilik penyusuan peribadi dengan air panas/sejuk dan meja salin lampin. Setiap tingkat kecuali G & LG Utara."
-      },
-      {
-        "name": "Kereta Sorong Bayi",
-        "where": "Boleh didapati di Kaunter Informasi, Concourse Tingkat Bawah"
-      },
-      {
-        "name": "Cuci Kereta",
-        "where": "Tinggalkan kereta anda semasa membeli-belah. Aras Bawah Tanah 1 (B1-01)"
-      },
-      {
-        "name": "Tempat Letak Kereta Tanpa Tunai",
-        "where": "Semua tingkat parkir"
-      },
-      {
-        "name": "Tandas OKU",
-        "where": "Setiap tingkat"
-      },
-      {
-        "name": "Wi-Fi Percuma",
-        "where": "Kekal berhubung di setiap tingkat"
-      },
-      {
-        "name": "Butang Kecemasan",
-        "where": "Di setiap kawasan parkir. Tekan untuk bantuan semasa kecemasan."
-      },
-      {
-        "name": "Surau",
-        "where": "Tingkat 2, berhampiran DZI Kingdom"
-      },
-      {
-        "name": "Kerusi Roda",
-        "where": "Boleh didapati di Kaunter Informasi, Concourse Tingkat Bawah"
+        "icon": "wc",
+        "name": "Washrooms",
+        "where": "Male and female washrooms on levels 33 and 33A; sauna and steam rooms on 63A."
       }
     ]
   },
   "zh": {
     "items": [
       {
-        "name": "提款机",
-        "where": "南区底层（LG）与南区一楼"
+        "name": "停车场",
+        "where": "262 个车位：253 个自动化车位及 9 个业主车位。车位以租用方式提供（9 个单位除外）。"
       },
       {
-        "name": "育婴室",
-        "where": "私密哺乳室，配备冷热饮水机与尿布台。除地面层与底层北区外，每层楼均设。"
+        "name": "保安",
+        "where": "车牌识别、电梯大堂人脸识别、Desfire 门禁卡、电梯 CCTV，收发室外设包裹柜。"
       },
       {
-        "name": "婴儿车",
-        "where": "可于地面层中庭询问处借用"
+        "name": "三区电梯",
+        "where": "9 部客梯（每区 3 部）及 1 部服务兼消防梯；各区均停靠 33 与 33A 楼设施层。"
       },
       {
-        "name": "洗车服务",
-        "where": "购物时顺便洗车。地下一层（B1-01）"
+        "name": "洗手间",
+        "where": "33 与 33A 楼设男女洗手间；63A 楼设桑拿与蒸汽室。"
+      }
+    ]
+  },
+  "zh-TW": {
+    "items": [
+      {
+        "name": "停車場",
+        "where": "262 個車位：253 個自動化車位與 9 個業主車位。車位以租用方式提供（9 戶除外）。"
       },
       {
-        "name": "无现金停车场",
-        "where": "所有停车楼层"
+        "name": "保全",
+        "where": "車牌辨識、電梯廳人臉辨識、Desfire 門禁卡、電梯 CCTV，收發室外設包裹櫃。"
       },
       {
-        "name": "无障碍洗手间",
-        "where": "每层楼"
+        "name": "三區電梯",
+        "where": "9 部客梯（每區 3 部）與 1 部服務兼消防梯；各區皆停靠 33 與 33A 樓設施層。"
       },
       {
-        "name": "免费 Wi-Fi",
-        "where": "每层楼都能畅快上网"
-      },
-      {
-        "name": "紧急求助按钮",
-        "where": "设于各停车区，紧急时按下即可求助"
-      },
-      {
-        "name": "祈祷室（Surau）",
-        "where": "二楼，DZI Kingdom 旁"
-      },
-      {
-        "name": "轮椅",
-        "where": "可于地面层中庭询问处借用"
+        "name": "洗手間",
+        "where": "33 與 33A 樓設男女洗手間；63A 樓設烤箱與蒸氣室。"
       }
     ]
   }

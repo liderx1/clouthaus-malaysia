@@ -2,140 +2,44 @@
   "en": {
     "items": [
       {
-        "image": "/images/topic-lantern.svg",
-        "title": "Mid-Autumn Lantern Walk",
+        "image": "/images/clouthaus/grand-drop-off.webp",
+        "title": "Visit the Type B show unit",
         "category": "event",
-        "start": "2026-09-12",
-        "end": "2026-10-04",
-        "note": ""
-      },
-      {
-        "image": "/images/topic-deepavali.svg",
-        "title": "Festival of Lights: Deepavali Kolam Showcase",
-        "category": "event",
-        "start": "2026-10-24",
-        "end": "2026-11-15",
-        "note": ""
-      },
-      {
-        "image": "/images/topic-rewards.svg",
-        "title": "Shop & Rewards: spend, snap, redeem",
-        "category": "campaign",
-        "start": "2026-10-01",
-        "end": "2026-10-31",
-        "note": ""
-      },
-      {
-        "image": "/images/topic-market.svg",
-        "title": "Weekend Artisan Market",
-        "category": "popup",
-        "start": "2026-10-03",
-        "end": "2026-10-25",
-        "note": "Every Sat & Sun in October"
-      },
-      {
-        "image": "/images/topic-bricks.svg",
-        "title": "Build-a-Brick Workshop for Kids",
-        "category": "event",
-        "start": "2026-10-17",
-        "end": "2026-10-18",
-        "note": ""
-      },
-      {
-        "image": "/images/topic-halloween.svg",
-        "title": "Kids' Trick-or-Treat Trail",
-        "category": "event",
-        "start": "2026-10-31",
+        "start": "",
         "end": "",
-        "note": ""
+        "note": "Menara TA One sales gallery, daily 9am – 6pm"
       },
       {
-        "image": "/images/topic-sale.svg",
-        "title": "Year-End Sale",
+        "image": "/images/clouthaus/sky-trellis-lounge.webp",
+        "title": "Ask for the current price list",
         "category": "campaign",
-        "start": "2026-11-20",
-        "end": "2026-12-31",
-        "note": ""
-      },
-      {
-        "image": "/images/topic-christmas.svg",
-        "title": "Christmas Wonderland",
-        "category": "event",
-        "start": "2026-11-28",
-        "end": "2026-12-26",
-        "note": ""
-      }
-    ]
-  },
-  "ms": {
-    "items": [
-      {
-        "title": "Jalan Tanglung Pertengahan Musim Luruh",
-        "note": ""
-      },
-      {
-        "title": "Pesta Cahaya: Pameran Kolam Deepavali",
-        "note": ""
-      },
-      {
-        "title": "Beli & Ganjaran: belanja, snap, tebus",
-        "note": ""
-      },
-      {
-        "title": "Pasar Artisan Hujung Minggu",
-        "note": "Setiap Sabtu & Ahad pada bulan Oktober"
-      },
-      {
-        "title": "Bengkel Bina Bata untuk Kanak-kanak",
-        "note": ""
-      },
-      {
-        "title": "Laluan Trick-or-Treat Kanak-kanak",
-        "note": ""
-      },
-      {
-        "title": "Jualan Akhir Tahun",
-        "note": ""
-      },
-      {
-        "title": "Dunia Ajaib Krismas",
-        "note": ""
+        "start": "",
+        "end": "",
+        "note": "WhatsApp +60 10-827 8932"
       }
     ]
   },
   "zh": {
     "items": [
       {
-        "title": "中秋提灯游",
-        "note": ""
+        "title": "参观 B 型样板房",
+        "note": "Menara TA One 销售展厅，每日 9am – 6pm"
       },
       {
-        "title": "光明节：屠妖节彩粉画展",
-        "note": ""
+        "title": "索取最新价格表",
+        "note": "WhatsApp +60 10-827 8932"
+      }
+    ]
+  },
+  "zh-TW": {
+    "items": [
+      {
+        "title": "參觀 B 型樣品屋",
+        "note": "Menara TA One 接待中心，每日 9am – 6pm"
       },
       {
-        "title": "购物有礼：消费、拍照、兑换",
-        "note": ""
-      },
-      {
-        "title": "周末手作市集",
-        "note": "10月每逢周六、日"
-      },
-      {
-        "title": "儿童积木创作工作坊",
-        "note": ""
-      },
-      {
-        "title": "儿童万圣节讨糖之旅",
-        "note": ""
-      },
-      {
-        "title": "年终大促",
-        "note": ""
-      },
-      {
-        "title": "圣诞奇幻乐园",
-        "note": ""
+        "title": "索取最新價格表",
+        "note": "WhatsApp +60 10-827 8932"
       }
     ]
   }

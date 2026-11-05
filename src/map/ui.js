@@ -17,6 +17,7 @@ import { isNightAt, nowAt } from './core/hours.js';
 import { $, $$, TEST } from './env.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
+import { ROUTE_ICON } from './routes.js';
 import { mallMesh } from './mall.js';
 import { asmMarks, entMarks, exitMarks } from './markers.js';
 import { applyModes, focusMall } from './modes.js';
@@ -31,7 +32,7 @@ export function buildUI() {
     el.textContent = t(el.dataset.t);
   });
   $$('[data-lang]').forEach((b) => b.setAttribute('aria-current', b.dataset.lang === S.lang));
-  const ICON = { mrt: ['#1565D8', 'M'], bus: ['#B45309', 'B'], carN: ['#C2410C', 'P'], carS: ['#C2410C', 'P'] };
+  const ICON = ROUTE_ICON;
   $('#routes').innerHTML = PLACES.routes
     .map(
       (r) =>
@@ -187,7 +188,7 @@ export function showStore(s) {
   showPlace(
     s.name,
     `${f} · ${t('unit')} ${s.unit}`,
-    (s.desc || t('storeText')(s.name, f, s.unit)) +
+    (pick(s.desc) || t('storeText')(s.name, f, s.unit)) +
       (!storeSpot(s).exact ? ' ' + t('exactSoon') : storeSpot(s).est ? ' ' + t('estimated') : ''),
   );
   if (s.logo) $('#cardLogo').style.backgroundImage = `url("${s.logo}")`;

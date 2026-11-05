@@ -2,45 +2,34 @@
   "en": {
     "items": [
       {
-        "date": "2026-09-20",
-        "text": "Opening hours: Mondays to Sundays, 10:00am – 10:00pm",
+        "date": "2026-09-30",
+        "text": "Sales gallery open daily, 9:00am – 6:00pm. The show unit is a Type B.",
         "link": "/#visit"
       },
       {
         "date": "2026-09-01",
-        "text": "Baby strollers & wheelchairs are available at the Ground Floor Information Counter",
-        "link": "/#visit"
-      },
-      {
-        "date": "2026-08-15",
-        "text": "Cashless payment is accepted at all car park exits",
-        "link": "/#visit"
-      }
-    ]
-  },
-  "ms": {
-    "items": [
-      {
-        "text": "Waktu operasi: Isnin hingga Ahad, 10:00pg – 10:00mlm"
-      },
-      {
-        "text": "Kereta sorong bayi & kerusi roda boleh didapati di Kaunter Informasi Tingkat Bawah"
-      },
-      {
-        "text": "Pembayaran tanpa tunai diterima di semua pintu keluar tempat letak kereta"
+        "text": "Completion planned for 2029, 54 months from the sale and purchase agreement.",
+        "link": "/#about"
       }
     ]
   },
   "zh": {
     "items": [
       {
-        "text": "营业时间：星期一至星期日，上午10时至晚上10时"
+        "text": "销售展厅每日开放，上午9时至下午6时；样板房为 B 型。"
       },
       {
-        "text": "地面层询问处提供婴儿车与轮椅借用"
+        "text": "预计 2029 年竣工，自买卖合约起 54 个月。"
+      }
+    ]
+  },
+  "zh-TW": {
+    "items": [
+      {
+        "text": "接待中心每日開放，上午 9 點至下午 6 點；樣品屋為 B 型。"
       },
       {
-        "text": "所有停车场出口均接受无现金付款"
+        "text": "預計 2029 年完工，自買賣合約起 54 個月。"
       }
     ]
   }

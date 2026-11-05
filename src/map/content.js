@@ -17,13 +17,28 @@ import { bus } from './core/events.js';
 /* ---------- the site's content, inside the map ---------- */
 const fmtDate = (d) =>
   d
-    ? new Date(d + 'T00:00:00').toLocaleDateString({ en: 'en-GB', zh: 'zh-CN', ms: 'ms-MY' }[S.lang], {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      })
+    ? new Date(d + 'T00:00:00').toLocaleDateString(
+        { en: 'en-GB', zh: 'zh-CN', 'zh-TW': 'zh-TW', ms: 'ms-MY' }[S.lang] ?? S.lang,
+        {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        },
+      )
     : '';
-const CAT_ORDER = ['anchor', 'food', 'fashion', 'beauty', 'tech', 'home', 'fun', 'grocery', 'services'];
+const CAT_ORDER = [
+  'anchor',
+  ...(CONFIG.categories?.map((/** @type {{ value: string }} */ c) => c.value) ?? [
+    'food',
+    'fashion',
+    'beauty',
+    'tech',
+    'home',
+    'fun',
+    'grocery',
+    'services',
+  ]),
+];
 export function renderCats() {
   const inCat = (s, c) => (c === 'anchor' ? s.featured : s.category === c),
     name = (c) => (c === 'anchor' ? '★ ' + t('anchors') : t('storeCats')[c]);
@@ -94,7 +109,7 @@ function goToStore(s) {
   const p = showPin(s);
   $$('.store').forEach((b) => b.classList.toggle('is-on', STORES[+b.dataset.store] === s));
   // phones: glide to centre the pin at the current zoom; computers: move in closer
-  flyTo(null, [p.x, p.y], MOBILE ? camera.position.distanceTo(controls.target) : 280);
+  flyTo(null, [p.x, p.y], MOBILE ? camera.position.distanceTo(controls.target) : 280, p.z); // at the pin's floor (a tower is tall)
   bus.emit('store:show', s);
 }
 export function renderNews() {
@@ -220,7 +235,7 @@ export function openPop(kind, opts = {}) {
   const b = $('#modalBody');
   if (kind === 'about') {
     const { title: h, paragraphs: ps, factLabels: fl } = about();
-    b.innerHTML = `<img class="modal-img" src="/images/about-car-display.webp" alt="New cars on display in a mall atrium" width="1920" height="800"><span class="card-tag">${esc(t('about'))}</span><h2>${esc(h)}</h2>${ps.map((p) => `<p>${esc(p)}</p>`).join('')}
+    b.innerHTML = `<img class="modal-img" src="${esc(CONFIG.aboutImage?.src ?? '/images/about-car-display.webp')}" alt="${esc(CONFIG.aboutImage?.alt ?? '')}" width="1920" height="800"><span class="card-tag">${esc(t('about'))}</span><h2>${esc(h)}</h2>${ps.map((p) => `<p>${esc(p)}</p>`).join('')}
       <div class="modal-facts">${(CONFIG.aboutFacts ?? []).map((/** @type {string} */ v, /** @type {number} */ i) => `<div><b>${v}</b><span>${esc(fl[i])}</span></div>`).join('')}</div>
       <button class="card-go" type="button" data-pop="contact">${esc(t('contactUs'))}</button><p class="credits">${esc(t('credits'))}</p>`;
   } else {
@@ -314,7 +329,7 @@ function syncDock() {
   document.documentElement.style.setProperty('--dock-h', `${S.dockH}px`);
 }
 new ResizeObserver(syncDock).observe($('#panel'));
-fetch('/images/logo.svg')
+fetch(CONFIG.logo)
   .then((r) => r.text())
   .then((svg) => {
     $('#brand').innerHTML = svg.replace(/#FFFFFF/gi, 'currentColor').replace(/class="lp-[a-z]+"/g, '');

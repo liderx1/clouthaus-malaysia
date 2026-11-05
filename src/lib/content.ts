@@ -28,9 +28,17 @@ async function perLocale(p: Payload, collection: string, draft: boolean, map: (d
 export async function build(file: string, draft = false): Promise<unknown> {
   const p = await payload()
   switch (file) {
-    case 'stores':
+    case 'stores': {
+      // the card text is translated: { en, zh, … } when any language other than English has its own
+      const other: Record<string, Map<any, string>> = {}
+      for (const l of LOCALES.filter((l) => l !== 'en')) other[l] = new Map((await all(p, 'stores', l, draft)).map((s) => [s.id, s.desc]))
+      const desc = (s: any) => {
+        const t: Record<string, string> = Object.fromEntries(Object.entries(other).map(([l, m]) => [l, m.get(s.id)]).filter(([, v]) => v && v !== s.desc))
+        return Object.keys(t).length ? { en: s.desc, ...t } : s.desc
+      }
       return { items: (await all(p, 'stores', 'en', draft)).map((s) => ({ name: s.name, floor: s.floor, unit: s.unit, logo: url(s.logo) || s.logoPath || '', category: s.category, featured: !!s.featured,
-        ...(s.desc ? { desc: s.desc } : {}), ...(Number.isFinite(s.pin?.x) && Number.isFinite(s.pin?.y) ? { pin: { x: s.pin.x, y: s.pin.y, ...(s.pin.estimated ? { estimated: true } : {}) } } : {}) })) }
+        ...(s.desc ? { desc: desc(s) } : {}), ...(Number.isFinite(s.pin?.x) && Number.isFinite(s.pin?.y) ? { pin: { x: s.pin.x, y: s.pin.y, ...(s.pin.estimated ? { estimated: true } : {}) } } : {}) })) }
+    }
     case 'topics':
       return perLocale(p, 'events', draft, (e) => ({ image: url(e.image), title: e.title, category: e.category, start: day(e.start), end: day(e.end), note: e.note ?? '' }))
     case 'features':

@@ -1,42 +1,44 @@
 {
   "en": {
-    "hours": "Mondays to Sundays, 10:00am – 10:00pm",
-    "address": "No. 693, Batu 5, Jalan Cheras, 56000 Kuala Lumpur",
-    "email": "info@ekocherasmall.com",
-    "mrt": "Taman Mutiara station (Kajang Line), with a covered link bridge to the First Floor",
-    "car": "Easy access via major roads & highways. Cashless car park, car wash at B1-01.",
-    "map_url": "https://www.google.com/maps?q=3.0940219,101.7366251",
+    "hours": "Sales gallery: daily, 9:00am – 6:00pm",
+    "address": "Menara TA First, 28 Jalan P. Ramlee, 50250 Kuala Lumpur (sales gallery: Mezzanine Floor, Menara TA One, 22 Jalan P. Ramlee)",
+    "email": "shyanyeews@gmail.com",
+    "mrt": "KL City Centre LRT (Kelana Jaya line) about 9 min on foot; Bukit Nanas and Raja Chulan Monorail about 12 min; Persiaran KLCC MRT (Putrajaya line) about 16 min.",
+    "car": "Jalan Ampang, Jalan Sultan Ismail and Jalan Tun Razak, and the AKLEH and DUKE expressways, run around the site. 262 car park bays (253 automated).",
+    "map_url": "https://www.google.com/maps?q=3.15741,101.71033",
     "instagram": {
-      "handle": "@ekocherasmall",
-      "url": "https://www.instagram.com/ekocherasmall/",
-      "text": "Food finds, new stores and weekend happenings at EkoCheras. Tag your visit with #EkoCherasMall!"
+      "handle": "[To be provided]",
+      "url": "",
+      "text": "[To be provided]"
     },
     "facebook": {
-      "handle": "@EkoCherasMall.Ekovest",
-      "url": "https://www.facebook.com/EkoCherasMall.Ekovest/",
-      "text": "Events, promotions and announcements. The first place we post what's on at the mall."
-    }
-  },
-  "ms": {
-    "hours": "Isnin hingga Ahad, 10:00pg – 10:00mlm",
-    "mrt": "Stesen Taman Mutiara (Laluan Kajang), dengan jejantas berbumbung ke Tingkat 1",
-    "car": "Akses mudah melalui jalan utama & lebuh raya. Tempat letak kereta tanpa tunai, cuci kereta di B1-01.",
-    "instagram": {
-      "text": "Penemuan makanan, kedai baharu dan acara hujung minggu di EkoCheras. Tag lawatan anda dengan #EkoCherasMall!"
-    },
-    "facebook": {
-      "text": "Acara, promosi dan pengumuman. Tempat pertama kami kongsi apa yang berlaku di pusat beli-belah."
+      "handle": "WhatsApp +60 10-827 8932",
+      "url": "https://wa.me/60108278932",
+      "text": "Shyan Yee (REN 46305, IQI Realty Sdn Bhd): price list, floor plans and viewings."
     }
   },
   "zh": {
-    "hours": "星期一至星期日，上午10时至晚上10时",
-    "mrt": "Taman Mutiara 站（加影线），有盖天桥直通一楼",
-    "car": "可经由主要道路与高速公路轻松抵达。无现金停车场，B1-01 设有洗车服务。",
+    "hours": "销售展厅：每日 上午9时至下午6时",
+    "address": "Menara TA First, 28 Jalan P. Ramlee, 50250 吉隆坡（销售展厅：22 Jalan P. Ramlee, Menara TA One 夹层）",
+    "mrt": "KLCC LRT 站（格拉那再也线）步行约 9 分钟；武吉免登与拉惹朱兰单轨站约 12 分钟；Persiaran KLCC MRT 站（布城线）约 16 分钟。",
+    "car": "项目周边有 Jalan Ampang、Jalan Sultan Ismail、Jalan Tun Razak 及 AKLEH、DUKE 大道。共 262 个停车位（253 个自动化车位）。",
     "instagram": {
-      "text": "EkoCheras 的美食发现、新店与周末活动。打卡时记得加上 #EkoCherasMall！"
+      "text": "【待提供】"
     },
     "facebook": {
-      "text": "活动、优惠与公告，商场最新动态第一时间在这里发布。"
+      "text": "Shyan Yee（REN 46305，IQI Realty Sdn Bhd）：价格表、平面图与预约参观。"
+    }
+  },
+  "zh-TW": {
+    "hours": "接待中心：每日 上午 9 點至下午 6 點",
+    "address": "Menara TA First, 28 Jalan P. Ramlee, 50250 吉隆坡（接待中心：22 Jalan P. Ramlee, Menara TA One 夾層）",
+    "mrt": "KLCC LRT 站（格拉那再也線）步行約 9 分鐘；武吉免登與拉惹朱蘭單軌站約 12 分鐘；Persiaran KLCC MRT 站（布城線）約 16 分鐘。",
+    "car": "基地周邊有 Jalan Ampang、Jalan Sultan Ismail、Jalan Tun Razak 與 AKLEH、DUKE 快速道路。共 262 個車位（253 個自動化車位）。",
+    "instagram": {
+      "text": "【待提供】"
+    },
+    "facebook": {
+      "text": "Shyan Yee（REN 46305，IQI Realty Sdn Bhd）：價格表、平面圖與預約參觀。"
     }
   }
 }

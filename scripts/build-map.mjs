@@ -17,6 +17,32 @@ const options = {
   sourcemap: true,
   legalComments: 'none',
   logLevel: 'warning',
+  plugins: [
+    {
+      name: 'slim',
+      setup(b) {
+        // indentation and end-of-line comments inside multi-line strings (shaders, HTML) are not minified by esbuild;
+        // they mean nothing there either
+        b.onLoad({ filter: /src[\\/]map[\\/].*\.js$/ }, (a) =>
+          /[\\/]vendor[\\/]/.test(a.path)
+            ? undefined
+            : {
+                contents: fs
+                  .readFileSync(a.path, 'utf8')
+                  .replace(/\n[ \t]+/g, '\n')
+                  .replace(/([;{])[ \t]+\/\/[^\n]*/g, '$1'),
+                loader: 'js',
+              },
+        );
+        // the map reads site.config.json, but not its SEO defaults or test settings: keep those out of the download
+        b.onLoad({ filter: /site\.config\.json$/ }, (a) => {
+          const c = JSON.parse(fs.readFileSync(a.path, 'utf8'));
+          for (const k of ['seo', 'test', '$schema']) delete c[k];
+          return { contents: JSON.stringify(c), loader: 'json' };
+        });
+      },
+    },
+  ],
 };
 if (process.argv.includes('--watch')) {
   await (await context(options)).watch();

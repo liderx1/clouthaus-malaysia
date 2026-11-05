@@ -63,6 +63,14 @@
         "radius": {
           "type": "number",
           "description": "Metres of city around the origin to fetch and draw (600–1200 is typical)"
+        },
+        "skyline": {
+          "type": "number",
+          "description": "Optional: metres out to which tall buildings (skyline landmarks) are fetched too, beyond radius"
+        },
+        "skylineMin": {
+          "type": "number",
+          "description": "Optional: the height in metres a building needs to count for skyline (default 150)"
         }
       },
       "description": "Centre of the map (usually the main building) for scripts/fetch_osm.py"
@@ -100,6 +108,66 @@
         "roofLabel": {
           "type": "boolean",
           "description": "Show a 'Green roof' label on the roof"
+        },
+        "style": {
+          "enum": [
+            "mall",
+            "tower"
+          ],
+          "description": "How the main building's walls are drawn: \"mall\" (default, the EkoCheras facade) or \"tower\" (curtain-wall high-rise, see tower)"
+        },
+        "view": {
+          "type": "number",
+          "description": "Compass bearing (degrees) the opening view looks from; default 139 (south-east)"
+        },
+        "footprint": {
+          "type": "object",
+          "description": "Draw the main building from its published floor plan instead of the OSM outline: a rounded rectangle w × d metres, corner radius r, long side facing `facing` degrees, centred on the OSM outline (+ optional shift [x, y])",
+          "required": [
+            "w",
+            "d"
+          ],
+          "properties": {
+            "w": {
+              "type": "number"
+            },
+            "d": {
+              "type": "number"
+            },
+            "r": {
+              "type": "number"
+            },
+            "facing": {
+              "type": "number"
+            },
+            "shift": {
+              "type": "array"
+            }
+          }
+        },
+        "tower": {
+          "type": "object",
+          "description": "style \"tower\": floorHeight (m), podium height (m), crown height (m), glass and fin colours, bands = [[from, to], …] heights of the lit amenity floors",
+          "properties": {
+            "floorHeight": {
+              "type": "number"
+            },
+            "podium": {
+              "type": "number"
+            },
+            "crown": {
+              "type": "number"
+            },
+            "glass": {
+              "type": "string"
+            },
+            "fin": {
+              "type": "string"
+            },
+            "bands": {
+              "type": "array"
+            }
+          }
         }
       }
     },
@@ -200,6 +268,13 @@
                 "description": "Labels under aboutFacts, same order"
               }
             }
+          },
+          "ui": {
+            "type": "object",
+            "description": "Any other interface wording by key in src/map/i18n.js (e.g. stores, tabStores, searchStores with {n}); for a residence or campus instead of a mall",
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         }
       }
@@ -261,6 +336,55 @@
           "admin": {
             "type": "string"
           }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "The site's own categories for the directory (replaces the mall ones: food, fashion, …); value is stored with each item (changing values needs a migration), label per language",
+      "items": {
+        "type": "object",
+        "required": [
+          "value",
+          "label"
+        ],
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "landmarks": {
+      "type": "array",
+      "description": "Big named labels over landmarks: label text and the point [x, y] (metres from the origin, from osm.json) of the building or part it stands on",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "at"
+        ],
+        "properties": {
+          "label": {},
+          "kind": {},
+          "at": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "aboutImage": {
+      "type": "object",
+      "description": "Picture at the top of the About popup: src under public/ and alt text",
+      "properties": {
+        "src": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
         }
       }
     }

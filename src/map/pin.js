@@ -6,7 +6,7 @@ import { CONFIG } from './config.js';
 import { bus } from './core/events.js';
 import { t } from './i18n.js';
 import { label } from './labels.js';
-import { mallC } from './mall.js';
+import { TOWER, mallC } from './mall.js';
 import { overlay } from './stage.js';
 import { S } from './state.js';
 
@@ -80,7 +80,7 @@ export function storeSpot(s) {
 }
 export function showPin(s) {
   const p = storeSpot(s),
-    top = MALL_H + 16;
+    top = TOWER && p.exact ? p.z + 18 : MALL_H + 16; // on a tower the pin floats just above its floor
   pinSprite.material.map?.dispose();
   pinSprite.material.map = pinTexture(s);
   pinSprite.material.needsUpdate = true;

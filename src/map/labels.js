@@ -4,9 +4,9 @@ import { bInfo } from './buildings.js';
 import { CONFIG } from './config.js';
 import { MALL, MALL_H, OSM, V, ring } from './data.js';
 import { $, MOBILE } from './env.js';
-import { cumulative, polyLen, sampleAt } from './geo.js';
+import { cumulative, inPoly, polyLen, sampleAt } from './geo.js';
 import { FOOT, roadZ } from './ground.js';
-import { t } from './i18n.js';
+import { pick, t } from './i18n.js';
 import { mallC } from './mall.js';
 import { RAIL_Z } from './rail.js';
 import { camera, controls } from './stage.js';
@@ -100,19 +100,47 @@ const tagName = (k) => (S.lang === 'en' ? k.replace(/_/g, ' ') : (TAGS[S.lang]?.
 const dist = (p) => Math.round(Math.hypot(p[0] - mallC[0], p[1] - mallC[1]));
 {
   const seen = new Set();
+  // a station is named after the lines that pass it: MRT, LRT, Monorail (OSM station names may carry a code, e.g. KJ10)
+  const LINE = { subway: 'MRT', light_rail: 'LRT', monorail: 'Monorail', rail: 'KTM' };
+  const linesAt = (q) =>
+    [
+      ...new Set(
+        OSM.rails
+          .filter((r) => LINE[r.t] && r.p.some((v) => Math.hypot(v[0] - q[0], v[1] - q[1]) < 140))
+          .map((r) => LINE[r.t]),
+      ),
+    ].join(' · ') || 'MRT';
   for (const p of OSM.pois.filter((p) => p.kind === 'station')) {
-    if (seen.has(p.name)) continue;
-    seen.add(p.name);
-    label(`MRT ${p.name}`, V(p.p[0], p.p[1], RAIL_Z + 9), {
+    const name = p.name.replace(/^[A-Z]{2}\d+[A-Z]?\s+/, '');
+    if (seen.has(name)) continue;
+    seen.add(name);
+    label(`${linesAt(p.p)} ${name}`, V(p.p[0], p.p[1], RAIL_Z + 9), {
       kind: 'station',
       pri: 900,
       color: '#1565D8',
       maxDist: 3000,
-      onClick: () => bus.emit('place', () => [p.name, t('station'), `${dist(p.p)} m ${t('away')}`]),
+      onClick: () =>
+        bus.emit('place', () => [name, `${linesAt(p.p)} · ${t('station')}`, `${dist(p.p)} m ${t('away')}`]),
+    });
+  }
+  // landmarks (site.config.json → landmarks): a name over the tallest building or part at a point, seen from far away
+  for (const lm of CONFIG.landmarks ?? []) {
+    const [x, y] = lm.at,
+      under = OSM.buildings.filter((b) => inPoly(x, y, ring(b.p)));
+    if (!under.length) continue;
+    const top = Math.max(...under.map((b) => bInfo(b).h));
+    under.forEach((b) => b.name && seen.add(b.name));
+    label(pick(lm.label), V(x, y, top + 6), {
+      kind: 'landmark',
+      pri: 950,
+      color: '#3D4A5C',
+      maxDist: 6000,
+      onClick: () =>
+        bus.emit('place', () => [pick(lm.label), pick(lm.kind) ?? t('place'), `${dist([x, y])} m ${t('away')}`]),
     });
   }
   for (const b of OSM.buildings)
-    if (b.name && b !== MALL && (b.h || 0) > 15 && !seen.has(b.name)) {
+    if (b.name && !b.part && b !== MALL && (b.h || 0) > 15 && !seen.has(b.name)) {
       seen.add(b.name);
       const r = ring(b.p);
       const c = r.reduce((a, q) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]);

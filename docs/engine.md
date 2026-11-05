@@ -1,7 +1,27 @@
 # 3D map site — engine reference
 
 The technical reference for the engine: a 3D map website (Three.js) on Next.js with Payload CMS and Supabase.
-The example data in this repo is EkoCheras Mall (Kuala Lumpur); a new site replaces it (see the `/3d-map` skill).
+This repo is set up for **CloutHaus Residences** (Jalan P. Ramlee, KL City Centre): a 64-storey residential tower, its
+15 unit types and 25 facilities in the directory, and KLCC around it. The engine was first built for EkoCheras Mall; a
+few parts of this document still describe the mall wording.
+
+### Settings added for a tower (site.config.json)
+
+| Setting | What it does |
+| --- | --- |
+| `origin.skyline`, `origin.skylineMin` | also fetch buildings at least `skylineMin` m tall (default 150) out to `skyline` m, so Merdeka 118, KL Tower and The Exchange 106 stand on the horizon where they really are |
+| `main.style: "tower"`, `main.tower` | curtain-wall tower shader: floor height, podium, crown, glass and fin colours, lit amenity floors (`bands`) |
+| `main.footprint` | draw the main building from the published floor plan (rounded rectangle w × d, corner r, long side facing `facing`°) when the OSM outline is only a sketch |
+| `main.view` | compass bearing the opening view looks from; a tall building is framed from further away |
+| `categories` | the directory's own categories (here bedrooms / dual key / facility levels) instead of the mall ones; a migration is needed when values change |
+| `landmarks` | big labels over the tallest building at a point (Twin Towers, Merdeka 118, …) |
+| `text.<lang>.ui` | any interface wording by its key in `src/map/i18n.js` (“stores” → “unit types & facilities”) |
+| `aboutImage` | the picture at the top of the About popup |
+
+Rail lines in tunnels (OSM `tunnel=yes` or a negative layer) are drawn as a coloured trace on the ground in the line's
+colour; the KL Monorail gets its guideway, piers and two 4-car trains; Grab and foodpanda riders join the traffic.
+`sites/clouthaus.js` adds the podium on the OSM site outline, the 63A rooftop pool and an **indicative** Paradox Hotel
+tower (no public footprint: replace it when the developer's site plan is available).
 
 ## The site
 

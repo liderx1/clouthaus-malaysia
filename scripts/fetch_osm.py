@@ -1,7 +1,8 @@
-"""Fetch the area around the site (site.config.json → origin) from OpenStreetMap (Overpass API) and write map/osm.json,
+"""Fetch the area around the site (site.config.json → origin) from OpenStreetMap (Overpass API) and write public/map/osm.json,
 the compact local-metre geometry the 3D map loads. Re-run to refresh: python3 scripts/fetch_osm.py
-Map data © OpenStreetMap contributors, ODbL."""
-import json, math, subprocess
+With origin.skyline set (metres), tall buildings (≥ origin.skylineMin m, default 150) out to that distance are added too,
+so landmarks on the horizon stand where they really are. Map data © OpenStreetMap contributors, ODbL."""
+import json, math, subprocess, time
 from pathlib import Path
 
 _C = json.loads((Path(__file__).resolve().parent.parent / 'site.config.json').read_text())
@@ -10,21 +11,41 @@ dlat, dlon = R / 110540, R / (111320 * math.cos(math.radians(LAT0)))
 bbox = f'{LAT0 - dlat},{LON0 - dlon},{LAT0 + dlat},{LON0 + dlon}'
 Q = f'''[out:json][timeout:120];
 ( way["building"]({bbox}); relation["building"]({bbox}); way["building:part"]({bbox});
-  way["highway"]({bbox}); way["railway"]({bbox}); node["railway"~"station|stop|subway_entrance"]({bbox}); node["public_transport"]({bbox}); node["highway"="bus_stop"]({bbox});
+  way["highway"]({bbox}); way["railway"]({bbox}); node["railway"~"station|stop|subway_entrance|halt"]({bbox}); node["public_transport"]({bbox}); node["highway"="bus_stop"]({bbox});
   way["landuse"]({bbox}); way["leisure"]({bbox}); way["natural"]({bbox}); way["waterway"]({bbox}); way["amenity"="parking"]({bbox});
   node["natural"="tree"]({bbox}); node["entrance"]({bbox}); node["amenity"="parking_entrance"]({bbox});
   node["name"]["amenity"]({bbox}); node["name"]["shop"]({bbox}); node["name"]["tourism"]({bbox}); node["name"]["leisure"]({bbox}); node["name"]["office"]({bbox}); node["name"]["healthcare"]({bbox});
   way["name"]["amenity"]({bbox}); way["name"]["shop"]({bbox}); way["name"]["tourism"]({bbox}); );
 out body geom;'''
-raw = subprocess.run(['curl', '-sf', '--max-time', '180', '-A', '3D-map-site/1.0', '--data-urlencode', 'data=' + Q,
-                      'https://overpass-api.de/api/interpreter'], capture_output=True, check=True).stdout
-els = json.loads(raw)['elements']
-
-def xy(lat, lon):  # local tangent plane, metres: x east, y north
-    return [round((lon - LON0) * 111320 * math.cos(math.radians(LAT0)), 1), round((lat - LAT0) * 110540, 1)]
 def num(v):
     try: return float(str(v).split()[0].replace(',', '.'))
     except Exception: return None
+ENDPOINTS = ['https://overpass-api.de/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+             'https://overpass.kumi.systems/api/interpreter']
+def overpass(q):  # the public servers are often busy: try each a few times
+    for attempt in range(4):
+        for url in ENDPOINTS:
+            r = subprocess.run(['curl', '-sf', '--max-time', '240', '-A', '3D-map-site/1.0', '--data-urlencode', 'data=' + q, url],
+                               capture_output=True)
+            if r.returncode == 0:
+                try: return json.loads(r.stdout)['elements']
+                except ValueError: pass
+        time.sleep(10 * (attempt + 1))
+    raise SystemExit('Overpass API did not answer; try again later')
+els = overpass(Q)
+SKY, SKY_MIN = _C['origin'].get('skyline'), _C['origin'].get('skylineMin', 150)
+if SKY and SKY > R:  # tall buildings beyond the radius, e.g. the skyline landmarks seen from the site
+    sl, so = SKY / 110540, SKY / (111320 * math.cos(math.radians(LAT0)))
+    sb = f'{LAT0 - sl},{LON0 - so},{LAT0 + sl},{LON0 + so}'
+    far = overpass(f'''[out:json][timeout:120];( way["building"]["height"]({sb}); way["building:part"]["height"]({sb}); way["building"]["building:levels"]({sb}); );out body geom;''')
+    seen = {e['id'] for e in els}
+    def tall(t):
+        h = num(t.get('height')) if 'height' in t else None
+        return (h or (num(t.get('building:levels')) or 0) * 3.3) >= SKY_MIN or (num(t.get('min_height')) or 0) >= SKY_MIN * 0.5
+    els += [e for e in far if e['id'] not in seen and tall(e.get('tags', {}))]
+
+def xy(lat, lon):  # local tangent plane, metres: x east, y north
+    return [round((lon - LON0) * 111320 * math.cos(math.radians(LAT0)), 1), round((lat - LAT0) * 110540, 1)]
 def clean(d): return {k: v for k, v in d.items() if v is not None}
 
 out = {'origin': [LAT0, LON0], 'radius': R, 'buildings': [], 'roads': [], 'rails': [], 'areas': [], 'trees': [], 'pois': [], 'water': [], 'entrances': [], 'stops': []}
@@ -54,9 +75,12 @@ for e in els:
             'name': t.get('name'), 'mat': t.get('building:material'), 'col': t.get('building:colour'), 'roof': t.get('roof:colour'), 'part': 1 if 'building:part' in t else None}))
     elif 'highway' in t:
         out['roads'].append(clean({'p': pts, 't': t['highway'], 'name': t.get('name'), 'bridge': 1 if t.get('bridge') in ('yes', 'viaduct') else None,
+            'tunnel': 1 if t.get('tunnel') in ('yes', 'building_passage', 'culvert') or t.get('covered') == 'yes' and num(t.get('layer')) and num(t.get('layer')) < 0 else None,
             'layer': num(t.get('layer')), 'lanes': num(t.get('lanes')), 'oneway': 1 if t.get('oneway') == 'yes' else None}))
     elif 'railway' in t:
-        out['rails'].append(clean({'p': pts, 't': t['railway'], 'name': t.get('name'), 'bridge': 1 if t.get('bridge') in ('yes', 'viaduct') else None, 'layer': num(t.get('layer'))}))
+        out['rails'].append(clean({'p': pts, 't': t['railway'], 'name': t.get('name'), 'bridge': 1 if t.get('bridge') in ('yes', 'viaduct') else None,
+            'tunnel': 1 if t.get('tunnel') == 'yes' or (num(t.get('layer')) or 0) < 0 else None, 'layer': num(t.get('layer')),
+            'colour': t.get('colour'), 'ref': t.get('ref')}))
     elif t.get('waterway'):
         out['water'].append(clean({'p': pts, 't': t['waterway'], 'name': t.get('name')}))
     elif (t.get('landuse') or t.get('leisure') or t.get('natural') or t.get('amenity') == 'parking') and len(pts) > 3 and pts[0] == pts[-1]:
@@ -65,9 +89,18 @@ for e in els:
         cx = sum(q[0] for q in pts) / len(pts); cy = sum(q[1] for q in pts) / len(pts)
         k = next(k for k in ('amenity', 'shop', 'tourism') if k in t)
         out['pois'].append({'p': [round(cx, 1), round(cy, 1)], 'name': t['name'], 'kind': k, 'sub': t.get(k)})
-# re-centre on the EkoCheras Mall building so (0, 0) is the mall and everything is in metres from it
-mall = next(b for b in out['buildings'] if b.get('name') == 'EkoCheras Mall')
-mx = sum(q[0] for q in mall['p']) / len(mall['p']); my = sum(q[1] for q in mall['p']) / len(mall['p'])
+# re-centre on the main building (main.osmName, else the largest building at the origin) so (0, 0) is its centre
+def inside(x, y, r):
+    c = False
+    for i in range(len(r)):
+        (x1, y1), (x2, y2) = r[i], r[i - 1]
+        if (y1 > y) != (y2 > y) and x < (x2 - x1) * (y - y1) / (y2 - y1) + x1: c = not c
+    return c
+def area(r): return abs(sum(r[i][0] * r[i - 1][1] - r[i - 1][0] * r[i][1] for i in range(len(r)))) / 2
+mall = next((b for b in out['buildings'] if _C['main'].get('osmName') and b.get('name') == _C['main']['osmName']), None) or \
+    max((b for b in out['buildings'] if not b.get('part') and inside(0, 0, b['p'])), key=lambda b: area(b['p']))
+ring = mall['p'][:-1] if mall['p'][0] == mall['p'][-1] else mall['p']
+mx = sum(q[0] for q in ring) / len(ring); my = sum(q[1] for q in ring) / len(ring)
 def shift(v):
     if isinstance(v, list) and len(v) == 2 and all(isinstance(c, (int, float)) for c in v): return [round(v[0] - mx, 1), round(v[1] - my, 1)]
     if isinstance(v, list): return [shift(x) for x in v]
@@ -75,6 +108,6 @@ def shift(v):
     return v
 for k in ('buildings', 'roads', 'rails', 'areas', 'trees', 'pois', 'water', 'entrances', 'stops'): out[k] = shift(out[k])
 out['origin'] = [round(LAT0 + my / 110540, 7), round(LON0 + mx / (111320 * math.cos(math.radians(LAT0))), 7)]
-Path('map').mkdir(exist_ok=True)
-Path('map/osm.json').write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')))
-print({k: len(v) for k, v in out.items() if isinstance(v, list)}, round(Path('map/osm.json').stat().st_size / 1e6, 2), 'MB')
+OUT = Path(__file__).resolve().parent.parent / 'public/map/osm.json'
+OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')))
+print('main building:', mall.get('name') or mall['id'], {k: len(v) for k, v in out.items() if isinstance(v, list)}, round(OUT.stat().st_size / 1e6, 2), 'MB')

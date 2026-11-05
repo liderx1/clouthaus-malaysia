@@ -4,11 +4,14 @@ import { mapPosition } from '../fields/shared'
 import { abs } from '../fields/preview'
 import { publishedOrEditor } from '../access'
 
-export const CATEGORIES = [
+const MALL_CATEGORIES = [
   { label: 'Food & drink', value: 'food' }, { label: 'Fashion', value: 'fashion' }, { label: 'Beauty & health', value: 'beauty' },
   { label: 'Gadgets & telco', value: 'tech' }, { label: 'Home & lifestyle', value: 'home' }, { label: 'Fun & family', value: 'fun' },
   { label: 'Groceries', value: 'grocery' }, { label: 'Services', value: 'services' },
 ]
+/** site.config.json → categories when the site has its own (a residence: unit types, facilities); else the mall ones */
+export const CATEGORIES: { label: string; value: string }[] =
+  (SITE_CONFIG as any).categories?.map((c: any) => ({ label: c.label?.en ?? c.value, value: c.value })) ?? MALL_CATEGORIES
 
 export const Stores: CollectionConfig = {
   slug: 'stores',
@@ -36,7 +39,7 @@ export const Stores: CollectionConfig = {
       fields: [
         { name: 'floor', type: 'select', required: true, options: SITE_CONFIG.floors.map((f) => ({ label: f.admin ?? f.code, value: f.code })), admin: { width: '25%' } },
         { name: 'unit', type: 'text', required: true, admin: { width: '25%' } },
-        { name: 'category', type: 'select', required: true, defaultValue: 'food', options: CATEGORIES, admin: { width: '30%' } },
+        { name: 'category', type: 'select', required: true, defaultValue: CATEGORIES[0].value, options: CATEGORIES, admin: { width: '30%' } },
         { name: 'featured', label: 'Anchor store ★', type: 'checkbox', admin: { width: '20%', description: 'Shown first.' } },
       ],
     },

@@ -8,7 +8,7 @@ import { crownMat, edges, mallGroup } from './mall.js';
 import { BEACONS } from './markers.js';
 import { pinDot, pinGroup, pinSprite } from './pin.js';
 import { bloom, composer } from './post.js';
-import { RAIL_Z, TRAIN } from './rail.js';
+import { MONO, MONO_Z, RAIL_Z, TRAIN } from './rail.js';
 import {
   DPR_MAX,
   ENV,
@@ -66,6 +66,7 @@ renderer.setAnimationLoop(() => {
   lampMat.emissiveIntensity = 3 * n;
   mallGroup.userData.logo.material.emissiveIntensity = 0.55 * n;
   if (TRAIN) TRAIN.win.emissiveIntensity = 1.6 * n;
+  if (MONO) MONO.win.emissiveIntensity = 1.6 * n;
   crownMat.color
     .setRGB(1, 0.08 + 0.34 * n, 0.58 - 0.41 * n)
     .multiplyScalar(1.2 + 0.9 * n + (0.6 + 0.8 * U.uDim.value) * (0.5 + 0.5 * Math.sin(time * 2.6)));
@@ -92,6 +93,16 @@ renderer.setAnimationLoop(() => {
         const s = T.dir > 0 ? (s0 - i * 22 + T.L) % T.L : (T.L - s0 + i * 22) % T.L;
         const q = sampleAt(T.p, T.cum, s);
         c.position.set(q.x, RAIL_Z + 0.1, -q.y);
+        c.rotation.y = Math.atan2(q.dx * T.dir, -q.dy * T.dir);
+      });
+    });
+  if (MONO)
+    MONO.trains.forEach((T) => {
+      const s0 = (time * 12 + T.phase * T.L) % T.L;
+      T.cars.forEach((c, i) => {
+        const s = T.dir > 0 ? (s0 - i * 12 + T.L) % T.L : (T.L - s0 + i * 12) % T.L;
+        const q = sampleAt(T.p, T.cum, s);
+        c.position.set(q.x, MONO_Z + 0.4, -q.y);
         c.rotation.y = Math.atan2(q.dx * T.dir, -q.dy * T.dir);
       });
     });

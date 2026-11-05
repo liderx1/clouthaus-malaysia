@@ -1,12 +1,12 @@
 import { bus } from './core/events.js';
 import { esc } from './core/text.js';
-import { PLACES, V } from './data.js';
+import { MALL_H, PLACES, V } from './data.js';
 import { $, $$, MOBILE } from './env.js';
 import { pick, t } from './i18n.js';
 import { LINK_ROOF, mallC } from './mall.js';
 import { BEACONS, asmMarks, entMarks, exitMarks } from './markers.js';
 import { hidePin } from './pin.js';
-import { ROUTE_COL, dijkstra, nearest, routeMesh, routePoints, walkGraph } from './routes.js';
+import { ROUTE_COL, ROUTE_ICON, dijkstra, nearest, routeMesh, routePoints, walkGraph } from './routes.js';
 import { camera, controls, scene } from './stage.js';
 import { MODE, S } from './state.js';
 
@@ -98,14 +98,13 @@ export function applyModes() {
   bus.emit('modes:change');
 }
 let rebuildEnt = false;
-const ROUTE_ICON = { mrt: ['#1565D8', 'M'], bus: ['#B45309', 'B'], carN: ['#C2410C', 'P'], carS: ['#C2410C', 'P'] };
 export function focusMall() {
   MODE.focus = true;
   applyModes();
-  flyTo(null, [mallC[0], mallC[1]], 300);
+  flyTo(null, [mallC[0], mallC[1]], Math.max(300, MALL_H * 1.7), MALL_H * 0.4); // a tower is framed whole
 }
 /* smooth camera moves */
-export function flyTo(pts, centre, distance) {
+export function flyTo(pts, centre, distance, z = 0) {
   S.zoomTo = null;
   let c = centre,
     d = distance;
@@ -117,7 +116,7 @@ export function flyTo(pts, centre, distance) {
       Math.max(260, Math.hypot(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) * 1.35) *
       Math.max(1, 0.95 / camera.aspect);
   } // narrow phone screens need to stand further back
-  const target = V(c[0], c[1], 0);
+  const target = V(c[0], c[1], z);
   const dir = camera.position.clone().sub(controls.target).normalize();
   dir.y = Math.max(dir.y, 0.55);
   dir.normalize();

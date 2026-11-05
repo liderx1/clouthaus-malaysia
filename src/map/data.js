@@ -34,13 +34,30 @@ export const items = (d) =>
   });
 export const V = (x, y, z = 0) => new THREE.Vector3(x, z, -y);
 export { ring } from './core/geometry.js';
-import { area, inPoly, ring } from './core/geometry.js';
+import { area, inPoly, ring, roundedRect } from './core/geometry.js';
 import { CONFIG } from './config.js';
 // the main building (site.config.json → main): found by its OpenStreetMap name, else the largest building at the origin
-export const MALL =
-  OSM.buildings.find((b) => b.name === CONFIG.main.osmName) ??
+const OSM_MAIN =
+  (CONFIG.main.osmName && OSM.buildings.find((b) => b.name === CONFIG.main.osmName)) ||
   OSM.buildings
-    .filter((b) => inPoly(0, 0, ring(b.p)))
+    .filter((b) => !b.part && inPoly(0, 0, ring(b.p)))
     .sort((a, b) => Math.abs(area(ring(b.p))) - Math.abs(area(ring(a.p))))[0];
+// main.footprint: when the OSM outline is only a sketch, the shape from the published floor plan, centred where OSM has it
+const FP = CONFIG.main.footprint;
+export const MALL = FP
+  ? (() => {
+      const r = ring(OSM_MAIN.p),
+        c = r.reduce((a, q) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]);
+      const p = roundedRect(
+        c[0] + (FP.shift?.[0] ?? 0),
+        c[1] + (FP.shift?.[1] ?? 0),
+        FP.w,
+        FP.d,
+        FP.r ?? 0,
+        FP.facing ?? 0,
+      );
+      return { ...OSM_MAIN, p: [...p, p[0]] };
+    })()
+  : OSM_MAIN;
 export const MALL_R = ring(MALL.p);
 export const MALL_H = CONFIG.main.height;

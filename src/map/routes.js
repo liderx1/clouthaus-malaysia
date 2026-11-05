@@ -169,4 +169,20 @@ export function routeMesh(pts, color, wide = 1) {
   g.userData.start = performance.now();
   return { g, p, L };
 }
-export const ROUTE_COL = { mrt: '#0A6CFF', bus: '#E8890B', carN: '#F04A12', carS: '#F04A12' };
+export const ROUTE_COL = {
+  mrt: '#0A6CFF',
+  lrt: '#D50032',
+  mono: '#5E8F00',
+  bus: '#E8890B',
+  carN: '#F04A12',
+  carS: '#F04A12',
+};
+/** route button icon (colour, letter) by route id: MRT, LRT, Monorail, bus, car park */
+export const ROUTE_ICON = {
+  mrt: ['#1565D8', 'M'],
+  lrt: ['#D50032', 'L'],
+  mono: ['#5E8F00', 'M'],
+  bus: ['#B45309', 'B'],
+  carN: ['#C2410C', 'P'],
+  carS: ['#C2410C', 'P'],
+};

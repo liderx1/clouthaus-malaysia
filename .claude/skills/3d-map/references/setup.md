@@ -5,7 +5,7 @@
 npm ci
 npm i --no-save embedded-postgres && node scripts/devdb.mjs   # 另一個終端機，Postgres 在 54329
 ```
-`.env`：`PAYLOAD_SECRET=<隨機字串>`、`DATABASE_URI=postgres://payload:payload@localhost:54329/ekocheras`（資料庫名稱可改）。
+`.env`：`PAYLOAD_SECRET=<隨機字串>`、`DATABASE_URI=postgres://payload:payload@localhost:54329/site`（資料庫名稱可改）。
 ```bash
 npx cross-env PAYLOAD_MIGRATING=1 payload migrate
 npx cross-env PAYLOAD_MIGRATING=1 payload run scripts/seed.ts

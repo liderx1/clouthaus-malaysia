@@ -106,7 +106,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'ms' | 'zh') | ('en' | 'ms' | 'zh')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'zh' | 'zh-TW') | ('en' | 'zh' | 'zh-TW')[];
   globals: {
     site: Site;
     seo: Seo;
@@ -115,7 +115,7 @@ export interface Config {
     site: SiteSelect<false> | SiteSelect<true>;
     seo: SeoSelect<false> | SeoSelect<true>;
   };
-  locale: 'en' | 'ms' | 'zh';
+  locale: 'en' | 'zh' | 'zh-TW';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -154,9 +154,9 @@ export interface Store {
   _order?: string | null;
   name: string;
   logo?: (number | null) | Media;
-  floor: 'LG' | 'G' | '1' | '2' | '2A';
+  floor: 'G' | 'LOW' | 'MID' | '33' | '33A' | 'ALL' | 'UP' | 'HIGH' | '63A';
   unit: string;
-  category: 'food' | 'fashion' | 'beauty' | 'tech' | 'home' | 'fun' | 'grocery' | 'services';
+  category: 'one' | 'two' | 'three' | 'dualkey' | 'family' | 'wellness' | 'rooftop';
   /**
    * Shown first.
    */
@@ -186,7 +186,6 @@ export interface Store {
 export interface Media {
   id: number;
   alt?: string | null;
-  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -361,7 +360,7 @@ export interface Route {
   mode: 'walk' | 'drive';
   note?: string | null;
   to: number | Entrance;
-  start?: ('jalan-cheras-north' | 'jalan-cheras-south') | null;
+  start?: ('jalan-ampang-north' | 'jalan-ampang-south') | null;
   from?: {
     x?: number | null;
     y?: number | null;
@@ -698,7 +697,6 @@ export interface RoutesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

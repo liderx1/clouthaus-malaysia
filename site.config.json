@@ -1,171 +1,423 @@
 {
   "$schema": "./site.config.schema.json",
-  "name": "EkoCheras Mall",
+  "name": "CloutHaus Residences",
   "logo": "/images/logo.svg",
   "timezone": "Asia/Kuala_Lumpur",
   "locales": [
     "en",
     "zh",
-    "ms"
+    "zh-TW"
   ],
   "origin": {
-    "lat": 3.0940219,
-    "lon": 101.7366251,
-    "radius": 950
+    "lat": 3.15741,
+    "lon": 101.71033,
+    "radius": 1000,
+    "skyline": 2600
   },
   "main": {
-    "osmName": "EkoCheras Mall",
-    "label": "EkoCheras Mall",
-    "height": 21,
-    "facade": "#F1E9DC",
-    "roof": "#7FA866",
-    "signFacade": [
-      [
-        3.2,
-        179
-      ],
-      [
-        77.4,
-        -58.8
+    "label": "CloutHaus Residences",
+    "height": 250,
+    "style": "tower",
+    "view": 150,
+    "facade": "#6E5038",
+    "roof": "#4A4038",
+    "footprint": {
+      "w": 52,
+      "d": 26,
+      "r": 5,
+      "facing": 75
+    },
+    "tower": {
+      "floorHeight": 3.8,
+      "podium": 28,
+      "crown": 7,
+      "glass": "#6A4A30",
+      "fin": "#C9A46A",
+      "bands": [
+        [
+          125.4,
+          133.0
+        ]
       ]
-    ],
-    "roofLabel": true
+    }
   },
   "floors": [
     {
-      "code": "LG",
-      "z": 2.5,
-      "short": "LG",
-      "admin": "LG"
-    },
-    {
       "code": "G",
-      "z": 6.5,
+      "z": 2,
       "short": "G",
-      "admin": "G"
+      "admin": "Ground · lobby"
     },
     {
-      "code": "1",
-      "z": 10.5,
-      "short": "L1",
-      "admin": "Level 1"
+      "code": "LOW",
+      "z": 77.5,
+      "short": "L9–32",
+      "admin": "Levels 9–32 (Type L)"
     },
     {
-      "code": "2",
-      "z": 14.5,
-      "short": "L2",
-      "admin": "Level 2"
+      "code": "MID",
+      "z": 111.7,
+      "short": "L9–50",
+      "admin": "Levels 9–50 (Type J)"
     },
     {
-      "code": "2A",
-      "z": 16.5,
-      "short": "2A",
-      "admin": "2A"
+      "code": "33",
+      "z": 126.9,
+      "short": "L33",
+      "admin": "Level 33 · facilities"
+    },
+    {
+      "code": "33A",
+      "z": 130.7,
+      "short": "L33A",
+      "admin": "Level 33A · facilities"
+    },
+    {
+      "code": "ALL",
+      "z": 138.3,
+      "short": "L9–63",
+      "admin": "Levels 9–63 (most types)"
+    },
+    {
+      "code": "UP",
+      "z": 187.7,
+      "short": "L36–63",
+      "admin": "Levels 36–63 (Type L1)"
+    },
+    {
+      "code": "HIGH",
+      "z": 218.1,
+      "short": "L51–63",
+      "admin": "Levels 51–63 (Types M, N)"
+    },
+    {
+      "code": "63A",
+      "z": 244.7,
+      "short": "L63A",
+      "admin": "Level 63A · rooftop"
+    }
+  ],
+  "categories": [
+    {
+      "value": "one",
+      "label": {
+        "en": "1 bedroom",
+        "zh": "一房",
+        "zh-TW": "一房"
+      }
+    },
+    {
+      "value": "two",
+      "label": {
+        "en": "2 bedrooms",
+        "zh": "两房",
+        "zh-TW": "兩房"
+      }
+    },
+    {
+      "value": "three",
+      "label": {
+        "en": "3 bedrooms",
+        "zh": "三房",
+        "zh-TW": "三房"
+      }
+    },
+    {
+      "value": "dualkey",
+      "label": {
+        "en": "Dual key",
+        "zh": "双钥匙单位",
+        "zh-TW": "雙鑰匙單位"
+      }
+    },
+    {
+      "value": "family",
+      "label": {
+        "en": "L33 · Explore & relax",
+        "zh": "33楼 · 亲子与休闲",
+        "zh-TW": "33 樓 · 親子與休閒"
+      }
+    },
+    {
+      "value": "wellness",
+      "label": {
+        "en": "L33A · Play & wellness",
+        "zh": "33A楼 · 健身与娱乐",
+        "zh-TW": "33A 樓 · 健身與娛樂"
+      }
+    },
+    {
+      "value": "rooftop",
+      "label": {
+        "en": "L63A · Rooftop",
+        "zh": "63A楼 · 空中顶楼",
+        "zh-TW": "63A 樓 · 空中頂樓"
+      }
+    }
+  ],
+  "landmarks": [
+    {
+      "label": "Petronas Twin Towers",
+      "at": [
+        158,
+        62
+      ]
+    },
+    {
+      "label": "Merdeka 118",
+      "at": [
+        -1064,
+        -1729
+      ]
+    },
+    {
+      "label": "KL Tower",
+      "at": [
+        -731,
+        -502
+      ]
+    },
+    {
+      "label": "The Exchange 106",
+      "at": [
+        928,
+        -1722
+      ]
+    },
+    {
+      "label": "Four Seasons Place",
+      "at": [
+        394,
+        71
+      ]
+    },
+    {
+      "label": "Menara Ilham",
+      "at": [
+        945,
+        166
+      ]
+    },
+    {
+      "label": "Pavilion Kuala Lumpur",
+      "at": [
+        325,
+        -915
+      ]
     }
   ],
   "drive": {
-    "road": "Jalan Cheras",
-    "roadType": "trunk",
+    "road": "Jalan Ampang",
+    "roadType": "secondary",
     "starts": [
       {
-        "value": "jalan-cheras-north",
-        "label": "Jalan Cheras, from KL (north)"
+        "value": "jalan-ampang-north",
+        "label": "Jalan Ampang, from Ampang Park (east end)"
       },
       {
-        "value": "jalan-cheras-south",
-        "label": "Jalan Cheras, from Kajang (south)"
+        "value": "jalan-ampang-south",
+        "label": "Jalan Ampang, from the city centre (west end)"
       }
     ]
   },
-  "hideRoadLabels": [
-    "to EkoCheras Mall"
-  ],
-  "extras": "ekocheras",
+  "extras": "clouthaus",
   "aboutFacts": [
-    "280+",
-    "4",
-    "10–10",
-    "15 min"
+    "64",
+    "615",
+    "549–1,216",
+    "6 min"
   ],
   "text": {
     "en": {
-      "loading": "Building Cheras in 3D…",
-      "why": "Why EkoCheras",
-      "storeText": "Find {name} on the {floor} of EkoCheras Mall, unit {unit}.",
-      "agree": "I agree to {name} using my details to respond to this message.",
+      "loading": "Building KL City Centre in 3D…",
+      "why": "Why CloutHaus",
+      "storeText": "{name}: {unit}, {floor}.",
+      "agree": "I agree to {name} and its agent using my details to respond to this message.",
+      "floors": {
+        "G": "Ground floor lobby",
+        "LOW": "levels 9–32",
+        "MID": "levels 9–50",
+        "33": "Level 33",
+        "33A": "Level 33A",
+        "ALL": "levels 9–63",
+        "UP": "levels 36–63",
+        "HIGH": "levels 51–63",
+        "63A": "Level 63A rooftop"
+      },
+      "ui": {
+        "stores": "All unit types & facilities",
+        "tabStores": "Units & facilities",
+        "searchStores": "Search types & facilities",
+        "storesN": "{n} unit types & facilities",
+        "noResults": "Nothing found",
+        "anchors": "Featured",
+        "pickCat": "Choose a category, or type a unit type",
+        "focus": "Focus on CloutHaus",
+        "away": "from CloutHaus",
+        "entText": "Building entrance",
+        "station": "Rail station",
+        "estimated": "Indicative position on the side of the tower this unit faces (from the developer's typical floor plan).",
+        "exactSoon": "Exact position is added once the developer's plans are in the CMS.",
+        "about": "About CloutHaus",
+        "contactUs": "Register interest & enquiries",
+        "leasing": "Ask for the price list",
+        "why": "Why CloutHaus",
+        "routeMrt": "Route from the LRT",
+        "byMrt": "By LRT / MRT",
+        "hours": "Sales gallery hours",
+        "unit": "Unit",
+        "tabVisit": "Visit",
+        "tabNews": "Updates"
+      },
       "about": {
-        "title": "A place where nature meets technology",
+        "title": "Freehold residences facing the Petronas Twin Towers",
         "paragraphs": [
-          "Embark on a real experience like no other at EkoCheras Mall, the shopping destination at the heart of Cheras. Classical design meets a contemporary twist, and it's just 15 minutes from downtown Kuala Lumpur.",
-          "Built with seamless connectivity in mind, the mall is easy to reach from major roads and highways, and an elevated link bridge on the First Floor brings pedestrians straight in from Taman Mutiara MRT station. It's covered, accessible and easy for everyone.",
-          "Visit our dedicated Food Street for the authentic flavours of Cheras, while an array of shops and entertainment keeps the kids busy and the whole family happy. Dining and shopping have never been more enjoyable, or more relaxing."
+          "CloutHaus Residences rises on Jalan P. Ramlee, in the KL City Centre core, on one of the last parcels facing the Petronas Twin Towers. The freehold tower by TA First Credit Sdn Bhd (TA Global group) holds 615 residences, 9 to 13 per floor, served by 9 passenger lifts in three zones plus a service lift.",
+          "Fifteen types, A to N plus L1, run from 549 sq ft one-bedroom homes to 1,216 sq ft three-bedroom corner units, including four dual-key types and three garden units on level 9. Residents share 25 facilities on levels 33, 33A and the 63A rooftop, with a 25 m infinity lap pool facing the Twin Towers.",
+          "Hotel services come from Paradox Hotel Kuala Lumpur in the second tower of the same development. Completion is planned for 2029. Figures are from the developer's records as at September 2026 and remain subject to the authorities' final approval."
         ],
         "factLabels": [
-          "Stores & restaurants",
-          "Shopping floors",
-          "Open daily, 10am – 10pm",
-          "From downtown KL"
-        ]
-      }
-    },
-    "ms": {
-      "loading": "Membina Cheras dalam 3D…",
-      "why": "Kenapa EkoCheras",
-      "storeText": "{name} di {floor} EkoCheras Mall, unit {unit}.",
-      "agree": "Saya bersetuju {name} menggunakan butiran saya untuk membalas mesej ini.",
-      "about": {
-        "title": "Tempat di mana alam bertemu teknologi",
-        "paragraphs": [
-          "Nikmati pengalaman sebenar yang tiada tandingan di EkoCheras Mall, destinasi membeli-belah di tengah-tengah Cheras. Reka bentuk klasik bertemu sentuhan kontemporari, dan hanya 15 minit dari pusat bandar Kuala Lumpur.",
-          "Dibina dengan ketersambungan lancar, pusat beli-belah ini mudah dikunjungi dari jalan utama dan lebuh raya, manakala jejantas bertingkat di Tingkat 1 membawa pejalan kaki terus dari stesen MRT Taman Mutiara. Ia berbumbung, mesra akses dan mudah untuk semua.",
-          "Kunjungi Food Street kami untuk rasa asli Cheras, sementara pelbagai kedai dan hiburan memastikan kanak-kanak seronok dan seisi keluarga gembira. Makan dan membeli-belah tidak pernah seseronok dan setenang ini."
-        ],
-        "factLabels": [
-          "Kedai & restoran",
-          "Tingkat membeli-belah",
-          "Dibuka setiap hari, 10pg – 10mlm",
-          "Dari pusat bandar KL"
+          "Storeys",
+          "Residences",
+          "sq ft built-up",
+          "Walk to the Twin Towers"
         ]
       }
     },
     "zh": {
-      "loading": "正在生成 3D 蕉赖…",
-      "why": "为什么选择 EkoCheras",
-      "storeText": "{name} 位于 EkoCheras Mall {floor}，单位 {unit}。",
-      "agree": "我同意 {name} 使用我的资料回复此讯息。",
+      "loading": "正在生成 3D 吉隆坡城中城…",
+      "why": "为什么选择 CloutHaus",
+      "storeText": "{name}：{unit}，{floor}。",
+      "agree": "我同意 {name} 及其代理使用我的资料回复此讯息。",
+      "floors": {
+        "G": "地面层大堂",
+        "LOW": "9–32楼",
+        "MID": "9–50楼",
+        "33": "33楼",
+        "33A": "33A楼",
+        "ALL": "9–63楼",
+        "UP": "36–63楼",
+        "HIGH": "51–63楼",
+        "63A": "63A楼顶层"
+      },
+      "ui": {
+        "stores": "全部户型与设施",
+        "tabStores": "户型与设施",
+        "searchStores": "搜索户型与设施",
+        "storesN": "{n} 个户型与设施",
+        "noResults": "找不到结果",
+        "anchors": "精选",
+        "pickCat": "选择分类，或输入户型",
+        "focus": "聚焦 CloutHaus",
+        "away": "距离 CloutHaus",
+        "entText": "大楼入口",
+        "station": "轨道交通站",
+        "estimated": "示意位置：依发展商标准层平面图，标在该户型面向的一侧。",
+        "exactSoon": "发展商图则录入后台后，将标示确切位置。",
+        "about": "关于 CloutHaus",
+        "contactUs": "登记意向与咨询",
+        "leasing": "索取价格表",
+        "why": "为什么选择 CloutHaus",
+        "routeMrt": "从 LRT 怎么走",
+        "byMrt": "搭 LRT / MRT",
+        "hours": "销售展厅开放时间",
+        "unit": "单位",
+        "tabVisit": "参观",
+        "tabNews": "最新消息"
+      },
       "about": {
-        "title": "自然与科技交汇之地",
+        "title": "面向双峰塔的永久地契住宅",
         "paragraphs": [
-          "在 EkoCheras Mall 展开与众不同的真实体验。这座购物胜地坐落于蕉赖心脏地带，经典设计融合现代风格，距吉隆坡市中心仅15分钟车程。",
-          "商场以无缝连接为设计理念，可经由主要道路与高速公路轻松抵达；一楼的高架天桥更让行人从 MRT Taman Mutiara 站直达商场，有盖、无障碍，人人方便。",
-          "走进专属美食街，品尝正宗蕉赖风味；丰富的商店与娱乐设施让孩子玩得开心、全家尽兴。用餐与购物，从未如此愉快又轻松。"
+          "CloutHaus Residences 位于吉隆坡城中城核心的 Jalan P. Ramlee，坐落在少数仍面向国油双峰塔的地段之一。这座永久地契大楼由 TA First Credit Sdn Bhd（TA Global 集团）发展，共 615 个住宅单位，每层 9 至 13 户，配备分三区运行的 9 部客梯及 1 部服务梯。",
+          "共 15 种户型（A 至 N 及 L1），面积从 549 平方英尺一房到 1,216 平方英尺三房转角单位，包括 4 种双钥匙户型及 9 楼的 3 个花园单位。住户共享 33、33A 楼及 63A 楼顶的 25 项设施，包括面向双峰塔的 25 米无边际泳池。",
+          "同一发展项目的第二座大楼为 Paradox Hotel Kuala Lumpur，为住户提供酒店式服务。预计 2029 年竣工。以上数据来自发展商 2026 年 9 月的资料，最终以政府批准为准。"
         ],
         "factLabels": [
-          "商店与餐厅",
-          "购物楼层",
-          "每日营业 10AM – 10PM",
-          "距吉隆坡市中心"
+          "层楼",
+          "住宅单位",
+          "平方英尺",
+          "步行至双峰塔"
+        ]
+      }
+    },
+    "zh-TW": {
+      "loading": "正在產生 3D 吉隆坡城中城…",
+      "why": "為什麼選擇 CloutHaus",
+      "storeText": "{name}：{unit}，{floor}。",
+      "agree": "我同意 {name} 及其代理使用我的資料回覆此訊息。",
+      "floors": {
+        "G": "地面層大廳",
+        "LOW": "9–32 樓",
+        "MID": "9–50 樓",
+        "33": "33 樓",
+        "33A": "33A 樓",
+        "ALL": "9–63 樓",
+        "UP": "36–63 樓",
+        "HIGH": "51–63 樓",
+        "63A": "63A 樓頂層"
+      },
+      "ui": {
+        "stores": "全部房型與設施",
+        "tabStores": "房型與設施",
+        "searchStores": "搜尋房型與設施",
+        "storesN": "{n} 個房型與設施",
+        "noResults": "找不到結果",
+        "anchors": "精選",
+        "pickCat": "選擇分類，或輸入房型",
+        "focus": "聚焦 CloutHaus",
+        "away": "距離 CloutHaus",
+        "entText": "大樓入口",
+        "station": "軌道交通站",
+        "estimated": "示意位置：依建商標準層平面圖，標在該房型面向的一側。",
+        "exactSoon": "建商圖說建檔後，將標示確切位置。",
+        "about": "關於 CloutHaus",
+        "contactUs": "登記意向與洽詢",
+        "leasing": "索取價格表",
+        "why": "為什麼選擇 CloutHaus",
+        "routeMrt": "從 LRT 怎麼走",
+        "byMrt": "搭 LRT／MRT",
+        "hours": "接待中心開放時間",
+        "unit": "單位",
+        "tabVisit": "參觀",
+        "tabNews": "最新消息"
+      },
+      "about": {
+        "title": "面向雙子星塔的永久產權住宅",
+        "paragraphs": [
+          "CloutHaus Residences 位於吉隆坡城中城核心的 Jalan P. Ramlee，坐落在少數仍正面雙子星塔的基地之一。這棟永久產權大樓由 TA First Credit Sdn Bhd（TA Global 集團）開發，共 615 戶，每層 9 至 13 戶，配備分三區運行的 9 部客梯與 1 部服務梯。",
+          "共 15 種房型（A 至 N 與 L1），坪數從 549 平方英尺一房到 1,216 平方英尺三房轉角戶，包括 4 種雙鑰匙房型與 9 樓的 3 戶花園單位。住戶共享 33、33A 樓與 63A 樓頂的 25 項設施，包括面向雙子星塔的 25 公尺無邊際泳池。",
+          "同一開發案的第二棟大樓為 Paradox Hotel Kuala Lumpur，提供住戶飯店式服務。預計 2029 年完工。以上數據來自建商 2026 年 9 月的資料，最終以政府核准為準。"
+        ],
+        "factLabels": [
+          "層樓",
+          "住宅戶數",
+          "平方英尺",
+          "步行到雙子星塔"
         ]
       }
     }
   },
   "seo": {
     "en": {
-      "title": "EkoCheras Mall · Cheras, Kuala Lumpur",
-      "description": "EkoCheras Mall, Cheras: find any of our 285 stores, get here by MRT, bus or car, and see what's on, all on a live 3D map."
+      "title": "CloutHaus Residences · KL City Centre in 3D",
+      "description": "CloutHaus Residences, Jalan P. Ramlee: the 64-storey tower, 15 unit types, 25 facilities and the KLCC streets, LRT, MRT and Monorail around it, on a live 3D map."
     },
     "zh": {
-      "title": "EkoCheras Mall · 吉隆坡蕉赖",
-      "description": "在 3D 地图上找到 285 家商店，查看搭 MRT、巴士或开车的路线与最新活动。"
+      "title": "CloutHaus Residences · 3D 吉隆坡城中城",
+      "description": "在 3D 地图上查看 CloutHaus Residences：15 种户型、25 项设施，以及周边的双峰塔、LRT、MRT、单轨列车与街道。"
     },
-    "ms": {
-      "title": "EkoCheras Mall · Cheras, Kuala Lumpur",
-      "description": "Cari 285 kedai, laluan MRT, bas dan kereta, serta acara terkini di peta 3D EkoCheras Mall."
+    "zh-TW": {
+      "title": "CloutHaus Residences · 3D 吉隆坡城中城",
+      "description": "在 3D 地圖上查看 CloutHaus Residences：15 種房型、25 項設施，以及周邊的雙子星塔、LRT、MRT、單軌電車與街道。"
     },
-    "shareImage": "/images/share-ekocheras-atrium.webp"
+    "shareImage": "/images/clouthaus-share.jpg"
   },
   "test": {
-    "sampleStore": "Starbucks",
-    "liveUrl": "https://ekocheras-mall-redesign.vercel.app"
+    "sampleStore": "Type A",
+    "liveUrl": "https://clouthaus-malaysia.vercel.app"
+  },
+  "aboutImage": {
+    "src": "/images/clouthaus-facade.jpg",
+    "alt": "CloutHaus Residences and Paradox Hotel towers, architectural render (artist's impression)"
   }
 }

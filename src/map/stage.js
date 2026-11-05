@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { V } from './data.js';
+import { CONFIG } from './config.js';
+import { MALL_H, V } from './data.js';
 import { $, MOBILE, TEST } from './env.js';
 import { S } from './state.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -43,7 +44,15 @@ for (const [k, file, later] of /** @type {[string, string, number][]} */ ([
     later,
   );
 export const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 4, 6000);
-export const HOME = ((k) => ({ p: V(15 + 385 * k, 25 - 445 * k, 22 + 200 * k), t: V(15, 0, 22) }))(MOBILE ? 1.75 : 1.2);
+// the opening view looks at the main building from main.view degrees (compass bearing of the camera, default south-east);
+// a tall building is framed from further away and its middle, not its foot, sits in the centre
+const VIEW = ((CONFIG.main.view ?? 139) * Math.PI) / 180,
+  TALL = Math.max(1, MALL_H / 140),
+  AIM = Math.max(22, MALL_H * 0.32);
+export const HOME = ((k) => ({
+  p: V((CONFIG.main.view == null ? 15 : 0) + 588 * k * Math.sin(VIEW), 25 + 588 * k * Math.cos(VIEW), AIM + 200 * k),
+  t: V(CONFIG.main.view == null ? 15 : 0, 0, AIM),
+}))((MOBILE ? 1.75 : 1.2) * TALL);
 camera.position.copy(HOME.p);
 export const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.copy(HOME.t);
@@ -54,7 +63,7 @@ controls.dampingFactor = 0.07;
 controls.maxPolarAngle = Math.PI * 0.455;
 controls.minDistance = 25;
 controls.maxDistance = 1800;
-const BOUNDS = { r: 1100, yMin: 0, yMax: 40 }; // how far from the mall the view may wander, and how high its centre sits
+const BOUNDS = { r: 1100, yMin: 0, yMax: Math.max(40, MALL_H) }; // how far from the mall the view may wander, and how high its centre sits
 /** keep the point the camera looks at above the ground and within the city; the camera moves with it */
 export function keepInBounds() {
   const t = controls.target,
