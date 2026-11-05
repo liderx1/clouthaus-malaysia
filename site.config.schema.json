@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "site.config.json",
+  "description": "Everything specific to one site. The map, the CMS, the seed and scripts/fetch_osm.py read it.",
+  "type": "object",
+  "required": [
+    "name",
+    "logo",
+    "timezone",
+    "locales",
+    "origin",
+    "main",
+    "floors"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Site name as visitors see it, e.g. \"EkoCheras Mall\""
+    },
+    "logo": {
+      "type": "string",
+      "description": "Logo path under public/, used on the page, the admin and the building signs"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "IANA time zone for opening hours and day/night, e.g. \"Asia/Taipei\""
+    },
+    "locales": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "en",
+          "zh-TW",
+          "zh",
+          "ms",
+          "ja",
+          "ko",
+          "th",
+          "vi",
+          "id"
+        ]
+      },
+      "description": "Languages, in the order of the language buttons; the first is the default. Changing them needs a new database migration."
+    },
+    "origin": {
+      "type": "object",
+      "required": [
+        "lat",
+        "lon",
+        "radius"
+      ],
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "radius": {
+          "type": "number",
+          "description": "Metres of city around the origin to fetch and draw (600–1200 is typical)"
+        }
+      },
+      "description": "Centre of the map (usually the main building) for scripts/fetch_osm.py"
+    },
+    "main": {
+      "type": "object",
+      "required": [
+        "height"
+      ],
+      "properties": {
+        "osmName": {
+          "type": "string",
+          "description": "The main building's name in OpenStreetMap; if missing, the largest building at the origin"
+        },
+        "label": {
+          "type": "string",
+          "description": "The orange label on the main building"
+        },
+        "height": {
+          "type": "number",
+          "description": "Height in metres"
+        },
+        "facade": {
+          "type": "string",
+          "description": "Wall colour"
+        },
+        "roof": {
+          "type": "string",
+          "description": "Roof colour"
+        },
+        "signFacade": {
+          "type": "array",
+          "description": "Two corners [[x,y],[x,y]] (metres from the origin) of the facade with the main sign; else the longest facade"
+        },
+        "roofLabel": {
+          "type": "boolean",
+          "description": "Show a 'Green roof' label on the roof"
+        }
+      }
+    },
+    "drive": {
+      "type": "object",
+      "properties": {
+        "road": {
+          "type": "string",
+          "description": "OpenStreetMap name of the main road driving routes start on"
+        },
+        "roadType": {
+          "type": "string",
+          "description": "Its highway type, e.g. trunk, primary"
+        },
+        "starts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "ends in -north or -south"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Driving start choices in the CMS (stored values; changing them needs a migration)"
+        }
+      }
+    },
+    "hideRoadLabels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Road names not to label (e.g. a private link road)"
+    },
+    "extras": {
+      "type": "string",
+      "description": "Site-specific landmarks module in src/map/sites/ (optional)"
+    },
+    "aboutFacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Up to four big figures in the About popup"
+    },
+    "text": {
+      "type": "object",
+      "description": "Per-language wording that is the site's own",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "loading": {
+            "type": "string",
+            "description": "Line under the logo while the map loads"
+          },
+          "why": {
+            "type": "string",
+            "description": "Heading of the highlights in the Visit tab"
+          },
+          "storeText": {
+            "type": "string",
+            "description": "Store card text; {name}, {floor}, {unit}"
+          },
+          "agree": {
+            "type": "string",
+            "description": "Contact form consent; {name} is the site name"
+          },
+          "floors": {
+            "type": "object",
+            "description": "Floor names by floor code, e.g. {\"B1\": \"地下一樓\"}",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "about": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "paragraphs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "factLabels": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Labels under aboutFacts, same order"
+              }
+            }
+          }
+        }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "description": "Defaults for the SEO settings on first setup (editable in the admin afterwards)",
+      "properties": {
+        "shareImage": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "test": {
+      "type": "object",
+      "properties": {
+        "sampleStore": {
+          "type": "string",
+          "description": "Store the browser sweep searches for and shares"
+        },
+        "liveUrl": {
+          "type": "string",
+          "description": "Live address the browser sweep checks by default (BASE_URL overrides)"
+        }
+      }
+    },
+    "floors": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Floors stores can be on, bottom to top. code is stored with each store (changing codes needs a migration); z is the pin height in metres; short is how the store list shows it (e.g. L1, B1, 2F); admin is the name in the CMS menu.",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "z"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "z": {
+            "type": "number"
+          },
+          "short": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

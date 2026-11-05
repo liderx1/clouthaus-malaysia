@@ -1,0 +1,122 @@
+{
+  "en": {
+    "items": [
+      {
+        "image": "/images/feat-experience.svg",
+        "title": "A real shopping experience, at the heart of Cheras",
+        "desc": "Where nature meets technology: classical design with a contemporary twist, 15 minutes from downtown KL.",
+        "link": "/#about",
+        "floor": "",
+        "subtitle": "Open daily · 10:00am – 10:00pm"
+      },
+      {
+        "image": "/images/feat-food-street.svg",
+        "title": "Food Street: the authentic flavours of Cheras",
+        "desc": "Ipoh ais kopi, hotpot, sushi, nasi lemak and desserts. Dozens of places to eat on LG alone.",
+        "link": "/#stores",
+        "floor": "LG",
+        "subtitle": "Lower Ground Floor"
+      },
+      {
+        "image": "/images/feat-mrt.svg",
+        "title": "Walk straight in from MRT Taman Mutiara",
+        "desc": "A covered, elevated bridge takes you from the station into the mall, rain or shine.",
+        "link": "/#visit",
+        "floor": "",
+        "subtitle": "First Floor link bridge"
+      },
+      {
+        "image": "/images/feat-cinema.svg",
+        "title": "Golden movie experience at GSC",
+        "desc": "Total movie entertainment in the best halls, with the best customer service.",
+        "link": "/#stores",
+        "floor": "2",
+        "subtitle": "Second Floor"
+      },
+      {
+        "image": "/images/feat-mid-autumn.svg",
+        "title": "Mid-Autumn Lantern Nights",
+        "desc": "Lantern displays, mooncake gifting and family activities around the Concourse.",
+        "link": "/#news",
+        "floor": "",
+        "subtitle": "12 Sep – 4 Oct 2026"
+      },
+      {
+        "image": "/images/feat-family.svg",
+        "title": "Family fun days, every weekend",
+        "desc": "Fun Scape, Big Kidz, Baby Shark Bounce Wonderland and Toy World keep the little ones busy.",
+        "link": "/#stores",
+        "floor": "2",
+        "subtitle": "Second Floor"
+      }
+    ]
+  },
+  "ms": {
+    "items": [
+      {
+        "title": "Pengalaman membeli-belah sebenar, di tengah-tengah Cheras",
+        "desc": "Di mana alam bertemu teknologi: reka bentuk klasik dengan sentuhan kontemporari, 15 minit dari pusat bandar KL.",
+        "subtitle": "Dibuka setiap hari · 10:00pg – 10:00mlm"
+      },
+      {
+        "title": "Food Street: rasa asli Cheras",
+        "desc": "Ais kopi Ipoh, hotpot, sushi, nasi lemak dan pencuci mulut. Berpuluh-puluh tempat makan di LG sahaja.",
+        "subtitle": "Tingkat Bawah Tanah"
+      },
+      {
+        "title": "Masuk terus dari MRT Taman Mutiara",
+        "desc": "Jejantas berbumbung membawa anda dari stesen terus ke pusat beli-belah, hujan atau panas.",
+        "subtitle": "Jejantas penghubung Tingkat 1"
+      },
+      {
+        "title": "Pengalaman menonton istimewa di GSC",
+        "desc": "Hiburan filem sepenuhnya di dewan terbaik, dengan layanan pelanggan terbaik.",
+        "subtitle": "Tingkat 2"
+      },
+      {
+        "title": "Malam Tanglung Pertengahan Musim Luruh",
+        "desc": "Pameran tanglung, hadiah kuih bulan dan aktiviti keluarga di sekitar Concourse.",
+        "subtitle": "12 Sep – 4 Okt 2026"
+      },
+      {
+        "title": "Hari keseronokan keluarga, setiap hujung minggu",
+        "desc": "Fun Scape, Big Kidz, Baby Shark Bounce Wonderland dan Toy World memastikan si kecil sentiasa seronok.",
+        "subtitle": "Tingkat 2"
+      }
+    ]
+  },
+  "zh": {
+    "items": [
+      {
+        "title": "位于蕉赖心脏地带的真实购物体验",
+        "desc": "自然与科技交汇之地，经典设计融入现代元素，距吉隆坡市中心仅15分钟。",
+        "subtitle": "每日营业 · 上午10时至晚上10时"
+      },
+      {
+        "title": "美食街：正宗蕉赖风味",
+        "desc": "怡保冰咖啡、火锅、寿司、椰浆饭和甜品，光是 LG 层就有数十家餐饮店。",
+        "subtitle": "底层（LG）"
+      },
+      {
+        "title": "从 MRT Taman Mutiara 站直达商场",
+        "desc": "有盖高架天桥从车站直通商场，风雨无阻。",
+        "subtitle": "一楼连接天桥"
+      },
+      {
+        "title": "GSC 金牌观影体验",
+        "desc": "一流影厅，搭配一流服务，带来全方位的观影享受。",
+        "subtitle": "二楼"
+      },
+      {
+        "title": "中秋灯笼之夜",
+        "desc": "中庭一带举办灯笼展、月饼礼品与亲子活动。",
+        "subtitle": "2026年9月12日 – 10月4日"
+      },
+      {
+        "title": "每个周末，亲子欢乐日",
+        "desc": "Fun Scape、Big Kidz、Baby Shark Bounce Wonderland 与 Toy World，让孩子们玩得尽兴。",
+        "subtitle": "二楼"
+      }
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+# Every push to the working branch `dev` is checked here before it reaches the live site:
+#   1. check  — ESLint, type checks, unit tests, map bundle within its size budget, TypeScript for the CMS
+#   2. smoke  — Chrome opens the site with this commit's map against the live content and goes through a route,
+#               entrances, a store search, hidden panels and the contact form, failing on any error.
+#               (GitHub's machines have no GPU: WebGL runs on the CPU at about 1 frame a second, so the full sweep
+#               and the screenshot comparison run on a developer's machine instead: `npm run verify`.)
+#   3. release — only if both pass: fast-forward `main` to this commit; Vercel deploys `main` to the live site.
+# Pull requests run 1 and 2 only.
+name: CI
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build:map
+      - run: npx tsc --noEmit
+
+  smoke:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build:map
+      - name: Smoke test in Chrome
+        run: node tests/e2e/sweep.mjs --local-map --smoke
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: screenshots
+          path: tests/e2e/shots
+          if-no-files-found: ignore
+          retention-days: 14
+
+  release:
+    needs: [check, smoke]
+    if: github.ref == 'refs/heads/dev' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Fast-forward main (refuses if main has commits this branch does not)
+        run: git push origin HEAD:main

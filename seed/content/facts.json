@@ -1,0 +1,62 @@
+{
+  "en": {
+    "items": [
+      {
+        "title": "180 m covered link bridge",
+        "text": "Walk straight in from MRT Taman Mutiara (Kajang Line) to Level 1, under cover."
+      },
+      {
+        "title": "Over 4,000 parking bays",
+        "text": "Cashless car parks with entrances from Jalan Cheras and the side roads."
+      },
+      {
+        "title": "A green building",
+        "text": "Green roof, rainwater harvesting and energy-efficient lighting; designed to Green Building Index standards."
+      },
+      {
+        "title": "Cinema, groceries and family fun",
+        "text": "GSC, Village Grocer, Daiso and play areas under one roof, open daily 10am–10pm."
+      }
+    ]
+  },
+  "ms": {
+    "items": [
+      {
+        "title": "Jambatan berbumbung 180 m",
+        "text": "Berjalan terus dari MRT Taman Mutiara (Laluan Kajang) ke Tingkat 1, terlindung."
+      },
+      {
+        "title": "Lebih 4,000 petak parkir",
+        "text": "Tempat letak kereta tanpa tunai dengan pintu masuk dari Jalan Cheras dan jalan sisi."
+      },
+      {
+        "title": "Bangunan hijau",
+        "text": "Bumbung hijau, penuaian air hujan dan lampu cekap tenaga; mengikut piawaian Green Building Index."
+      },
+      {
+        "title": "Pawagam, barangan runcit dan hiburan keluarga",
+        "text": "GSC, Village Grocer, Daiso dan ruang permainan di bawah satu bumbung, dibuka setiap hari 10am–10pm."
+      }
+    ]
+  },
+  "zh": {
+    "items": [
+      {
+        "title": "180 米有盖天桥",
+        "text": "从 MRT Taman Mutiara 站（加影线）不淋雨直达一楼。"
+      },
+      {
+        "title": "超过 4,000 个停车位",
+        "text": "无现金停车场，可从 Jalan Cheras 及周边道路进入。"
+      },
+      {
+        "title": "绿色建筑",
+        "text": "绿色屋顶、雨水收集与节能照明，按绿色建筑指数（GBI）标准设计。"
+      },
+      {
+        "title": "影院、超市与亲子娱乐",
+        "text": "GSC、Village Grocer、Daiso 与游乐空间一站集齐，每日上午10时至晚上10时营业。"
+      }
+    ]
+  }
+}

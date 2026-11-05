@@ -1,0 +1,14 @@
+.DS_Store
+.vercel
+node_modules
+.next
+.env
+.env.local
+next-env.d.ts
+*.tsbuildinfo
+/media
+/.pgdata
+.dev-login.txt
+tests/e2e/shots/
+tests/e2e/diff/
+tests/e2e/baseline/

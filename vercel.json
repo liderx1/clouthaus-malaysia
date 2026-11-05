@@ -1,0 +1,10 @@
+{
+  "regions": [
+    "sin1"
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "dev": false
+    }
+  }
+}

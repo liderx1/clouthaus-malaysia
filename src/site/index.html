@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EkoCheras Mall · Cheras, Kuala Lumpur</title>
+<meta name="description" content="EkoCheras Mall, Cheras: find any of our 285 stores, get here by MRT, bus or car, and see what's on, all on a live 3D map.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/map/map.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="is-night">
+<div class="preload" id="preload" aria-hidden="true"><img src="/images/logo.svg" alt="" width="132"><i><b></b></i></div>
+<div id="stage"></div>
+<div id="labels"></div>
+
+<header class="top">
+  <a class="brand" href="/" id="brand" aria-label="EkoCheras Mall"></a>
+  <p class="notice" id="notice" hidden></p>
+  <div class="top-tools">
+    <span class="open" id="open" hidden></span>
+    <button class="chip" id="daynight" type="button" aria-pressed="true"><span class="dn-sun">☀︎</span><span class="dn-moon">☾</span><span data-t="dayNight"></span></button>
+    <div class="langs" role="group" aria-label="Language"><button data-lang="en">EN</button><button data-lang="zh">中文</button><button data-lang="ms">BM</button></div>
+  </div>
+</header>
+
+<p class="route-note" id="routeNote" hidden></p>
+<section class="dock" id="panel">
+  <div class="dock-top">
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="go" class="is-on" data-t="tabGo"></button><button type="button" role="tab" data-tab="stores" data-t="tabStores"></button><button type="button" role="tab" data-tab="news" data-t="tabNews"></button><button type="button" role="tab" data-tab="visit" data-t="tabVisit"></button>
+    </nav>
+    <button class="reset" type="button" id="reset" data-t="reset"></button>
+  </div>
+  <div class="pane" data-pane="go">
+    <div class="hrow">
+      <div class="routes" id="routes"></div>
+      <span class="sep"></span>
+      <button class="chip" type="button" data-mode="entrances" data-t="entrances"></button>
+      <button class="chip chip--safe" type="button" data-mode="safety" data-t="safety"></button>
+      <button class="chip" type="button" data-mode="focus" data-t="focus"></button>
+    </div>
+  </div>
+  <div class="pane" data-pane="stores" hidden>
+    <div class="hrow">
+      <input class="search" id="storeQ" type="search" autocomplete="off">
+      <div class="cats" id="cats"></div>
+    </div>
+    <div class="hrow store-row" id="storeList"></div>
+  </div>
+  <div class="pane" data-pane="news" hidden><div class="hrow card-row" id="news"></div></div>
+  <div class="pane" data-pane="visit" hidden><div class="hrow card-row" id="visit"></div></div>
+  <p class="madeby"><span data-t="madeBy">Website by</span> <a href="https://blank-design.com.tw" target="_blank" rel="noopener">留白設計 Blank Design</a></p>
+</section>
+
+<div class="compass" id="compass" aria-hidden="true">
+  <div class="rose" id="rose"><b class="n">N</b><b class="e">E</b><b class="s">S</b><b class="w">W</b><i></i></div>
+</div>
+<div class="scale" id="scale"><i></i><span>100 m</span></div>
+<button class="ui-toggle" id="uiToggle" type="button" aria-pressed="false"><svg class="eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="eye-x" d="M3 3l18 18"/></svg><span class="sr" data-t="hideUI"></span></button>
+
+<article class="card" id="card" hidden>
+  <button class="card-x" type="button" aria-label="Close">×</button>
+  <span class="card-tag" id="cardTag"></span>
+  <h2 id="cardTitle"></h2>
+  <p id="cardText"></p>
+  <div class="card-art"><span class="card-pin"></span><span class="card-logo" id="cardLogo"></span></div>
+  <div class="card-actions"><button class="card-go" type="button" id="cardGo" hidden></button><button class="card-share" type="button" id="cardShare" hidden></button></div>
+</article>
+
+<p class="toast" id="toast" role="status" hidden></p>
+<div class="modal" id="modal" hidden><div class="modal-box" role="dialog" aria-modal="true"><button class="modal-x" type="button" aria-label="Close">×</button><div id="modalBody"></div></div></div>
+
+<script type="module" src="/map/map.js"></script>
+</body>
+</html>

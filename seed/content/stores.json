@@ -1,0 +1,3298 @@
+{
+  "items": [
+    {
+      "name": "Nomad Rider",
+      "floor": "LG",
+      "unit": "LG-35",
+      "logo": "/images/logos/nomad-rider.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 17.8,
+        "y": -11.1
+      }
+    },
+    {
+      "name": "Hao Shi Ji",
+      "floor": "LG",
+      "unit": "01",
+      "logo": "/images/logos/hao-shi-ji.webp",
+      "category": "food",
+      "pin": {
+        "x": 75.3,
+        "y": -78.3
+      }
+    },
+    {
+      "name": "The Brew House",
+      "floor": "LG",
+      "unit": "03A",
+      "logo": "/images/logos/the-brew-house.webp",
+      "category": "food",
+      "pin": {
+        "x": 68.8,
+        "y": -47.0
+      }
+    },
+    {
+      "name": "Siong Tong Gai",
+      "floor": "LG",
+      "unit": "07",
+      "logo": "/images/logos/siong-tong-gai.webp",
+      "category": "food",
+      "pin": {
+        "x": 22.0,
+        "y": -57.2
+      }
+    },
+    {
+      "name": "Oloiya",
+      "floor": "LG",
+      "unit": "07",
+      "logo": "/images/logos/oloiya.webp",
+      "category": "food",
+      "pin": {
+        "x": 22.0,
+        "y": -57.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Hong Kong Sheng Kee Dessert",
+      "floor": "LG",
+      "unit": "08",
+      "logo": "/images/logos/hong-kong-sheng-kee-dessert.webp",
+      "category": "food",
+      "pin": {
+        "x": 57.7,
+        "y": -13.1
+      }
+    },
+    {
+      "name": "Azuma Sushi",
+      "floor": "LG",
+      "unit": "09",
+      "logo": "/images/logos/azuma-sushi.webp",
+      "category": "food",
+      "pin": {
+        "x": 61.0,
+        "y": -16.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Ipoh Ais Kopi by ChekHup",
+      "floor": "LG",
+      "unit": "09",
+      "logo": "/images/logos/ipoh-ais-kopi-by-chekhup.webp",
+      "category": "food",
+      "pin": {
+        "x": 61.0,
+        "y": -16.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Kim Lian Kee",
+      "floor": "LG",
+      "unit": "10",
+      "logo": "/images/logos/kim-lian-kee.webp",
+      "category": "food",
+      "pin": {
+        "x": 31.5,
+        "y": 1.6
+      }
+    },
+    {
+      "name": "Liu Gong Zi Hotpot",
+      "floor": "LG",
+      "unit": "10",
+      "logo": "/images/logos/liu-gong-zi-hotpot.webp",
+      "category": "food",
+      "pin": {
+        "x": 31.5,
+        "y": 1.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Starbucks",
+      "floor": "LG",
+      "unit": "11",
+      "logo": "/images/logos/starbucks.webp",
+      "category": "food",
+      "pin": {
+        "x": 54.7,
+        "y": 14.6
+      }
+    },
+    {
+      "name": "Wong Kok Char Chan Teng",
+      "floor": "LG",
+      "unit": "12",
+      "logo": "/images/logos/wong-kok-char-chan-teng.webp",
+      "category": "food",
+      "pin": {
+        "x": 11.0,
+        "y": 125.6
+      }
+    },
+    {
+      "name": "Go Street Noodle",
+      "floor": "LG",
+      "unit": "13",
+      "logo": "/images/logos/go-street-noodle.webp",
+      "category": "food",
+      "pin": {
+        "x": 62.9,
+        "y": -18.3
+      }
+    },
+    {
+      "name": "TWG",
+      "floor": "LG",
+      "unit": "13",
+      "logo": "/images/logos/twg.webp",
+      "category": "food",
+      "pin": {
+        "x": 43.8,
+        "y": 40.5
+      }
+    },
+    {
+      "name": "Ekoba",
+      "floor": "LG",
+      "unit": "16",
+      "logo": "/images/logos/ekoba.webp",
+      "category": "food",
+      "pin": {
+        "x": 6.9,
+        "y": 142.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Xin Dau Ji",
+      "floor": "LG",
+      "unit": "19",
+      "logo": "/images/logos/xin-dau-ji.webp",
+      "category": "food",
+      "pin": {
+        "x": 5.9,
+        "y": 145.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "BAHT BY BARCADE",
+      "floor": "LG",
+      "unit": "23 & 23A",
+      "logo": "/images/logos/baht-by-barcade.webp",
+      "category": "food",
+      "pin": {
+        "x": 8.6,
+        "y": 135.7
+      }
+    },
+    {
+      "name": "7 Eleven",
+      "floor": "LG",
+      "unit": "25",
+      "logo": "/images/logos/7-eleven.webp",
+      "category": "grocery",
+      "pin": {
+        "x": 12.9,
+        "y": 26.1
+      }
+    },
+    {
+      "name": "myNEWS.com",
+      "floor": "LG",
+      "unit": "27",
+      "logo": "/images/logos/mynews-com.webp",
+      "category": "grocery",
+      "pin": {
+        "x": 17.6,
+        "y": -47.6
+      }
+    },
+    {
+      "name": "Tang Bar & Baby Seal",
+      "floor": "LG",
+      "unit": "29",
+      "logo": "/images/logos/tang-bar-and-baby-seal.webp",
+      "category": "food",
+      "pin": {
+        "x": 21.6,
+        "y": -2.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "OOPPA",
+      "floor": "LG",
+      "unit": "30",
+      "logo": "/images/logos/ooppa.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 56.9,
+        "y": -12.9
+      }
+    },
+    {
+      "name": "Koong Woh Tong",
+      "floor": "LG",
+      "unit": "31",
+      "logo": "/images/logos/koong-woh-tong.webp",
+      "category": "food",
+      "pin": {
+        "x": 49.1,
+        "y": -12.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "I Love Yoo!",
+      "floor": "LG",
+      "unit": "32",
+      "logo": "/images/logos/i-love-yoo.webp",
+      "category": "food",
+      "pin": {
+        "x": 41.3,
+        "y": -12.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Dunkin’ Donuts",
+      "floor": "LG",
+      "unit": "33A",
+      "logo": "/images/logos/dunkin-donuts.webp",
+      "category": "food",
+      "pin": {
+        "x": 29.5,
+        "y": -11.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "P.S. Tokyo",
+      "floor": "LG",
+      "unit": "35",
+      "logo": "/images/logos/p-s-tokyo.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 85.8,
+        "y": -85.6
+      }
+    },
+    {
+      "name": "Devil Chicken",
+      "floor": "LG",
+      "unit": "36",
+      "logo": "/images/logos/devil-chicken.webp",
+      "category": "food",
+      "pin": {
+        "x": 28.1,
+        "y": 10.2
+      }
+    },
+    {
+      "name": "Mr. Chizu",
+      "floor": "LG",
+      "unit": "37",
+      "logo": "/images/logos/mr-chizu.webp",
+      "category": "food",
+      "pin": {
+        "x": 10.9,
+        "y": -24.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Team Smart Forex",
+      "floor": "LG",
+      "unit": "38",
+      "logo": "/images/logos/team-smart-forex.webp",
+      "category": "services",
+      "pin": {
+        "x": -6.2,
+        "y": -59.9
+      }
+    },
+    {
+      "name": "Soon Thye Hang",
+      "floor": "LG",
+      "unit": "39",
+      "logo": "/images/logos/soon-thye-hang.webp",
+      "category": "grocery",
+      "pin": {
+        "x": 3.1,
+        "y": -40.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Village Grocer",
+      "floor": "LG",
+      "unit": "41",
+      "logo": "/images/logos/village-grocer.webp",
+      "category": "grocery",
+      "pin": {
+        "x": 21.6,
+        "y": -2.4
+      },
+      "featured": true
+    },
+    {
+      "name": "CARiNG Pharmacy",
+      "floor": "LG",
+      "unit": "42",
+      "logo": "/images/logos/caring-pharmacy.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -20.7,
+        "y": 63.7
+      }
+    },
+    {
+      "name": "BMS Organics Cafe",
+      "floor": "LG",
+      "unit": "43",
+      "logo": "/images/logos/bms-organics-cafe.webp",
+      "category": "food",
+      "pin": {
+        "x": 7.9,
+        "y": -7.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Yi Lin Lap Mei",
+      "floor": "LG",
+      "unit": "43A",
+      "logo": "/images/logos/yi-lin-lap-mei.webp",
+      "category": "food",
+      "pin": {
+        "x": 22.2,
+        "y": -42.3
+      }
+    },
+    {
+      "name": "Lou Yau Restaurant",
+      "floor": "LG",
+      "unit": "45",
+      "logo": "/images/logos/lou-yau-restaurant.webp",
+      "category": "food",
+      "pin": {
+        "x": 12.1,
+        "y": -6.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Wonder Bowl",
+      "floor": "LG",
+      "unit": "45",
+      "logo": "/images/logos/wonder-bowl.webp",
+      "category": "food",
+      "pin": {
+        "x": 12.1,
+        "y": -6.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Yuen Chen Siang",
+      "floor": "LG",
+      "unit": "47",
+      "logo": "/images/logos/yuen-chen-siang.webp",
+      "category": "food",
+      "pin": {
+        "x": -40.7,
+        "y": 3.4
+      }
+    },
+    {
+      "name": "Du Men",
+      "floor": "LG",
+      "unit": "48",
+      "logo": "/images/logos/du-men.webp",
+      "category": "food",
+      "pin": {
+        "x": 36.6,
+        "y": 54.9
+      }
+    },
+    {
+      "name": "Auntie Lora",
+      "floor": "LG",
+      "unit": "49",
+      "logo": "/images/logos/auntie-lora.webp",
+      "category": "food",
+      "pin": {
+        "x": 21.1,
+        "y": 31.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Pets Wonderland",
+      "floor": "LG",
+      "unit": "53",
+      "logo": "/images/logos/pets-wonderland.webp",
+      "category": "home",
+      "pin": {
+        "x": 56.2,
+        "y": -25.6
+      }
+    },
+    {
+      "name": "Hair Secret",
+      "floor": "LG",
+      "unit": "53A",
+      "logo": "/images/logos/hair-secret.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 54.9,
+        "y": -22.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sushi Jiro",
+      "floor": "LG",
+      "unit": "55",
+      "logo": "/images/logos/sushi-jiro.webp",
+      "category": "food",
+      "pin": {
+        "x": 51.0,
+        "y": -14.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Balloon Buzz Party Centre",
+      "floor": "LG",
+      "unit": "57",
+      "logo": "/images/logos/balloon-buzz-party-centre.webp",
+      "category": "home",
+      "pin": {
+        "x": 45.7,
+        "y": -2.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Garuda Bayana",
+      "floor": "LG",
+      "unit": "58",
+      "logo": "/images/logos/garuda-bayana.webp",
+      "category": "food",
+      "pin": {
+        "x": 43.1,
+        "y": 3.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Chicken Plus",
+      "floor": "LG",
+      "unit": "60",
+      "logo": "/images/logos/chicken-plus.webp",
+      "category": "food",
+      "pin": {
+        "x": 28.1,
+        "y": 10.2
+      }
+    },
+    {
+      "name": "Nyonya Famous",
+      "floor": "LG",
+      "unit": "63A",
+      "logo": "/images/logos/nyonya-famous.webp",
+      "category": "food",
+      "pin": {
+        "x": 53.1,
+        "y": 12.4
+      }
+    },
+    {
+      "name": "Shihlin Taiwan Street Snacks",
+      "floor": "LG",
+      "unit": "65",
+      "logo": "/images/logos/shihlin-taiwan-street-snacks.webp",
+      "category": "food",
+      "pin": {
+        "x": 0.4,
+        "y": 70.5
+      }
+    },
+    {
+      "name": "Kaki Makan",
+      "floor": "LG",
+      "unit": "73",
+      "logo": "/images/logos/kaki-makan.webp",
+      "category": "food",
+      "pin": {
+        "x": -46.4,
+        "y": 8.8
+      }
+    },
+    {
+      "name": "Pho Street",
+      "floor": "LG",
+      "unit": "75",
+      "logo": "/images/logos/pho-street.webp",
+      "category": "food",
+      "pin": {
+        "x": -34.4,
+        "y": 42.0
+      }
+    },
+    {
+      "name": "LAC Nutrition for Life",
+      "floor": "LG",
+      "unit": "K-PS",
+      "logo": "/images/logos/lac-nutrition-for-life.webp",
+      "category": "beauty"
+    },
+    {
+      "name": "Secret Recipe Cakes & Coffee",
+      "floor": "LG",
+      "unit": "K05",
+      "logo": "/images/logos/secret-recipe-cakes-and-coffee.webp",
+      "category": "food",
+      "pin": {
+        "x": 20.0,
+        "y": -3.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Juice Works",
+      "floor": "LG",
+      "unit": "K06",
+      "logo": "/images/logos/juice-works.webp",
+      "category": "food",
+      "pin": {
+        "x": 46.9,
+        "y": -33.3
+      }
+    },
+    {
+      "name": "AliBaba & Nyonya",
+      "floor": "LG",
+      "unit": "K07",
+      "logo": "/images/logos/alibaba-and-nyonya.webp",
+      "category": "food",
+      "pin": {
+        "x": 22.0,
+        "y": -57.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Cuckoo",
+      "floor": "LG",
+      "unit": "K10",
+      "logo": "/images/logos/cuckoo.webp",
+      "category": "tech",
+      "pin": {
+        "x": 31.5,
+        "y": 1.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Lol Soon Kee Desserts",
+      "floor": "LG",
+      "unit": "K7",
+      "logo": "/images/logos/lol-soon-kee-desserts.webp",
+      "category": "food",
+      "pin": {
+        "x": 23.3,
+        "y": -35.7
+      }
+    },
+    {
+      "name": "Famous Amos",
+      "floor": "LG",
+      "unit": "K8",
+      "logo": "/images/logos/famous-amos.webp",
+      "category": "food",
+      "pin": {
+        "x": 57.7,
+        "y": -13.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Ayu Borneo",
+      "floor": "LG",
+      "unit": "LG 53A - 58",
+      "logo": "/images/logos/ayu-borneo.webp",
+      "category": "food",
+      "pin": {
+        "x": 43.1,
+        "y": 3.5
+      }
+    },
+    {
+      "name": "Watsons",
+      "floor": "LG",
+      "unit": "LG 72-76",
+      "logo": "/images/logos/watsons.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -34.4,
+        "y": 42.0,
+        "estimated": true
+      },
+      "featured": true
+    },
+    {
+      "name": "Nando's",
+      "floor": "LG",
+      "unit": "LG-08",
+      "logo": "/images/logos/nando-s.webp",
+      "category": "food",
+      "pin": {
+        "x": 60.2,
+        "y": -11.5
+      }
+    },
+    {
+      "name": "Shaang Cuisine",
+      "floor": "LG",
+      "unit": "LG-13A",
+      "logo": "/images/logos/shaang-cuisine.webp",
+      "category": "food",
+      "pin": {
+        "x": 37.7,
+        "y": 50.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Powerplant",
+      "floor": "LG",
+      "unit": "LG-15",
+      "logo": "/images/logos/powerplant.webp",
+      "category": "tech",
+      "pin": {
+        "x": 19.4,
+        "y": 80.4
+      }
+    },
+    {
+      "name": "X Office Bar",
+      "floor": "LG",
+      "unit": "LG-16",
+      "logo": "/images/logos/x-office-bar.webp",
+      "category": "food",
+      "pin": {
+        "x": 6.9,
+        "y": 142.8
+      }
+    },
+    {
+      "name": "GUANG HOTPOT",
+      "floor": "LG",
+      "unit": "LG-19",
+      "logo": "/images/logos/guang-hotpot.webp",
+      "category": "food",
+      "pin": {
+        "x": 5.9,
+        "y": 145.2
+      }
+    },
+    {
+      "name": "Seahorse Seafood",
+      "floor": "LG",
+      "unit": "LG-26",
+      "logo": "/images/logos/seahorse-seafood.webp",
+      "category": "food",
+      "pin": {
+        "x": 15.2,
+        "y": -10.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Spice Route",
+      "floor": "LG",
+      "unit": "LG-26 & LG-K1",
+      "logo": "/images/logos/spice-route.webp",
+      "category": "food",
+      "pin": {
+        "x": 75.3,
+        "y": -78.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Nasi Lemak Wau",
+      "floor": "LG",
+      "unit": "LG-26 & LG-K1",
+      "logo": "/images/logos/nasi-lemak-wau.webp",
+      "category": "food",
+      "pin": {
+        "x": -26.3,
+        "y": 49.0
+      }
+    },
+    {
+      "name": "Cutea Panda",
+      "floor": "LG",
+      "unit": "LG-28",
+      "logo": "/images/logos/cutea-panda.webp",
+      "category": "food",
+      "pin": {
+        "x": 54.2,
+        "y": -54.0
+      }
+    },
+    {
+      "name": "Yuan Taste",
+      "floor": "LG",
+      "unit": "LG-29",
+      "logo": "/images/logos/yuan-taste.webp",
+      "category": "food",
+      "pin": {
+        "x": 21.6,
+        "y": -2.4
+      }
+    },
+    {
+      "name": "Happy Lemon",
+      "floor": "LG",
+      "unit": "LG-35",
+      "logo": "/images/logos/happy-lemon.webp",
+      "category": "food",
+      "pin": {
+        "x": 17.8,
+        "y": -11.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Curr's Curries",
+      "floor": "LG",
+      "unit": "LG-36",
+      "logo": "/images/logos/curr-s-curries.webp",
+      "category": "food",
+      "pin": {
+        "x": 28.1,
+        "y": 10.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "BMS & Cafe",
+      "floor": "LG",
+      "unit": "LG-43",
+      "logo": "/images/logos/bms-and-cafe.webp",
+      "category": "food",
+      "pin": {
+        "x": 7.9,
+        "y": -7.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "theLOCAL Kopi Malaya",
+      "floor": "LG",
+      "unit": "LG-45 & LG-46",
+      "logo": "/images/logos/thelocal-kopi-malaya.webp",
+      "category": "food",
+      "pin": {
+        "x": 5.3,
+        "y": 17.7
+      }
+    },
+    {
+      "name": "Family Mart",
+      "floor": "LG",
+      "unit": "LG-47, LG-48, LG-K09",
+      "logo": "/images/logos/family-mart.webp",
+      "category": "grocery",
+      "pin": {
+        "x": 61.0,
+        "y": -16.8
+      }
+    },
+    {
+      "name": "Pak Ananda Chic Kut Teh Chicken Rice Shop",
+      "floor": "LG",
+      "unit": "LG-49 & LG-50",
+      "logo": "/images/logos/pak-ananda-chic-kut-teh-chicken-rice-shop.webp",
+      "category": "food",
+      "pin": {
+        "x": 5.6,
+        "y": 7.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sour Little 7",
+      "floor": "LG",
+      "unit": "LG-49, LG-50",
+      "logo": "/images/logos/sour-little-7.webp",
+      "category": "food",
+      "pin": {
+        "x": 5.6,
+        "y": 7.5
+      }
+    },
+    {
+      "name": "Ayam Penyet Best",
+      "floor": "LG",
+      "unit": "LG-51 & LG-52",
+      "logo": "/images/logos/ayam-penyet-best.webp",
+      "category": "food",
+      "pin": {
+        "x": 3.3,
+        "y": 70.5
+      }
+    },
+    {
+      "name": "MOKA",
+      "floor": "LG",
+      "unit": "LG-59",
+      "logo": "/images/logos/moka.webp",
+      "category": "food",
+      "pin": {
+        "x": 35.6,
+        "y": 6.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Guestonic",
+      "floor": "LG",
+      "unit": "LG-63",
+      "logo": "/images/logos/guestonic.webp",
+      "category": "food",
+      "pin": {
+        "x": -49.4,
+        "y": 105.2
+      }
+    },
+    {
+      "name": "Have A Bowl",
+      "floor": "LG",
+      "unit": "LG-66 & LG-67",
+      "logo": "/images/logos/have-a-bowl.webp",
+      "category": "food",
+      "pin": {
+        "x": -44.7,
+        "y": 38.2
+      }
+    },
+    {
+      "name": "7 Cafe (7-Eleven Cafe)",
+      "floor": "LG",
+      "unit": "LG-68, LG-69, LG-70",
+      "logo": "/images/logos/7-cafe-7-eleven-cafe.webp",
+      "category": "food",
+      "pin": {
+        "x": 12.9,
+        "y": 26.1
+      }
+    },
+    {
+      "name": "Potato Story",
+      "floor": "LG",
+      "unit": "LG-K5",
+      "logo": "/images/logos/potato-story.webp",
+      "category": "food",
+      "pin": {
+        "x": 20.0,
+        "y": -3.3
+      }
+    },
+    {
+      "name": "Boost Juice",
+      "floor": "LG",
+      "unit": "LG-K6",
+      "logo": "/images/logos/boost-juice.webp",
+      "category": "food",
+      "pin": {
+        "x": 46.9,
+        "y": -33.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "LC Waikiki",
+      "floor": "G",
+      "unit": "01",
+      "logo": "/images/logos/lc-waikiki.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 34.9,
+        "y": -56.9,
+        "estimated": true
+      },
+      "featured": true
+    },
+    {
+      "name": "Sport Planet",
+      "floor": "G",
+      "unit": "01",
+      "logo": "/images/logos/sport-planet.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 34.9,
+        "y": -56.9
+      },
+      "featured": true
+    },
+    {
+      "name": "Erke Malaysia",
+      "floor": "G",
+      "unit": "02",
+      "logo": "/images/logos/erke-malaysia.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 31.8,
+        "y": -51.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Voir & Elle",
+      "floor": "G",
+      "unit": "03",
+      "logo": "/images/logos/voir-and-elle.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 28.7,
+        "y": -46.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "F.O.S APPAREL GROUP SDN.BHD.",
+      "floor": "G",
+      "unit": "08",
+      "logo": "/images/logos/f-o-s-apparel-group-sdn-bhd.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 41.6,
+        "y": -30.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Panda Eyes",
+      "floor": "G",
+      "unit": "11",
+      "logo": "/images/logos/panda-eyes.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 38.1,
+        "y": -1.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Bricks Smart",
+      "floor": "G",
+      "unit": "13",
+      "logo": "/images/logos/bricks-smart.webp",
+      "category": "home",
+      "pin": {
+        "x": 30.5,
+        "y": 54.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Poppy Hill",
+      "floor": "G",
+      "unit": "13",
+      "logo": "/images/logos/poppy-hill.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 30.5,
+        "y": 54.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Cartoon Network",
+      "floor": "G",
+      "unit": "13A",
+      "logo": "/images/logos/cartoon-network.webp",
+      "category": "fun",
+      "pin": {
+        "x": 30.0,
+        "y": 59.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Novel",
+      "floor": "G",
+      "unit": "13A*27 & G-30",
+      "logo": "/images/logos/novel.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 12.9,
+        "y": 32.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Elebe Maternity Lifestyle",
+      "floor": "G",
+      "unit": "21",
+      "logo": "/images/logos/elebe-maternity-lifestyle.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 59.3,
+        "y": -54.7
+      }
+    },
+    {
+      "name": "My Beaute Village",
+      "floor": "G",
+      "unit": "22",
+      "logo": "/images/logos/my-beaute-village.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 54.1,
+        "y": -45.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Taste By Champignons",
+      "floor": "G",
+      "unit": "31",
+      "logo": "/images/logos/taste-by-champignons.webp",
+      "category": "food",
+      "pin": {
+        "x": 7.8,
+        "y": 42.3
+      }
+    },
+    {
+      "name": "My Flavour",
+      "floor": "G",
+      "unit": "32",
+      "logo": "/images/logos/my-flavour.webp",
+      "category": "food",
+      "pin": {
+        "x": -19.0,
+        "y": 34.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "The Coffee Bean & Tea Leaf",
+      "floor": "G",
+      "unit": "33",
+      "logo": "/images/logos/the-coffee-bean-and-tea-leaf.webp",
+      "category": "food",
+      "pin": {
+        "x": -45.8,
+        "y": 26.3
+      }
+    },
+    {
+      "name": "Pamela",
+      "floor": "G",
+      "unit": "33a",
+      "logo": "/images/logos/pamela.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 18.1,
+        "y": 35.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Myfeet",
+      "floor": "G",
+      "unit": "35",
+      "logo": "/images/logos/myfeet.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 29.7,
+        "y": 17.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Fipper",
+      "floor": "G",
+      "unit": "38B",
+      "logo": "/images/logos/fipper.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 56.9,
+        "y": -24.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Common Sense",
+      "floor": "G",
+      "unit": "39",
+      "logo": "/images/logos/common-sense.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 60.7,
+        "y": -30.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "NexiGold",
+      "floor": "G",
+      "unit": "40",
+      "logo": "/images/logos/nexigold.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 68.5,
+        "y": -42.9
+      }
+    },
+    {
+      "name": "Switch",
+      "floor": "G",
+      "unit": "41",
+      "logo": "/images/logos/switch.webp",
+      "category": "tech",
+      "pin": {
+        "x": 17.0,
+        "y": -4.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "A-Look",
+      "floor": "G",
+      "unit": "42",
+      "logo": "/images/logos/a-look.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 29.0,
+        "y": -8.4
+      }
+    },
+    {
+      "name": "Focus Point",
+      "floor": "G",
+      "unit": "43",
+      "logo": "/images/logos/focus-point.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -32.8,
+        "y": 30.5
+      }
+    },
+    {
+      "name": "60 Minutes",
+      "floor": "G",
+      "unit": "43A",
+      "logo": "/images/logos/60-minutes.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -26.5,
+        "y": 25.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Lazo Diamond",
+      "floor": "G",
+      "unit": "43B",
+      "logo": "/images/logos/lazo-diamond.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -26.5,
+        "y": 25.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Huawei",
+      "floor": "G",
+      "unit": "45",
+      "logo": "/images/logos/huawei.webp",
+      "category": "tech",
+      "pin": {
+        "x": -7.5,
+        "y": 10.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Wah Chan",
+      "floor": "G",
+      "unit": "46",
+      "logo": "/images/logos/wah-chan.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 5.1,
+        "y": 0.1
+      }
+    },
+    {
+      "name": "Solar Time",
+      "floor": "G",
+      "unit": "47",
+      "logo": "/images/logos/solar-time.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 8.8,
+        "y": -0.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Giordano",
+      "floor": "G",
+      "unit": "48",
+      "logo": "/images/logos/giordano.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 12.6,
+        "y": -0.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sothys Paris",
+      "floor": "G",
+      "unit": "48A",
+      "logo": "/images/logos/sothys-paris.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 14.4,
+        "y": -0.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Milano Eyes Fashion",
+      "floor": "G",
+      "unit": "48B",
+      "logo": "/images/logos/milano-eyes-fashion.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 14.4,
+        "y": -0.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "HLA",
+      "floor": "G",
+      "unit": "49",
+      "logo": "/images/logos/hla.webp",
+      "category": "services",
+      "pin": {
+        "x": 16.3,
+        "y": -0.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "XES Signature",
+      "floor": "G",
+      "unit": "49",
+      "logo": "/images/logos/xes-signature.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 16.3,
+        "y": -0.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "High Cultured",
+      "floor": "G",
+      "unit": "52",
+      "logo": "/images/logos/high-cultured.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 27.5,
+        "y": -0.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Jo Andrew",
+      "floor": "G",
+      "unit": "53",
+      "logo": "/images/logos/jo-andrew.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 31.3,
+        "y": -0.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "DeFacto",
+      "floor": "G",
+      "unit": "53b",
+      "logo": "/images/logos/defacto.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 33.1,
+        "y": -0.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Maxis",
+      "floor": "G",
+      "unit": "57",
+      "logo": "/images/logos/maxis.webp",
+      "category": "tech",
+      "pin": {
+        "x": -10.3,
+        "y": 1.8
+      }
+    },
+    {
+      "name": "H&M",
+      "floor": "G",
+      "unit": "59",
+      "logo": "/images/logos/handm.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 24.2,
+        "y": -41.3
+      },
+      "featured": true
+    },
+    {
+      "name": "The Loaf",
+      "floor": "G",
+      "unit": "61",
+      "logo": "/images/logos/the-loaf.webp",
+      "category": "food",
+      "pin": {
+        "x": 24.2,
+        "y": -41.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Poney",
+      "floor": "G",
+      "unit": "G-02",
+      "logo": "/images/logos/poney.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 31.8,
+        "y": -51.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Hypershoe",
+      "floor": "G",
+      "unit": "G-02",
+      "logo": "/images/logos/hypershoe.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 31.8,
+        "y": -51.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Snips",
+      "floor": "G",
+      "unit": "G-11",
+      "logo": "/images/logos/snips.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 38.1,
+        "y": -1.7
+      }
+    },
+    {
+      "name": "Donz",
+      "floor": "G",
+      "unit": "G-12",
+      "logo": "/images/logos/donz.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 31.5,
+        "y": 46.6
+      }
+    },
+    {
+      "name": "Syok Kart",
+      "floor": "G",
+      "unit": "G-16,17,18,19",
+      "logo": "/images/logos/syok-kart.webp",
+      "category": "fun",
+      "pin": {
+        "x": 24.4,
+        "y": 104.3
+      }
+    },
+    {
+      "name": "Taogo Fashion",
+      "floor": "G",
+      "unit": "G-20",
+      "logo": "/images/logos/taogo-fashion.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -9.4,
+        "y": 166.6
+      }
+    },
+    {
+      "name": "Laser Attack",
+      "floor": "G",
+      "unit": "G-21, G23A",
+      "logo": "/images/logos/laser-attack.webp",
+      "category": "fun",
+      "pin": {
+        "x": 46.4,
+        "y": -30.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Toy World Amusement x Cocomelon",
+      "floor": "G",
+      "unit": "G-25 to G-30",
+      "logo": "/images/logos/toy-world-amusement-x-cocomelon.webp",
+      "category": "fun",
+      "pin": {
+        "x": 12.9,
+        "y": 32.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Aglow Clinic",
+      "floor": "G",
+      "unit": "G-33A",
+      "logo": "/images/logos/aglow-clinic.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 18.1,
+        "y": 35.7
+      }
+    },
+    {
+      "name": "Ethos IGCSE Education Centre",
+      "floor": "G",
+      "unit": "G-37 & G-38",
+      "logo": "/images/logos/ethos-igcse-education-centre.webp",
+      "category": "services",
+      "pin": {
+        "x": 53.0,
+        "y": -18.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Bambu Lab",
+      "floor": "G",
+      "unit": "G-39",
+      "logo": "/images/logos/bambu-lab.webp",
+      "category": "tech",
+      "pin": {
+        "x": 60.7,
+        "y": -30.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "321K WAH CHAN",
+      "floor": "G",
+      "unit": "G-40",
+      "logo": "/images/logos/321k-wah-chan.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 5.1,
+        "y": 0.1
+      }
+    },
+    {
+      "name": "Seeme",
+      "floor": "G",
+      "unit": "G-48",
+      "logo": "/images/logos/seeme.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 12.6,
+        "y": -0.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Oppo",
+      "floor": "G",
+      "unit": "G-50",
+      "logo": "/images/logos/oppo.webp",
+      "category": "tech",
+      "pin": {
+        "x": 20.1,
+        "y": -0.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Ichido",
+      "floor": "G",
+      "unit": "G-52",
+      "logo": "/images/logos/ichido.webp",
+      "category": "food",
+      "pin": {
+        "x": 27.5,
+        "y": -0.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Samsung Platinium Store",
+      "floor": "G",
+      "unit": "G-52",
+      "logo": "/images/logos/samsung-platinium-store.webp",
+      "category": "tech",
+      "pin": {
+        "x": 27.5,
+        "y": -0.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Xiaomi",
+      "floor": "G",
+      "unit": "G-53A",
+      "logo": "/images/logos/xiaomi.webp",
+      "category": "tech",
+      "pin": {
+        "x": 33.1,
+        "y": -0.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Original Classic",
+      "floor": "G",
+      "unit": "G-53B, G-55 & G-56",
+      "logo": "/images/logos/original-classic.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 42.5,
+        "y": -1.0
+      }
+    },
+    {
+      "name": "HWC Coffee",
+      "floor": "G",
+      "unit": "G-K5",
+      "logo": "/images/logos/hwc-coffee.webp",
+      "category": "food",
+      "pin": {
+        "x": -34.7,
+        "y": -61.0
+      }
+    },
+    {
+      "name": "Tealive",
+      "floor": "G",
+      "unit": "K06",
+      "logo": "/images/logos/tealive.webp",
+      "category": "food",
+      "pin": {
+        "x": 44.0,
+        "y": -49.6
+      }
+    },
+    {
+      "name": "Wonderlab",
+      "floor": "G",
+      "unit": "K3A",
+      "logo": "/images/logos/wonderlab.webp",
+      "category": "fun",
+      "pin": {
+        "x": 27.2,
+        "y": -43.7
+      }
+    },
+    {
+      "name": "Fruit Addicts",
+      "floor": "1",
+      "unit": "F-05",
+      "logo": "/images/logos/fruit-addicts.webp",
+      "category": "food",
+      "pin": {
+        "x": 68.9,
+        "y": -52.7
+      }
+    },
+    {
+      "name": "Ding Xiang",
+      "floor": "1",
+      "unit": "02",
+      "logo": "/images/logos/ding-xiang.webp",
+      "category": "food",
+      "pin": {
+        "x": 66.6,
+        "y": -70.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Y&W Salon",
+      "floor": "1",
+      "unit": "02, 03 & 03A",
+      "logo": "/images/logos/yandw-salon.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 66.6,
+        "y": -70.1
+      }
+    },
+    {
+      "name": "Express Go",
+      "floor": "1",
+      "unit": "05",
+      "logo": "/images/logos/express-go.webp",
+      "category": "services",
+      "pin": {
+        "x": 68.9,
+        "y": -52.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "MuYoo+",
+      "floor": "1",
+      "unit": "07",
+      "logo": "/images/logos/muyoo.webp",
+      "category": "food",
+      "pin": {
+        "x": 20.7,
+        "y": -4.8
+      }
+    },
+    {
+      "name": "The Blues",
+      "floor": "1",
+      "unit": "08",
+      "logo": "/images/logos/the-blues.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 24.2,
+        "y": -13.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Good2U",
+      "floor": "1",
+      "unit": "09",
+      "logo": "/images/logos/good2u.webp",
+      "category": "food",
+      "pin": {
+        "x": 27.8,
+        "y": -22.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sae Ma Eul",
+      "floor": "1",
+      "unit": "1",
+      "logo": "/images/logos/sae-ma-eul.webp",
+      "category": "food",
+      "pin": {
+        "x": 66.6,
+        "y": -70.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "100 Vision",
+      "floor": "1",
+      "unit": "11",
+      "logo": "/images/logos/100-vision.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 35.8,
+        "y": -11.9,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Wuming Hotpot",
+      "floor": "1",
+      "unit": "11 & 12",
+      "logo": "/images/logos/wuming-hotpot.webp",
+      "category": "food",
+      "pin": {
+        "x": 40.2,
+        "y": 8.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "QQ Outlet",
+      "floor": "1",
+      "unit": "12",
+      "logo": "/images/logos/qq-outlet.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 40.2,
+        "y": 8.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "O.W.L",
+      "floor": "1",
+      "unit": "13A",
+      "logo": "/images/logos/o-w-l.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 37.3,
+        "y": -27.4
+      }
+    },
+    {
+      "name": "A&W",
+      "floor": "1",
+      "unit": "18",
+      "logo": "/images/logos/aandw.webp",
+      "category": "food",
+      "pin": {
+        "x": -9.7,
+        "y": 129.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Food District",
+      "floor": "1",
+      "unit": "20*28",
+      "logo": "/images/logos/food-district.webp",
+      "category": "food",
+      "pin": {
+        "x": -26.1,
+        "y": 120.9,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Allstar D.I.Y",
+      "floor": "1",
+      "unit": "29",
+      "logo": "/images/logos/allstar-d-i-y.webp",
+      "category": "home",
+      "pin": {
+        "x": -27.7,
+        "y": 120.0
+      }
+    },
+    {
+      "name": "Next Food Garden",
+      "floor": "1",
+      "unit": "32",
+      "logo": "/images/logos/next-food-garden.webp",
+      "category": "food",
+      "pin": {
+        "x": -42.2,
+        "y": 82.7
+      }
+    },
+    {
+      "name": "Kingyo",
+      "floor": "1",
+      "unit": "33A",
+      "logo": "/images/logos/kingyo.webp",
+      "category": "home",
+      "pin": {
+        "x": 11.5,
+        "y": -7.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Extreme",
+      "floor": "1",
+      "unit": "36",
+      "logo": "/images/logos/extreme.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 64.3,
+        "y": -4.9
+      }
+    },
+    {
+      "name": "MC Vogue",
+      "floor": "1",
+      "unit": "39",
+      "logo": "/images/logos/mc-vogue.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 28.5,
+        "y": -47.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Seven Noodle Restaurant by Mama Love",
+      "floor": "1",
+      "unit": "4",
+      "logo": "/images/logos/seven-noodle-restaurant-by-mama-love.webp",
+      "category": "food",
+      "pin": {
+        "x": 67.4,
+        "y": -64.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Hush Puppies Apparel",
+      "floor": "1",
+      "unit": "40",
+      "logo": "/images/logos/hush-puppies-apparel.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 16.5,
+        "y": -61.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "MJ Jewellery",
+      "floor": "1",
+      "unit": "41A",
+      "logo": "/images/logos/mj-jewellery.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 76.8,
+        "y": -73.0
+      }
+    },
+    {
+      "name": "FOH",
+      "floor": "1",
+      "unit": "41B",
+      "logo": "/images/logos/foh.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 76.8,
+        "y": -73.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Simplebean Korean Fashion",
+      "floor": "1",
+      "unit": "42",
+      "logo": "/images/logos/simplebean-korean-fashion.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 54.4,
+        "y": -34.9,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Honey Bibi",
+      "floor": "1",
+      "unit": "43",
+      "logo": "/images/logos/honey-bibi.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 9.7,
+        "y": 41.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "VS Outlet",
+      "floor": "1",
+      "unit": "43A",
+      "logo": "/images/logos/vs-outlet.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 2.0,
+        "y": 37.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "ITSU",
+      "floor": "1",
+      "unit": "45",
+      "logo": "/images/logos/itsu.webp",
+      "category": "food",
+      "pin": {
+        "x": -21.0,
+        "y": 26.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Three B's",
+      "floor": "1",
+      "unit": "47",
+      "logo": "/images/logos/three-b-s.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -19.4,
+        "y": 64.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Travel House",
+      "floor": "1",
+      "unit": "48",
+      "logo": "/images/logos/travel-house.webp",
+      "category": "services",
+      "pin": {
+        "x": -16.1,
+        "y": 98.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Chardon",
+      "floor": "1",
+      "unit": "49",
+      "logo": "/images/logos/chardon.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -12.7,
+        "y": 132.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Pangoi",
+      "floor": "1",
+      "unit": "50",
+      "logo": "/images/logos/pangoi.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -9.4,
+        "y": 166.6
+      }
+    },
+    {
+      "name": "Sox World",
+      "floor": "1",
+      "unit": "51",
+      "logo": "/images/logos/sox-world.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 28.4,
+        "y": 14.0
+      }
+    },
+    {
+      "name": "Home's Outlet",
+      "floor": "1",
+      "unit": "51B",
+      "logo": "/images/logos/home-s-outlet.webp",
+      "category": "home",
+      "pin": {
+        "x": 36.7,
+        "y": -24.1
+      }
+    },
+    {
+      "name": "Hot Button Boutique",
+      "floor": "1",
+      "unit": "51B",
+      "logo": "/images/logos/hot-button-boutique.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 34.0,
+        "y": -45.2
+      }
+    },
+    {
+      "name": "Reisshop",
+      "floor": "1",
+      "unit": "52",
+      "logo": "/images/logos/reisshop.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 16.6,
+        "y": -49.1
+      }
+    },
+    {
+      "name": "The Porters",
+      "floor": "1",
+      "unit": "53",
+      "logo": "/images/logos/the-porters.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 57.4,
+        "y": -26.7
+      }
+    },
+    {
+      "name": "Young Hearts",
+      "floor": "1",
+      "unit": "53A",
+      "logo": "/images/logos/young-hearts.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 44.7,
+        "y": -23.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Felancy",
+      "floor": "1",
+      "unit": "55",
+      "logo": "/images/logos/felancy.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 6.6,
+        "y": -12.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sorella",
+      "floor": "1",
+      "unit": "56",
+      "logo": "/images/logos/sorella.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -18.8,
+        "y": -4.8
+      }
+    },
+    {
+      "name": "DeFacto",
+      "floor": "1",
+      "unit": "58",
+      "logo": "/images/logos/defacto.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 29.7,
+        "y": -8.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Home’s Harmony",
+      "floor": "1",
+      "unit": "59",
+      "logo": "/images/logos/homes-harmony.webp",
+      "category": "home",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1
+      }
+    },
+    {
+      "name": "DEES",
+      "floor": "1",
+      "unit": "60",
+      "logo": "/images/logos/dees.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "COMO",
+      "floor": "1",
+      "unit": "61",
+      "logo": "/images/logos/como.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Yubiso",
+      "floor": "1",
+      "unit": "62",
+      "logo": "/images/logos/yubiso.webp",
+      "category": "home",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Lush Woods",
+      "floor": "1",
+      "unit": "63",
+      "logo": "/images/logos/lush-woods.webp",
+      "category": "home",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Duke's Kitchen",
+      "floor": "1",
+      "unit": "F - 33",
+      "logo": "/images/logos/duke-s-kitchen.webp",
+      "category": "food",
+      "pin": {
+        "x": -66.6,
+        "y": 26.9
+      }
+    },
+    {
+      "name": "Scan & Cut",
+      "floor": "1",
+      "unit": "F-01",
+      "logo": "/images/logos/scan-and-cut.webp",
+      "category": "home",
+      "pin": {
+        "x": 66.6,
+        "y": -70.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Xiang Xiang Pangkor Nasi Lemak",
+      "floor": "1",
+      "unit": "F-06",
+      "logo": "/images/logos/xiang-xiang-pangkor-nasi-lemak.webp",
+      "category": "food",
+      "pin": {
+        "x": 44.8,
+        "y": -28.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "VTORY",
+      "floor": "1",
+      "unit": "F-12 & F-13",
+      "logo": "/images/logos/vtory.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 44.7,
+        "y": 27.8
+      }
+    },
+    {
+      "name": "PERYSMITH",
+      "floor": "1",
+      "unit": "F-13A",
+      "logo": "/images/logos/perysmith.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 46.9,
+        "y": -33.3
+      }
+    },
+    {
+      "name": "A Sweat Wellness",
+      "floor": "1",
+      "unit": "F-15, F-16 & F-17",
+      "logo": "/images/logos/a-sweat-wellness.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -8.0,
+        "y": 130.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Cili Plate Restaurant",
+      "floor": "1",
+      "unit": "F-33",
+      "logo": "/images/logos/cili-plate-restaurant.webp",
+      "category": "food",
+      "pin": {
+        "x": 1.0,
+        "y": -7.4
+      }
+    },
+    {
+      "name": "Ekovest Gallery",
+      "floor": "1",
+      "unit": "F-37",
+      "logo": "/images/logos/ekovest-gallery.webp",
+      "category": "services",
+      "pin": {
+        "x": 52.3,
+        "y": -19.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Duke Home Gallery",
+      "floor": "1",
+      "unit": "F-38",
+      "logo": "/images/logos/duke-home-gallery.webp",
+      "category": "home",
+      "pin": {
+        "x": 40.4,
+        "y": -33.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Lucky Star",
+      "floor": "1",
+      "unit": "F-40",
+      "logo": "/images/logos/lucky-star.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 16.5,
+        "y": -61.6
+      }
+    },
+    {
+      "name": "Simple Worthy",
+      "floor": "1",
+      "unit": "F-41B",
+      "logo": "/images/logos/simple-worthy.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 76.8,
+        "y": -73.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Gerona",
+      "floor": "1",
+      "unit": "F-43",
+      "logo": "/images/logos/gerona.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 9.7,
+        "y": 41.2
+      }
+    },
+    {
+      "name": "Goi By Pangoi",
+      "floor": "1",
+      "unit": "F-43A",
+      "logo": "/images/logos/goi-by-pangoi.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 2.0,
+        "y": 37.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "MPSY",
+      "floor": "1",
+      "unit": "F-45",
+      "logo": "/images/logos/mpsy.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -21.0,
+        "y": 26.7
+      }
+    },
+    {
+      "name": "J&K",
+      "floor": "1",
+      "unit": "F-46",
+      "logo": "/images/logos/jandk.webp",
+      "category": "fashion",
+      "pin": {
+        "x": -22.7,
+        "y": 30.0
+      }
+    },
+    {
+      "name": "Crystal Treasures",
+      "floor": "1",
+      "unit": "F-51A",
+      "logo": "/images/logos/crystal-treasures.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 37.8,
+        "y": -32.4
+      }
+    },
+    {
+      "name": "Ms Kim",
+      "floor": "1",
+      "unit": "F-53",
+      "logo": "/images/logos/ms-kim.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 57.4,
+        "y": -26.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "WarehouseDirect.my",
+      "floor": "1",
+      "unit": "F-57, F-58",
+      "logo": "/images/logos/warehousedirect-my.webp",
+      "category": "home",
+      "pin": {
+        "x": 29.7,
+        "y": -8.4
+      }
+    },
+    {
+      "name": "Royal County of Berkshire Polo Club (RCB)",
+      "floor": "1",
+      "unit": "F-62",
+      "logo": "/images/logos/royal-county-of-berkshire-polo-club-rcb.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "HLL Restaurant",
+      "floor": "1",
+      "unit": "F-63",
+      "logo": "/images/logos/hll-restaurant.webp",
+      "category": "food",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Hui Hotpot",
+      "floor": "1",
+      "unit": "F-63",
+      "logo": "/images/logos/hui-hotpot.webp",
+      "category": "food",
+      "pin": {
+        "x": 44.4,
+        "y": -46.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "DUKE Home Airbnb",
+      "floor": "1",
+      "unit": "F01",
+      "logo": "/images/logos/duke-home-airbnb.webp",
+      "category": "services",
+      "pin": {
+        "x": 66.6,
+        "y": -70.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Fun & Relax by Home's Harmony",
+      "floor": "1",
+      "unit": "F07",
+      "logo": "/images/logos/fun-and-relax-by-home-s-harmony.webp",
+      "category": "home",
+      "pin": {
+        "x": 20.7,
+        "y": -4.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sunway Alishan",
+      "floor": "1",
+      "unit": "FD-08, 09 &10",
+      "logo": "/images/logos/sunway-alishan.webp",
+      "category": "food",
+      "pin": {
+        "x": 31.3,
+        "y": -31.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Xiang Juu Ge Hotpot",
+      "floor": "1",
+      "unit": "FD-11 & FD-12",
+      "logo": "/images/logos/xiang-juu-ge-hotpot.webp",
+      "category": "food",
+      "pin": {
+        "x": 40.2,
+        "y": 8.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Xiangshan Fish Steamboat",
+      "floor": "1",
+      "unit": "FD-14 &  FD-15",
+      "logo": "/images/logos/xiangshan-fish-steamboat.webp",
+      "category": "food",
+      "pin": {
+        "x": 14.9,
+        "y": 65.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Pao Xiang Bah Kut Teh",
+      "floor": "1",
+      "unit": "FD-16",
+      "logo": "/images/logos/pao-xiang-bah-kut-teh.webp",
+      "category": "food",
+      "pin": {
+        "x": -6.4,
+        "y": 131.1
+      }
+    },
+    {
+      "name": "Rich Coffee",
+      "floor": "1",
+      "unit": "FK-06",
+      "logo": "/images/logos/rich-coffee.webp",
+      "category": "food",
+      "pin": {
+        "x": 44.8,
+        "y": -28.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "GATTI Sports Concept Store",
+      "floor": "1",
+      "unit": "Lot F-09 & F-10",
+      "logo": "/images/logos/gatti-sports-concept-store.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 31.3,
+        "y": -31.7
+      }
+    },
+    {
+      "name": "GSC",
+      "floor": "2",
+      "unit": "01",
+      "logo": "/images/logos/gsc.webp",
+      "category": "fun",
+      "pin": {
+        "x": -30.5,
+        "y": 103.5
+      },
+      "featured": true
+    },
+    {
+      "name": "Oriental Star",
+      "floor": "2",
+      "unit": "01",
+      "logo": "/images/logos/oriental-star.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 16.5,
+        "y": -61.6
+      }
+    },
+    {
+      "name": "ESH",
+      "floor": "2",
+      "unit": "02",
+      "logo": "/images/logos/esh.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 47.4,
+        "y": -67.7
+      }
+    },
+    {
+      "name": "Magicboo Premium",
+      "floor": "2",
+      "unit": "03",
+      "logo": "/images/logos/magicboo-premium.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 47.0,
+        "y": -35.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Digi & Vivo Store",
+      "floor": "2",
+      "unit": "03",
+      "logo": "/images/logos/digi-and-vivo-store.webp",
+      "category": "tech",
+      "pin": {
+        "x": 47.0,
+        "y": -35.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Nanyang Cafe",
+      "floor": "2",
+      "unit": "03A",
+      "logo": "/images/logos/nanyang-cafe.webp",
+      "category": "food",
+      "pin": {
+        "x": 46.8,
+        "y": -19.5
+      }
+    },
+    {
+      "name": "Yi Pin Ramen",
+      "floor": "2",
+      "unit": "05A",
+      "logo": "/images/logos/yi-pin-ramen.webp",
+      "category": "food",
+      "pin": {
+        "x": 69.0,
+        "y": -68.6
+      }
+    },
+    {
+      "name": "Sukishi",
+      "floor": "2",
+      "unit": "05",
+      "logo": "/images/logos/sukishi.webp",
+      "category": "food",
+      "pin": {
+        "x": 79.6,
+        "y": -88.6
+      }
+    },
+    {
+      "name": "Sushi Zanmai",
+      "floor": "2",
+      "unit": "08",
+      "logo": "/images/logos/sushi-zanmai.webp",
+      "category": "food",
+      "pin": {
+        "x": 48.4,
+        "y": -58.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Buddy Bits",
+      "floor": "2",
+      "unit": "11",
+      "logo": "/images/logos/buddy-bits.webp",
+      "category": "grocery",
+      "pin": {
+        "x": 33.1,
+        "y": -4.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Caveman Coffee",
+      "floor": "2",
+      "unit": "12",
+      "logo": "/images/logos/caveman-coffee.webp",
+      "category": "food",
+      "pin": {
+        "x": 34.3,
+        "y": 42.6
+      }
+    },
+    {
+      "name": "Mr. DIY",
+      "floor": "2",
+      "unit": "12",
+      "logo": "/images/logos/mr-diy.webp",
+      "category": "home",
+      "pin": {
+        "x": 26.9,
+        "y": 14.0
+      },
+      "featured": true
+    },
+    {
+      "name": "Fun Scape",
+      "floor": "2",
+      "unit": "17",
+      "logo": "/images/logos/fun-scape.webp",
+      "category": "fun",
+      "pin": {
+        "x": -25.0,
+        "y": -26.9
+      }
+    },
+    {
+      "name": "Big Kidz",
+      "floor": "2",
+      "unit": "19",
+      "logo": "/images/logos/big-kidz.webp",
+      "category": "fun",
+      "pin": {
+        "x": -6.0,
+        "y": -22.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Brows & Arts Studio",
+      "floor": "2",
+      "unit": "20",
+      "logo": "/images/logos/brows-and-arts-studio.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 3.5,
+        "y": -20.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Espace",
+      "floor": "2",
+      "unit": "21",
+      "logo": "/images/logos/espace.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 13.0,
+        "y": -18.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Life n Fitness",
+      "floor": "2",
+      "unit": "22B",
+      "logo": "/images/logos/life-n-fitness.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 27.2,
+        "y": -14.9,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Karaoke Manekineko",
+      "floor": "2",
+      "unit": "23",
+      "logo": "/images/logos/karaoke-manekineko.webp",
+      "category": "fun",
+      "pin": {
+        "x": 32.0,
+        "y": -13.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "BeauMedic",
+      "floor": "2",
+      "unit": "23A",
+      "logo": "/images/logos/beaumedic.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 36.7,
+        "y": -12.7
+      }
+    },
+    {
+      "name": "Q&M Dental",
+      "floor": "2",
+      "unit": "26",
+      "logo": "/images/logos/qandm-dental.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 36.4,
+        "y": 9.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Toy Catcher",
+      "floor": "2",
+      "unit": "27",
+      "logo": "/images/logos/toy-catcher.webp",
+      "category": "fun",
+      "pin": {
+        "x": 36.2,
+        "y": 17.9,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Quincy Hair Artisan",
+      "floor": "2",
+      "unit": "29",
+      "logo": "/images/logos/quincy-hair-artisan.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -3.3,
+        "y": 85.1
+      }
+    },
+    {
+      "name": "Medi Beaute",
+      "floor": "2",
+      "unit": "31",
+      "logo": "/images/logos/medi-beaute.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -4.7,
+        "y": 102.4
+      }
+    },
+    {
+      "name": "DC Royal Nails & Foot Spa",
+      "floor": "2",
+      "unit": "32",
+      "logo": "/images/logos/dc-royal-nails-and-foot-spa.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -29.0,
+        "y": 81.8
+      }
+    },
+    {
+      "name": "Beauté Library",
+      "floor": "2",
+      "unit": "33",
+      "logo": "/images/logos/beaute-library.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 17.9,
+        "y": 31.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "DIAMOND NAIL+",
+      "floor": "2",
+      "unit": "35",
+      "logo": "/images/logos/diamond-nail.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -29.0,
+        "y": 81.8
+      }
+    },
+    {
+      "name": "White House Clean Lab",
+      "floor": "2",
+      "unit": "36",
+      "logo": "/images/logos/white-house-clean-lab.webp",
+      "category": "services",
+      "pin": {
+        "x": -8.4,
+        "y": 27.8,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Fifty Percent Hair Salon",
+      "floor": "2",
+      "unit": "37",
+      "logo": "/images/logos/fifty-percent-hair-salon.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 12.1,
+        "y": -26.3
+      }
+    },
+    {
+      "name": "DZI Kingdom",
+      "floor": "2",
+      "unit": "40",
+      "logo": "/images/logos/dzi-kingdom.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 40.7,
+        "y": -31.5
+      }
+    },
+    {
+      "name": "Hoco",
+      "floor": "2",
+      "unit": "40A",
+      "logo": "/images/logos/hoco.webp",
+      "category": "tech",
+      "pin": {
+        "x": 43.7,
+        "y": -37.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "ZODODO",
+      "floor": "2",
+      "unit": "41",
+      "logo": "/images/logos/zododo.webp",
+      "category": "tech",
+      "pin": {
+        "x": 46.6,
+        "y": -43.4
+      }
+    },
+    {
+      "name": "Innere Design",
+      "floor": "2",
+      "unit": "43",
+      "logo": "/images/logos/innere-design.webp",
+      "category": "home",
+      "pin": {
+        "x": 24.3,
+        "y": -5.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Beauty Avenue Aesthetic",
+      "floor": "2",
+      "unit": "45",
+      "logo": "/images/logos/beauty-avenue-aesthetic.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 2.0,
+        "y": 32.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "C'est Mimosa Beauty",
+      "floor": "2",
+      "unit": "45",
+      "logo": "/images/logos/c-est-mimosa-beauty.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 2.0,
+        "y": 32.5
+      }
+    },
+    {
+      "name": "Living Cabin",
+      "floor": "2",
+      "unit": "46",
+      "logo": "/images/logos/living-cabin.webp",
+      "category": "home",
+      "pin": {
+        "x": -9.6,
+        "y": 136.9
+      }
+    },
+    {
+      "name": "Puzzle Planet",
+      "floor": "2",
+      "unit": "47",
+      "logo": "/images/logos/puzzle-planet.webp",
+      "category": "fun",
+      "pin": {
+        "x": -0.1,
+        "y": 31.5
+      }
+    },
+    {
+      "name": "Speedy",
+      "floor": "2",
+      "unit": "48",
+      "logo": "/images/logos/speedy.webp",
+      "category": "tech",
+      "pin": {
+        "x": 12.2,
+        "y": -25.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Animix",
+      "floor": "2",
+      "unit": "49",
+      "logo": "/images/logos/animix.webp",
+      "category": "fun",
+      "pin": {
+        "x": 24.4,
+        "y": -82.3
+      }
+    },
+    {
+      "name": "Rampage Ultron",
+      "floor": "2",
+      "unit": "50",
+      "logo": "/images/logos/rampage-ultron.webp",
+      "category": "fun",
+      "pin": {
+        "x": 1.5,
+        "y": -1.1,
+        "estimated": true
+      }
+    },
+    {
+      "name": "J Chiropractic",
+      "floor": "2",
+      "unit": "51",
+      "logo": "/images/logos/j-chiropractic.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -9.4,
+        "y": 50.4
+      }
+    },
+    {
+      "name": "Guardian",
+      "floor": "2",
+      "unit": "52",
+      "logo": "/images/logos/guardian.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 23.3,
+        "y": 27.7
+      }
+    },
+    {
+      "name": "Soffurni",
+      "floor": "2",
+      "unit": "53A, 65A, 65B & 66",
+      "logo": "/images/logos/soffurni.webp",
+      "category": "home",
+      "pin": {
+        "x": -1.1,
+        "y": 14.0,
+        "estimated": true
+      }
+    },
+    {
+      "name": "TMT by Thundermatch",
+      "floor": "2",
+      "unit": "55",
+      "logo": "/images/logos/tmt-by-thundermatch.webp",
+      "category": "tech",
+      "pin": {
+        "x": 19.2,
+        "y": 50.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Yes",
+      "floor": "2",
+      "unit": "56",
+      "logo": "/images/logos/yes.webp",
+      "category": "tech",
+      "pin": {
+        "x": -16.9,
+        "y": 33.2,
+        "estimated": true
+      }
+    },
+    {
+      "name": "ONE TOUCH SOLUTION",
+      "floor": "2",
+      "unit": "56",
+      "logo": "/images/logos/one-touch-solution.webp",
+      "category": "tech",
+      "pin": {
+        "x": -16.9,
+        "y": 33.2
+      }
+    },
+    {
+      "name": "Celmonze The Signature",
+      "floor": "2",
+      "unit": "58",
+      "logo": "/images/logos/celmonze-the-signature.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 9.9,
+        "y": 58.9,
+        "estimated": true
+      }
+    },
+    {
+      "name": "CRT Gift Station",
+      "floor": "2",
+      "unit": "59",
+      "logo": "/images/logos/crt-gift-station.webp",
+      "category": "home",
+      "pin": {
+        "x": 16.4,
+        "y": 25.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Sin Sin Bookstore",
+      "floor": "2",
+      "unit": "61",
+      "logo": "/images/logos/sin-sin-bookstore.webp",
+      "category": "home",
+      "pin": {
+        "x": 29.4,
+        "y": -41.4
+      }
+    },
+    {
+      "name": "U Mobile",
+      "floor": "2",
+      "unit": "62A",
+      "logo": "/images/logos/u-mobile.webp",
+      "category": "tech",
+      "pin": {
+        "x": 5.6,
+        "y": -31.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Zus Coffee",
+      "floor": "2",
+      "unit": "63A",
+      "logo": "/images/logos/zus-coffee.webp",
+      "category": "food",
+      "pin": {
+        "x": -10.3,
+        "y": -25.3
+      }
+    },
+    {
+      "name": "Celcom",
+      "floor": "2",
+      "unit": "63C",
+      "logo": "/images/logos/celcom.webp",
+      "category": "tech",
+      "pin": {
+        "x": -10.3,
+        "y": -25.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Toy World",
+      "floor": "2",
+      "unit": "67",
+      "logo": "/images/logos/toy-world.webp",
+      "category": "fun",
+      "pin": {
+        "x": 2.6,
+        "y": 29.7
+      }
+    },
+    {
+      "name": "Daiso",
+      "floor": "2",
+      "unit": "68",
+      "logo": "/images/logos/daiso.webp",
+      "category": "home",
+      "pin": {
+        "x": 41.6,
+        "y": -88.1
+      },
+      "featured": true
+    },
+    {
+      "name": "Kaison",
+      "floor": "2",
+      "unit": "69",
+      "logo": "/images/logos/kaison.webp",
+      "category": "grocery",
+      "pin": {
+        "x": -16.0,
+        "y": 107.1
+      }
+    },
+    {
+      "name": "Bloom Brow & Lash",
+      "floor": "2",
+      "unit": "F-20",
+      "logo": "/images/logos/bloom-brow-and-lash.webp",
+      "category": "fashion",
+      "pin": {
+        "x": 3.5,
+        "y": -20.3,
+        "estimated": true
+      }
+    },
+    {
+      "name": "9 Kopitiam",
+      "floor": "2",
+      "unit": "K09",
+      "logo": "/images/logos/9-kopitiam.webp",
+      "category": "food",
+      "pin": {
+        "x": 40.1,
+        "y": -54.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "MyKori",
+      "floor": "2",
+      "unit": "K10",
+      "logo": "/images/stores/mykori.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 31.9,
+        "y": -50.6
+      }
+    },
+    {
+      "name": "Waffuru Plus+",
+      "floor": "2",
+      "unit": "K12",
+      "logo": "/images/logos/waffuru-plus.webp",
+      "category": "food",
+      "pin": {
+        "x": 34.3,
+        "y": 42.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "10 Thousand",
+      "floor": "2",
+      "unit": "S-28",
+      "logo": "/images/logos/10-thousand.webp",
+      "category": "food",
+      "pin": {
+        "x": 36.1,
+        "y": 26.7
+      }
+    },
+    {
+      "name": "BESlim",
+      "floor": "2",
+      "unit": "S-42 & S-43",
+      "logo": "/images/logos/beslim.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 24.3,
+        "y": -5.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Vivo",
+      "floor": "2",
+      "unit": "S-48",
+      "logo": "/images/logos/vivo.webp",
+      "category": "tech",
+      "pin": {
+        "x": 12.2,
+        "y": -25.4,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Skin Renew",
+      "floor": "2",
+      "unit": "S-50",
+      "logo": "/images/logos/skin-renew.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 1.5,
+        "y": -1.1
+      }
+    },
+    {
+      "name": "Face Wash Bear",
+      "floor": "2",
+      "unit": "S-55",
+      "logo": "/images/logos/face-wash-bear.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 19.2,
+        "y": 50.3
+      }
+    },
+    {
+      "name": "Bioxcell",
+      "floor": "2",
+      "unit": "S-56",
+      "logo": "/images/logos/bioxcell.webp",
+      "category": "beauty",
+      "pin": {
+        "x": -3.1,
+        "y": 125.8
+      }
+    },
+    {
+      "name": "SnackyyBar",
+      "floor": "2",
+      "unit": "S-59",
+      "logo": "/images/stores/snackyybar.webp",
+      "category": "food",
+      "pin": {
+        "x": 16.4,
+        "y": 25.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Playzu",
+      "floor": "2",
+      "unit": "S-59",
+      "logo": "/images/logos/playzu.webp",
+      "category": "fun",
+      "pin": {
+        "x": 16.4,
+        "y": 25.5,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Iscreen",
+      "floor": "2",
+      "unit": "S-62A",
+      "logo": "/images/logos/iscreen.webp",
+      "category": "tech",
+      "pin": {
+        "x": 5.6,
+        "y": -31.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Baby Shark Bounce Wonderland",
+      "floor": "2",
+      "unit": "S-67",
+      "logo": "/images/logos/baby-shark-bounce-wonderland.webp",
+      "category": "fun",
+      "pin": {
+        "x": 2.6,
+        "y": 29.7,
+        "estimated": true
+      }
+    },
+    {
+      "name": "Gong Cha",
+      "floor": "2",
+      "unit": "S-K10",
+      "logo": "/images/logos/gong-cha.webp",
+      "category": "food",
+      "pin": {
+        "x": 31.9,
+        "y": -50.6,
+        "estimated": true
+      }
+    },
+    {
+      "name": "NaV Beaute",
+      "floor": "2",
+      "unit": "S32",
+      "logo": "/images/logos/nav-beaute.webp",
+      "category": "beauty",
+      "pin": {
+        "x": 41.4,
+        "y": 6.3
+      }
+    }
+  ]
+}

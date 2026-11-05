@@ -1,0 +1,70 @@
+{
+  "name": "3d-map-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "build:map": "node scripts/build-map.mjs",
+    "watch:map": "node scripts/build-map.mjs --watch",
+    "build": "npm run check && node scripts/build-map.mjs && node scripts/checkenv.mjs && cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" PAYLOAD_MIGRATING=1 payload migrate && cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_MIGRATING=1 payload run scripts/seed.ts && cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_MIGRATING=1 payload migrate:create",
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_MIGRATING=1 payload run scripts/seed.ts",
+    "lint": "eslint src/map scripts tests",
+    "format": "prettier --write src/map scripts tests",
+    "test": "node --test tests/unit/*.test.mjs",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "test:e2e": "node tests/e2e/sweep.mjs",
+    "typecheck": "tsc -p tsconfig.map.json && tsc -p tsconfig.core.json",
+    "test:visual": "node tests/e2e/visual.mjs",
+    "verify": "npm run check && npm run build:map && node tests/e2e/sweep.mjs --local-map && node tests/e2e/sweep.mjs --local-map --phone && node tests/e2e/sweep.mjs --local-map --size=360x640 && node tests/e2e/sweep.mjs --local-map --size=844x390 && node tests/e2e/visual.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@payloadcms/db-postgres": "^3.92.1",
+    "@payloadcms/next": "^3.92.1",
+    "@payloadcms/richtext-lexical": "^3.92.1",
+    "@payloadcms/storage-s3": "^3.92.1",
+    "@payloadcms/translations": "^3.92.1",
+    "@payloadcms/ui": "^3.92.1",
+    "cross-env": "^10.1.0",
+    "dotenv": "^18.0.9",
+    "graphql": "^16.11.0",
+    "next": "^16.4.5",
+    "payload": "^3.92.1",
+    "pg": "^8.23.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.170.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.9.10",
+    "puppeteer-core": "^25.16.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.7.3"
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "@embedded-postgres/darwin-arm64@18.6.0-beta.19": true,
+    "fsevents@2.3.3": true
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}

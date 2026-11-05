@@ -1,0 +1,144 @@
+{
+  "en": {
+    "items": [
+      {
+        "icon": "atm",
+        "name": "ATMs",
+        "where": "South – Lower Ground Floor & South – First Floor"
+      },
+      {
+        "icon": "baby",
+        "name": "Baby Room",
+        "where": "Private nursing room with hot/cold water and diaper-changing table. Every floor except G & LG North."
+      },
+      {
+        "icon": "stroller",
+        "name": "Baby Stroller",
+        "where": "Available at the Information Counter, Ground Floor Concourse"
+      },
+      {
+        "icon": "carwash",
+        "name": "Car Wash",
+        "where": "Drop off your car while you shop. Basement 1 (B1-01)"
+      },
+      {
+        "icon": "parking",
+        "name": "Cashless Car Park",
+        "where": "All parking floors"
+      },
+      {
+        "icon": "wc",
+        "name": "Disabled Washroom",
+        "where": "Every floor"
+      },
+      {
+        "icon": "wifi",
+        "name": "Free Wi-Fi",
+        "where": "Stay connected on every floor"
+      },
+      {
+        "icon": "alert",
+        "name": "Panic Button",
+        "where": "In every parking area. Press for help in an emergency."
+      },
+      {
+        "icon": "surau",
+        "name": "Surau",
+        "where": "Second Floor, near DZI Kingdom"
+      },
+      {
+        "icon": "wheel",
+        "name": "Wheelchair",
+        "where": "Available at the Information Counter, Ground Floor Concourse"
+      }
+    ]
+  },
+  "ms": {
+    "items": [
+      {
+        "name": "ATM",
+        "where": "Selatan – Tingkat Bawah Tanah & Selatan – Tingkat 1"
+      },
+      {
+        "name": "Bilik Bayi",
+        "where": "Bilik penyusuan peribadi dengan air panas/sejuk dan meja salin lampin. Setiap tingkat kecuali G & LG Utara."
+      },
+      {
+        "name": "Kereta Sorong Bayi",
+        "where": "Boleh didapati di Kaunter Informasi, Concourse Tingkat Bawah"
+      },
+      {
+        "name": "Cuci Kereta",
+        "where": "Tinggalkan kereta anda semasa membeli-belah. Aras Bawah Tanah 1 (B1-01)"
+      },
+      {
+        "name": "Tempat Letak Kereta Tanpa Tunai",
+        "where": "Semua tingkat parkir"
+      },
+      {
+        "name": "Tandas OKU",
+        "where": "Setiap tingkat"
+      },
+      {
+        "name": "Wi-Fi Percuma",
+        "where": "Kekal berhubung di setiap tingkat"
+      },
+      {
+        "name": "Butang Kecemasan",
+        "where": "Di setiap kawasan parkir. Tekan untuk bantuan semasa kecemasan."
+      },
+      {
+        "name": "Surau",
+        "where": "Tingkat 2, berhampiran DZI Kingdom"
+      },
+      {
+        "name": "Kerusi Roda",
+        "where": "Boleh didapati di Kaunter Informasi, Concourse Tingkat Bawah"
+      }
+    ]
+  },
+  "zh": {
+    "items": [
+      {
+        "name": "提款机",
+        "where": "南区底层（LG）与南区一楼"
+      },
+      {
+        "name": "育婴室",
+        "where": "私密哺乳室，配备冷热饮水机与尿布台。除地面层与底层北区外，每层楼均设。"
+      },
+      {
+        "name": "婴儿车",
+        "where": "可于地面层中庭询问处借用"
+      },
+      {
+        "name": "洗车服务",
+        "where": "购物时顺便洗车。地下一层（B1-01）"
+      },
+      {
+        "name": "无现金停车场",
+        "where": "所有停车楼层"
+      },
+      {
+        "name": "无障碍洗手间",
+        "where": "每层楼"
+      },
+      {
+        "name": "免费 Wi-Fi",
+        "where": "每层楼都能畅快上网"
+      },
+      {
+        "name": "紧急求助按钮",
+        "where": "设于各停车区，紧急时按下即可求助"
+      },
+      {
+        "name": "祈祷室（Surau）",
+        "where": "二楼，DZI Kingdom 旁"
+      },
+      {
+        "name": "轮椅",
+        "where": "可于地面层中庭询问处借用"
+      }
+    ]
+  }
+}

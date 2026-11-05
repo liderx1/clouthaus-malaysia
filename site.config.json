@@ -1,0 +1,171 @@
+{
+  "$schema": "./site.config.schema.json",
+  "name": "EkoCheras Mall",
+  "logo": "/images/logo.svg",
+  "timezone": "Asia/Kuala_Lumpur",
+  "locales": [
+    "en",
+    "zh",
+    "ms"
+  ],
+  "origin": {
+    "lat": 3.0940219,
+    "lon": 101.7366251,
+    "radius": 950
+  },
+  "main": {
+    "osmName": "EkoCheras Mall",
+    "label": "EkoCheras Mall",
+    "height": 21,
+    "facade": "#F1E9DC",
+    "roof": "#7FA866",
+    "signFacade": [
+      [
+        3.2,
+        179
+      ],
+      [
+        77.4,
+        -58.8
+      ]
+    ],
+    "roofLabel": true
+  },
+  "floors": [
+    {
+      "code": "LG",
+      "z": 2.5,
+      "short": "LG",
+      "admin": "LG"
+    },
+    {
+      "code": "G",
+      "z": 6.5,
+      "short": "G",
+      "admin": "G"
+    },
+    {
+      "code": "1",
+      "z": 10.5,
+      "short": "L1",
+      "admin": "Level 1"
+    },
+    {
+      "code": "2",
+      "z": 14.5,
+      "short": "L2",
+      "admin": "Level 2"
+    },
+    {
+      "code": "2A",
+      "z": 16.5,
+      "short": "2A",
+      "admin": "2A"
+    }
+  ],
+  "drive": {
+    "road": "Jalan Cheras",
+    "roadType": "trunk",
+    "starts": [
+      {
+        "value": "jalan-cheras-north",
+        "label": "Jalan Cheras, from KL (north)"
+      },
+      {
+        "value": "jalan-cheras-south",
+        "label": "Jalan Cheras, from Kajang (south)"
+      }
+    ]
+  },
+  "hideRoadLabels": [
+    "to EkoCheras Mall"
+  ],
+  "extras": "ekocheras",
+  "aboutFacts": [
+    "280+",
+    "4",
+    "10–10",
+    "15 min"
+  ],
+  "text": {
+    "en": {
+      "loading": "Building Cheras in 3D…",
+      "why": "Why EkoCheras",
+      "storeText": "Find {name} on the {floor} of EkoCheras Mall, unit {unit}.",
+      "agree": "I agree to {name} using my details to respond to this message.",
+      "about": {
+        "title": "A place where nature meets technology",
+        "paragraphs": [
+          "Embark on a real experience like no other at EkoCheras Mall, the shopping destination at the heart of Cheras. Classical design meets a contemporary twist, and it's just 15 minutes from downtown Kuala Lumpur.",
+          "Built with seamless connectivity in mind, the mall is easy to reach from major roads and highways, and an elevated link bridge on the First Floor brings pedestrians straight in from Taman Mutiara MRT station. It's covered, accessible and easy for everyone.",
+          "Visit our dedicated Food Street for the authentic flavours of Cheras, while an array of shops and entertainment keeps the kids busy and the whole family happy. Dining and shopping have never been more enjoyable, or more relaxing."
+        ],
+        "factLabels": [
+          "Stores & restaurants",
+          "Shopping floors",
+          "Open daily, 10am – 10pm",
+          "From downtown KL"
+        ]
+      }
+    },
+    "ms": {
+      "loading": "Membina Cheras dalam 3D…",
+      "why": "Kenapa EkoCheras",
+      "storeText": "{name} di {floor} EkoCheras Mall, unit {unit}.",
+      "agree": "Saya bersetuju {name} menggunakan butiran saya untuk membalas mesej ini.",
+      "about": {
+        "title": "Tempat di mana alam bertemu teknologi",
+        "paragraphs": [
+          "Nikmati pengalaman sebenar yang tiada tandingan di EkoCheras Mall, destinasi membeli-belah di tengah-tengah Cheras. Reka bentuk klasik bertemu sentuhan kontemporari, dan hanya 15 minit dari pusat bandar Kuala Lumpur.",
+          "Dibina dengan ketersambungan lancar, pusat beli-belah ini mudah dikunjungi dari jalan utama dan lebuh raya, manakala jejantas bertingkat di Tingkat 1 membawa pejalan kaki terus dari stesen MRT Taman Mutiara. Ia berbumbung, mesra akses dan mudah untuk semua.",
+          "Kunjungi Food Street kami untuk rasa asli Cheras, sementara pelbagai kedai dan hiburan memastikan kanak-kanak seronok dan seisi keluarga gembira. Makan dan membeli-belah tidak pernah seseronok dan setenang ini."
+        ],
+        "factLabels": [
+          "Kedai & restoran",
+          "Tingkat membeli-belah",
+          "Dibuka setiap hari, 10pg – 10mlm",
+          "Dari pusat bandar KL"
+        ]
+      }
+    },
+    "zh": {
+      "loading": "正在生成 3D 蕉赖…",
+      "why": "为什么选择 EkoCheras",
+      "storeText": "{name} 位于 EkoCheras Mall {floor}，单位 {unit}。",
+      "agree": "我同意 {name} 使用我的资料回复此讯息。",
+      "about": {
+        "title": "自然与科技交汇之地",
+        "paragraphs": [
+          "在 EkoCheras Mall 展开与众不同的真实体验。这座购物胜地坐落于蕉赖心脏地带，经典设计融合现代风格，距吉隆坡市中心仅15分钟车程。",
+          "商场以无缝连接为设计理念，可经由主要道路与高速公路轻松抵达；一楼的高架天桥更让行人从 MRT Taman Mutiara 站直达商场，有盖、无障碍，人人方便。",
+          "走进专属美食街，品尝正宗蕉赖风味；丰富的商店与娱乐设施让孩子玩得开心、全家尽兴。用餐与购物，从未如此愉快又轻松。"
+        ],
+        "factLabels": [
+          "商店与餐厅",
+          "购物楼层",
+          "每日营业 10AM – 10PM",
+          "距吉隆坡市中心"
+        ]
+      }
+    }
+  },
+  "seo": {
+    "en": {
+      "title": "EkoCheras Mall · Cheras, Kuala Lumpur",
+      "description": "EkoCheras Mall, Cheras: find any of our 285 stores, get here by MRT, bus or car, and see what's on, all on a live 3D map."
+    },
+    "zh": {
+      "title": "EkoCheras Mall · 吉隆坡蕉赖",
+      "description": "在 3D 地图上找到 285 家商店，查看搭 MRT、巴士或开车的路线与最新活动。"
+    },
+    "ms": {
+      "title": "EkoCheras Mall · Cheras, Kuala Lumpur",
+      "description": "Cari 285 kedai, laluan MRT, bas dan kereta, serta acara terkini di peta 3D EkoCheras Mall."
+    },
+    "shareImage": "/images/share-ekocheras-atrium.webp"
+  },
+  "test": {
+    "sampleStore": "Starbucks",
+    "liveUrl": "https://ekocheras-mall-redesign.vercel.app"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "image": "/images/shop-coffee.svg",
+      "store": "Starbucks"
+    },
+    {
+      "image": "/images/shop-grocer.svg",
+      "store": "Village Grocer"
+    },
+    {
+      "image": "/images/shop-chili.svg",
+      "store": "Nando's"
+    },
+    {
+      "image": "/images/shop-beauty.svg",
+      "store": "Watsons"
+    },
+    {
+      "image": "/images/shop-bubble.svg",
+      "store": "Happy Lemon"
+    },
+    {
+      "image": "/images/shop-tea.svg",
+      "store": "TWG"
+    },
+    {
+      "image": "/images/shop-cake.svg",
+      "store": "Secret Recipe Cakes & Coffee"
+    },
+    {
+      "image": "/images/shop-pets.svg",
+      "store": "Pets Wonderland"
+    },
+    {
+      "image": "/images/shop-fashion.svg",
+      "store": "H&M"
+    },
+    {
+      "image": "/images/shop-cookies.svg",
+      "store": "Famous Amos"
+    }
+  ]
+}
