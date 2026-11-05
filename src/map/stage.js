@@ -121,6 +121,8 @@ renderer.domElement.addEventListener(
 export const U = { uTime: { value: 0 }, uNight: { value: 1 }, uDim: { value: 0 }, uCalm: { value: 0 } };
 /** parts of the mall itself: dimmable for focus modes, but never muted by day */
 const MALL_PARTS = new Set(['skyb', 'lglass', 'lroof']);
+// look.vividGreen: parks, lawns and trees keep their full green by day (not faded with the rest of the city)
+if (CONFIG.look?.vividGreen) for (const k of ['grass', 'leaf', 'core', 'frond']) MALL_PARTS.add(k);
 export const SUN = new THREE.DirectionalLight(0xfff2e0, 2.6);
 SUN.position.set(-420, 620, 260);
 SUN.castShadow = true;

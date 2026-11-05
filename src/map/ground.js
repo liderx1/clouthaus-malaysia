@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { CONFIG } from './config.js';
 import { OSM, ring } from './data.js';
 import { cumulative, sampleAt } from './geo.js';
 import { U, dimmable, scene } from './stage.js';
@@ -41,6 +42,7 @@ export function tex(name, repeat, srgb = true, ext = 'jpg') {
 }
 const GREEN = new Set(['park', 'wood', 'grass', 'pitch', 'recreation_ground', 'garden', 'scrub', 'cemetery']);
 const GREEN_TINT = { wood: 0x9cc48a, pitch: 0xd8f0b8, scrub: 0xc2dca0 };
+const VIVID = !!CONFIG.look?.vividGreen;
 {
   const green = [],
     other = [];
@@ -52,7 +54,7 @@ const GREEN_TINT = { wood: 0x9cc48a, pitch: 0xd8f0b8, scrub: 0xc2dca0 };
     const g = new THREE.ShapeGeometry(new THREE.Shape(r.map((q) => new THREE.Vector2(q[0], q[1])))).toNonIndexed();
     g.rotateX(-Math.PI / 2);
     g.translate(0, GREEN.has(a.t) ? 0.09 : 0.05, 0);
-    const c = new THREE.Color(GREEN.has(a.t) ? (GREEN_TINT[a.t] ?? 0xcde8b0) : col),
+    const c = new THREE.Color(GREEN.has(a.t) ? (GREEN_TINT[a.t] ?? (VIVID ? 0xb4de86 : 0xcde8b0)) : col),
       n = g.attributes.position.count,
       cols = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) c.toArray(cols, i * 3);

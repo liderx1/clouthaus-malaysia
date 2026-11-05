@@ -194,6 +194,14 @@
               "type": "number"
             }
           }
+        },
+        "pulseRadius": {
+          "type": "number",
+          "description": "Radius (m) of the pulsing ring on the ground around the main building (default 1.45 × its size)"
+        },
+        "pulseThrough": {
+          "type": "number",
+          "description": "0–1: strength of a faint copy of the ground ring drawn through buildings (for a tower among towers)"
         }
       }
     },
@@ -439,6 +447,10 @@
         },
         "skyNight": {
           "type": "string"
+        },
+        "vividGreen": {
+          "type": "boolean",
+          "description": "Parks, lawns and trees keep their full green by day"
         }
       }
     },

@@ -145,22 +145,35 @@ const pulse = new THREE.Mesh(
   new THREE.ShaderMaterial({
     transparent: true,
     depthWrite: false,
-    uniforms: U,
+    uniforms: { ...U, uK: { value: 1 } },
     vertexShader:
       'varying vec2 vU; void main(){ vU = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `uniform float uTime; uniform float uDim; uniform float uNight; varying vec2 vU; void main(){ float r = length(vU);
+    fragmentShader: `uniform float uTime; uniform float uDim; uniform float uNight; uniform float uK; varying vec2 vU; void main(){ float r = length(vU);
     float th = mix(0.1, 0.04, uNight);
     float w = fract(uTime * 0.35); float ringA = smoothstep(th, 0.0, abs(r - w)) * (1.0 - w);
     float w2 = fract(uTime * 0.35 + 0.5); ringA += smoothstep(th, 0.0, abs(r - w2)) * (1.0 - w2);
     float halo = smoothstep(1.0, 0.45, r) * smoothstep(0.38, 0.6, r) * (0.34 + 0.1 * sin(uTime * 2.2)) * (1.0 - uNight * 0.7);
     vec3 col = ${HI ? `vec3(${HI.r.toFixed(3)}, ${HI.g.toFixed(3)}, ${HI.b.toFixed(3)})` : 'mix(vec3(1.0, 0.0, 0.5), vec3(1.0, 0.42, 0.15), uNight)'};   // main.highlight, else fluorescent magenta by day, warm orange by night
-    gl_FragColor = vec4(col, clamp(ringA * mix(1.6, 0.6, uNight) + halo * mix(1.5, 1.0, uNight) + uDim * 0.4 * ringA, 0.0, 0.95)); }`,
+    gl_FragColor = vec4(col, uK * clamp(ringA * mix(1.6, 0.6, uNight) + halo * mix(1.5, 1.0, uNight) + uDim * 0.4 * ringA, 0.0, 0.95)); }`,
   }),
 );
 pulse.rotation.x = -Math.PI / 2;
 pulse.position.set(mallC[0], 0.4, -mallC[1]);
-pulse.scale.setScalar(mallRad * 1.45);
+pulse.scale.setScalar(CONFIG.main.pulseRadius ?? mallRad * 1.45); // a tower on a podium needs a wider ring
 scene.add(pulse);
+// among tall buildings the ground around the main building is hidden from most views: a faint second pass of the
+// same ring is drawn through them (site.config.json → main.pulseThrough, 0–1)
+if (CONFIG.main.pulseThrough) {
+  const m = /** @type {THREE.ShaderMaterial} */ (pulse.material).clone();
+  m.uniforms = { ...U, uK: { value: CONFIG.main.pulseThrough } };
+  m.depthTest = false;
+  const ghost = new THREE.Mesh(pulse.geometry, m);
+  ghost.rotation.copy(pulse.rotation);
+  ghost.position.copy(pulse.position);
+  ghost.scale.copy(pulse.scale);
+  ghost.renderOrder = 2;
+  scene.add(ghost);
+}
 /* ---------- main.halo: a soft light around the main building, after the brand's lit-from-behind look ----------
    A billboard of warm light that always stands just behind the building (seen from the camera), so the building
    itself is drawn over its centre and the glow reads as an aura around it, by day as well as by night. */

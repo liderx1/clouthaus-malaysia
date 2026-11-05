@@ -48,7 +48,9 @@
       "day": "#E3A955",
       "night": "#F4DCA8",
       "size": 0.75
-    }
+    },
+    "pulseRadius": 220,
+    "pulseThrough": 0.45
   },
   "floors": [
     {
@@ -407,7 +409,8 @@
     "fogDay": "#D3CBBE",
     "horizonNight": "#3A2A1C",
     "fogNight": "#24190F",
-    "skyNight": "#F0C89A"
+    "skyNight": "#F0C89A",
+    "vividGreen": true
   },
   "routeColors": {
     "carN": "#D9A441",
