@@ -323,13 +323,14 @@ export function windowShader(mat, mall = false) {
           diffuseColor.rgb = mix(mix(vec3(0.86, 0.87, 0.88), vec3(0.42, 0.50, 0.56), g), vec3(0.97), max(slab, fin));
           diffuseColor.rgb *= 1.0 - rec * 0.35; win = g * (1.0 - max(slab, fin)) * step(4.0, vWall.y);
         }
-        float bandGlow = 0.0, litGlow = 0.0;
-        if (kind > 7.5 && wall > 0.5) {                               // lit landmark: stainless steel and glass, lit at night
-          float fc = fract(vWall.x / 1.25); float fy = fract(vWall.y / 4.0);
-          float fin = step(fc, 0.32);
-          diffuseColor.rgb = mix(vec3(0.62, 0.66, 0.70), vec3(0.93, 0.93, 0.92), fin);
+        float bandGlow = 0.0, litGlow = 0.0, wash = 0.0;
+        if (kind > 7.5 && wall > 0.5) {                               // lit landmark: polished stainless steel, white light strips
+          float fc = fract(vWall.x / 1.25); float ring = step(fract(vWall.y / 18.0), 0.035);
+          float fin = step(fc, 0.3);
+          diffuseColor.rgb = mix(vec3(0.62, 0.66, 0.71), vec3(0.95, 0.96, 0.97), max(fin, ring));
           win = 0.0;
-          litGlow = (0.5 + 0.5 * fin) * (0.8 + 0.2 * step(fy, 0.12)) * (0.55 + 0.45 * smoothstep(0.0, vInfo.x, vWall.y));
+          litGlow = fin * 0.85 + ring * 1.2 + (1.0 - fin) * 0.18;
+          litGlow *= 0.7 + 0.3 * smoothstep(0.0, vInfo.x, vWall.y);
         }
         if (kind > 6.5 && kind < 7.5 && wall > 0.5) {                 // main.style "tower": curtain wall with a fin at every floor
           float fh = ${TW.fh}; float fy = fract(vWall.y / fh); float col = fract(vWall.x / 1.6);
@@ -347,6 +348,7 @@ export function windowShader(mat, mall = false) {
           c = mix(c, mix(${TW.fin} * 1.1, glass * 0.8, step(0.4, fract(vWall.y / 1.1))), crown);
           diffuseColor.rgb = c;
           win = (1.0 - max(fin, mull)) * (1.0 - podium) * (1.0 - crown) * (1.0 - bandGlow * colm);
+          wash = (fin * 0.55 + 0.05) * (1.0 - podium) + crown * 0.25;
           shopGlow = podium * step(vWall.y, 5.0); signGlow = crown * 0.6 + fin * (1.0 - podium) * 0.05; tealGlow = bandGlow * (1.0 - colm);
         }
         ${
@@ -385,7 +387,7 @@ export function windowShader(mat, mall = false) {
           '#include <emissivemap_fragment>',
           `#include <emissivemap_fragment>
         totalEmissiveRadiance += step(5.5, kind) * (win * lit * 0.3 + shopGlow * 0.5) * uNight * warm * 1.1 * (1.0 - uDim * 0.85 * step(kind, 5.5)) + step(5.5, kind) * uNight * (signGlow * vec3(1.0, 0.85, 0.7) * 0.9 + tealGlow * mix(vec3(0.2, 0.75, 0.8), vec3(1.0, 0.78, 0.5), step(6.5, kind)) * 0.5);
-        totalEmissiveRadiance += litGlow * (uNight * 0.8 + (1.0 - uNight) * 0.1) * vec3(0.98, 0.96, 0.9);
+        totalEmissiveRadiance += litGlow * (uNight * 0.9 + (1.0 - uNight) * 0.16) * vec3(0.95, 0.97, 1.0) + wash * uNight * vec3(1.0, 0.8, 0.5);
         ${
           lit
             ? ''
@@ -441,7 +443,7 @@ if (litOnes.length) {
   const m = new THREE.Mesh(
     buildingGeometry(litOnes.map((b) => ({ ...b, kId: 8 }))),
     windowShader(
-      new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.38, metalness: 0.22, envMapIntensity: 0.9 }),
+      new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.2, metalness: 0.62, envMapIntensity: 1.8 }),
       'lit',
     ),
   );

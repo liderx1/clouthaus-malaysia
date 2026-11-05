@@ -178,3 +178,23 @@ button:active, .store:active, .route-btn:active, .chip:active, .info[data-link]:
 .card-art { background: radial-gradient(120% 140% at 30% 100%, rgba(230, 207, 161, .22), rgba(230, 207, 161, .04) 60%) !important; }
 .card-pin { background: radial-gradient(circle at 35% 35%, var(--champagne-hi), var(--bronze)) !important; box-shadow: 0 8px 22px rgba(230, 207, 161, .35) !important; }
 .card-logo { background-color: #fff !important; }
+
+/* "Turn on the music": a small note under the music button until the music has played once on this visit */
+.music { position: relative; overflow: visible; }
+.music-hint { display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); padding: 5px 11px; border-radius: 999px; background: var(--veil-label); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--champagne); font-size: 11px; font-weight: 500; letter-spacing: .04em; white-space: nowrap; pointer-events: none; animation: hintIn .6s ease .8s both; }
+.music.has-hint .music-hint { display: block; }
+@keyframes hintIn { from { opacity: 0; transform: translate(-50%, -4px); } }
+@media (max-width: 760px), (max-height: 500px) and (orientation: landscape) { .music-hint { left: auto; right: -6px; transform: none; } @keyframes hintIn { from { opacity: 0; } } }
+
+/* the logo stands on the scene without a frame; a soft shadow keeps it readable on a bright sky */
+.brand, .is-night .brand { background: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; padding: 0 !important; box-shadow: none !important; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .55)) drop-shadow(0 0 10px rgba(0, 0, 0, .35)) !important; }
+
+/* the route's length and time: light type on the dark note */
+.route-note em { color: var(--champagne) !important; border-left: 1px solid rgba(245, 239, 228, .14) !important; font-weight: 500 !important; }
+
+/* every remaining dark text from the base stylesheet, made readable on the dark veils */
+.hint, .credits, .modal-box .credits, .info--fact em, .pform label { color: var(--ivory-2) !important; }
+.open.is-open, .is-night .open.is-open { color: var(--champagne) !important; }
+.info--fact em { color: var(--champagne) !important; }
+/* by day the sky is bright: the frameless logo turns deep bronze with a light halo */
+body:not(.is-night) .brand { color: #5E4321 !important; filter: drop-shadow(0 0 1px rgba(255, 255, 255, .9)) drop-shadow(0 0 10px rgba(255, 248, 235, .7)) !important; }

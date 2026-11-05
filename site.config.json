@@ -47,7 +47,7 @@
     "halo": {
       "day": "#E3A955",
       "night": "#F4DCA8",
-      "size": 1.7
+      "size": 0.75
     }
   },
   "floors": [

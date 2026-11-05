@@ -176,20 +176,6 @@ export const HALO = CONFIG.main.halo
       g.addColorStop(1, 'rgba(210,160,96,0)');
       x.fillStyle = g;
       x.fillRect(0, 0, 256, 256);
-      // faint rays fanning out, as in a light from behind
-      x.globalCompositeOperation = 'lighter';
-      for (let i = 0; i < 28; i++) {
-        const a = (i / 28) * Math.PI * 2 + Math.sin(i * 7.3) * 0.08;
-        const ray = x.createLinearGradient(128, 128, 128 + Math.cos(a) * 128, 128 + Math.sin(a) * 128);
-        ray.addColorStop(0, 'rgba(255,236,200,.10)');
-        ray.addColorStop(1, 'rgba(255,236,200,0)');
-        x.strokeStyle = ray;
-        x.lineWidth = 2 + (i % 3) * 2;
-        x.beginPath();
-        x.moveTo(128, 128);
-        x.lineTo(128 + Math.cos(a) * 128, 128 + Math.sin(a) * 128);
-        x.stroke();
-      }
       const tex = new THREE.CanvasTexture(c);
       tex.colorSpace = THREE.SRGBColorSpace;
       // by day the city is bright: the glow is drawn in front, as a ring that leaves the building itself clear
@@ -232,10 +218,10 @@ export function updateHalo(/** @type {THREE.Camera} */ cam, /** @type {number} *
     night = n > 0.5,
     back = night ? HALO.r + 6 : -HALO.r; // by night behind the building, by day in front of it
   s.position.set(mallC[0] + (dx / d) * back, MALL_H * 0.56, -mallC[1] + (dz / d) * back);
-  const k = (1 + 0.035 * Math.sin(time * 0.9)) * (night ? 1 : 1.9);
+  const k = (1 + 0.03 * Math.sin(time * 0.9)) * (night ? 1 : 1.25);
   s.scale.set(MALL_H * 0.95 * HALO.size * k, MALL_H * 1.45 * HALO.size * k, 1);
   s.material.color.copy(HALO.day).lerp(HALO.night, n);
-  s.material.opacity = night ? 0.95 : 0.85;
+  s.material.opacity = night ? 0.5 : 0.42;
   if (s.material.map !== (night ? HALO.tex : HALO.dayTex)) {
     s.material.map = night ? HALO.tex : HALO.dayTex;
     s.material.blending = night ? THREE.AdditiveBlending : THREE.NormalBlending;
