@@ -86,8 +86,7 @@
           "description": "The main building's name in OpenStreetMap; if missing, the largest building at the origin"
         },
         "label": {
-          "type": "string",
-          "description": "The orange label on the main building"
+          "description": "The highlighted label on the main building: a name, or one per language, e.g. {\"en\": \"…\", \"zh\": \"…\"}"
         },
         "height": {
           "type": "number",

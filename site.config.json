@@ -14,7 +14,10 @@
     "skyline": 2600
   },
   "main": {
-    "label": "CloutHaus Residences",
+    "label": {
+      "en": "CloutHaus Residences",
+      "zh": "CloutHaus 格拉豪斯"
+    },
     "height": 258,
     "style": "tower",
     "view": 150,

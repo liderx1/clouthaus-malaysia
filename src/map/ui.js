@@ -211,7 +211,7 @@ export function showStore(s) {
 /** the main building's own card: its address, a line about it and its routes (site.config.json → main.routes) */
 export function showMain() {
   lastCard = showMain;
-  showPlace(CONFIG.main.label ?? CONFIG.name, t('mainTag'), t('mainText'));
+  showPlace(pick(CONFIG.main.label) ?? CONFIG.name, t('mainTag'), t('mainText'));
   if (CONFIG.aboutImage?.src) $('#cardLogo').style.backgroundImage = `url("${CONFIG.aboutImage.src}")`;
   zoomSrc = CONFIG.aboutImage?.src ?? null;
   $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
