@@ -106,7 +106,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'zh' | 'zh-TW') | ('en' | 'zh' | 'zh-TW')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'zh') | ('en' | 'zh')[];
   globals: {
     site: Site;
     seo: Seo;
@@ -115,7 +115,7 @@ export interface Config {
     site: SiteSelect<false> | SiteSelect<true>;
     seo: SeoSelect<false> | SeoSelect<true>;
   };
-  locale: 'en' | 'zh' | 'zh-TW';
+  locale: 'en' | 'zh';
   widgets: {
     collections: CollectionsWidget;
   };

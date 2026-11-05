@@ -14,6 +14,9 @@ import { S } from './state.js';
    Exact unit positions come from the CMS ("3D map pin position", metres from the mall centre). Until a store has one,
    the pin stands over the mall and the card names the floor and unit; nothing is guessed. */
 /** pin height of each floor (site.config.json → floors) */
+// the pin takes main.highlight when the site has one (CloutHaus: gold), else red
+const PIN_HEX = CONFIG.main.highlight ?? '#E8331F',
+  PIN_COL = new THREE.Color(PIN_HEX).getHex();
 const FLOOR_Z = Object.fromEntries(CONFIG.floors.map((/** @type {{ code: string, z: number }} */ f) => [f.code, f.z]));
 export const pinGroup = new THREE.Group();
 overlay.add(pinGroup); // over the finished picture: no glow, no tone mapping, never hidden by buildings
@@ -32,7 +35,7 @@ pinSprite.scale.set(0.05, 0.062, 1);
 const pinStem = new THREE.Mesh(
   new THREE.CylinderGeometry(0.18, 0.18, 1, 8),
   new THREE.MeshBasicMaterial({
-    color: 0xe8331f,
+    color: PIN_COL,
     depthTest: false,
     transparent: true,
     opacity: 0.85,
@@ -43,7 +46,7 @@ pinStem.renderOrder = 999;
 export const pinDot = new THREE.Mesh(
   new THREE.RingGeometry(1.2, 2.4, 32),
   new THREE.MeshBasicMaterial({
-    color: 0xe8331f,
+    color: PIN_COL,
     depthTest: false,
     transparent: true,
     side: THREE.DoubleSide,
@@ -117,7 +120,7 @@ function pinTexture(s) {
     x.shadowColor = 'rgba(0,0,0,.35)';
     x.shadowBlur = 14;
     x.shadowOffsetY = 6;
-    x.fillStyle = '#E8331F';
+    x.fillStyle = PIN_HEX;
     x.beginPath();
     x.arc(104, 96, 86, Math.PI, 0);
     x.bezierCurveTo(190, 160, 120, 200, 104, 248);

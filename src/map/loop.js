@@ -4,7 +4,7 @@ import { sampleAt } from './geo.js';
 import { ghost } from './ghost.js';
 import { updateLabels } from './labels.js';
 import { clock, dayFog, nightFog } from './main.js';
-import { crownMat, edges, mallGroup } from './mall.js';
+import { HI, crownMat, edges, mallGroup } from './mall.js';
 import { BEACONS } from './markers.js';
 import { pinDot, pinGroup, pinSprite } from './pin.js';
 import { bloom, composer } from './post.js';
@@ -67,10 +67,12 @@ renderer.setAnimationLoop(() => {
   mallGroup.userData.logo.material.emissiveIntensity = 0.55 * n;
   if (TRAIN) TRAIN.win.emissiveIntensity = 1.6 * n;
   if (MONO) MONO.win.emissiveIntensity = 1.6 * n;
-  crownMat.color
-    .setRGB(1, 0.08 + 0.34 * n, 0.58 - 0.41 * n)
-    .multiplyScalar(1.2 + 0.9 * n + (0.6 + 0.8 * U.uDim.value) * (0.5 + 0.5 * Math.sin(time * 2.6)));
-  edges.material.color.setRGB(1, 0.08 + 0.34 * n, 0.58 - 0.41 * n);
+  // the highlight on the main building: main.highlight (e.g. the facade's gold), else magenta by day / orange by night
+  if (HI) crownMat.color.copy(HI);
+  else crownMat.color.setRGB(1, 0.08 + 0.34 * n, 0.58 - 0.41 * n);
+  crownMat.color.multiplyScalar(1.2 + 0.9 * n + (0.6 + 0.8 * U.uDim.value) * (0.5 + 0.5 * Math.sin(time * 2.6)));
+  if (HI) edges.material.color.copy(HI);
+  else edges.material.color.setRGB(1, 0.08 + 0.34 * n, 0.58 - 0.41 * n);
   edges.material.opacity = 0.35 + 0.45 * (0.5 + 0.5 * Math.sin(time * 2.6)) * (0.4 + U.uDim.value);
   if (pinGroup.visible) {
     const k = Math.min(1, (now - pinGroup.userData.t0) / 650),

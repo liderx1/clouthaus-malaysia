@@ -8162,8 +8162,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_stores_floor": {
@@ -8243,8 +8242,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_events_category": {
@@ -8286,8 +8284,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_highlights_status": {
@@ -8311,8 +8308,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_notices_status": {
@@ -8336,8 +8332,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_facilities_icon": {
@@ -8393,8 +8388,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_facts_status": {
@@ -8418,8 +8412,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_entrances_kind": {
@@ -8465,8 +8458,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_exits_kind": {
@@ -8506,8 +8498,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_routes_mode": {
@@ -8563,8 +8554,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     },
     "payload.enum_reports_kind": {
@@ -8604,8 +8594,7 @@
       "schema": "payload",
       "values": [
         "en",
-        "zh",
-        "zh-TW"
+        "zh"
       ]
     }
   },
@@ -8621,6 +8610,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "57686426-2e55-408f-b1a7-a234dede3609",
+  "id": "ca6789b7-6f22-4647-9605-73200152f239",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

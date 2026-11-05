@@ -5,8 +5,7 @@
   "timezone": "Asia/Kuala_Lumpur",
   "locales": [
     "en",
-    "zh",
-    "zh-TW"
+    "zh"
   ],
   "origin": {
     "lat": 3.15741,
@@ -16,7 +15,7 @@
   },
   "main": {
     "label": "CloutHaus Residences",
-    "height": 250,
+    "height": 258,
     "style": "tower",
     "view": 150,
     "facade": "#6E5038",
@@ -39,7 +38,8 @@
           133.0
         ]
       ]
-    }
+    },
+    "highlight": "#D9B26F"
   },
   "floors": [
     {
@@ -92,7 +92,7 @@
     },
     {
       "code": "63A",
-      "z": 244.7,
+      "z": 248.5,
       "short": "L63A",
       "admin": "Level 63A · rooftop"
     }
@@ -102,56 +102,49 @@
       "value": "one",
       "label": {
         "en": "1 bedroom",
-        "zh": "一房",
-        "zh-TW": "一房"
+        "zh": "一房"
       }
     },
     {
       "value": "two",
       "label": {
         "en": "2 bedrooms",
-        "zh": "两房",
-        "zh-TW": "兩房"
+        "zh": "两房"
       }
     },
     {
       "value": "three",
       "label": {
         "en": "3 bedrooms",
-        "zh": "三房",
-        "zh-TW": "三房"
+        "zh": "三房"
       }
     },
     {
       "value": "dualkey",
       "label": {
         "en": "Dual key",
-        "zh": "双钥匙单位",
-        "zh-TW": "雙鑰匙單位"
+        "zh": "双钥匙单位"
       }
     },
     {
       "value": "family",
       "label": {
         "en": "L33 · Explore & relax",
-        "zh": "33楼 · 亲子与休闲",
-        "zh-TW": "33 樓 · 親子與休閒"
+        "zh": "33楼 · 亲子与休闲"
       }
     },
     {
       "value": "wellness",
       "label": {
         "en": "L33A · Play & wellness",
-        "zh": "33A楼 · 健身与娱乐",
-        "zh-TW": "33A 樓 · 健身與娛樂"
+        "zh": "33A楼 · 健身与娱乐"
       }
     },
     {
       "value": "rooftop",
       "label": {
         "en": "L63A · Rooftop",
-        "zh": "63A楼 · 空中顶楼",
-        "zh-TW": "63A 樓 · 空中頂樓"
+        "zh": "63A楼 · 空中顶楼"
       }
     }
   ],
@@ -222,7 +215,7 @@
   },
   "extras": "clouthaus",
   "aboutFacts": [
-    "64",
+    "66",
     "615",
     "549–1,216",
     "6 min"
@@ -272,7 +265,7 @@
       "about": {
         "title": "Freehold residences facing the Petronas Twin Towers",
         "paragraphs": [
-          "CloutHaus Residences rises on Jalan P. Ramlee, in the KL City Centre core, on one of the last parcels facing the Petronas Twin Towers. The freehold tower by TA First Credit Sdn Bhd (TA Global group) holds 615 residences, 9 to 13 per floor, served by 9 passenger lifts in three zones plus a service lift.",
+          "CloutHaus Residences rises on Jalan P. Ramlee, in the KL City Centre core, on one of the last parcels facing the Petronas Twin Towers. The 66-storey freehold tower by TA First Credit Sdn Bhd (TA Global group) holds 615 residences, 9 to 13 per floor, served by 9 passenger lifts in three zones plus a service lift.",
           "Fifteen types, A to N plus L1, run from 549 sq ft one-bedroom homes to 1,216 sq ft three-bedroom corner units, including four dual-key types and three garden units on level 9. Residents share 25 facilities on levels 33, 33A and the 63A rooftop, with a 25 m infinity lap pool facing the Twin Towers.",
           "Hotel services come from Paradox Hotel Kuala Lumpur in the second tower of the same development. Completion is planned for 2029. Figures are from the developer's records as at September 2026 and remain subject to the authorities' final approval."
         ],
@@ -328,7 +321,7 @@
       "about": {
         "title": "面向双峰塔的永久地契住宅",
         "paragraphs": [
-          "CloutHaus Residences 位于吉隆坡城中城核心的 Jalan P. Ramlee，坐落在少数仍面向国油双峰塔的地段之一。这座永久地契大楼由 TA First Credit Sdn Bhd（TA Global 集团）发展，共 615 个住宅单位，每层 9 至 13 户，配备分三区运行的 9 部客梯及 1 部服务梯。",
+          "CloutHaus Residences 位于吉隆坡城中城核心的 Jalan P. Ramlee，坐落在少数仍面向国油双峰塔的地段之一。这座 66 层永久地契大楼由 TA First Credit Sdn Bhd（TA Global 集团）发展，共 615 个住宅单位，每层 9 至 13 户，配备分三区运行的 9 部客梯及 1 部服务梯。",
           "共 15 种户型（A 至 N 及 L1），面积从 549 平方英尺一房到 1,216 平方英尺三房转角单位，包括 4 种双钥匙户型及 9 楼的 3 个花园单位。住户共享 33、33A 楼及 63A 楼顶的 25 项设施，包括面向双峰塔的 25 米无边际泳池。",
           "同一发展项目的第二座大楼为 Paradox Hotel Kuala Lumpur，为住户提供酒店式服务。预计 2029 年竣工。以上数据来自发展商 2026 年 9 月的资料，最终以政府批准为准。"
         ],
@@ -339,76 +332,16 @@
           "步行至双峰塔"
         ]
       }
-    },
-    "zh-TW": {
-      "loading": "正在產生 3D 吉隆坡城中城…",
-      "why": "為什麼選擇 CloutHaus",
-      "storeText": "{name}：{unit}，{floor}。",
-      "agree": "我同意 {name} 及其代理使用我的資料回覆此訊息。",
-      "floors": {
-        "G": "地面層大廳",
-        "LOW": "9–32 樓",
-        "MID": "9–50 樓",
-        "33": "33 樓",
-        "33A": "33A 樓",
-        "ALL": "9–63 樓",
-        "UP": "36–63 樓",
-        "HIGH": "51–63 樓",
-        "63A": "63A 樓頂層"
-      },
-      "ui": {
-        "stores": "全部房型與設施",
-        "tabStores": "房型與設施",
-        "searchStores": "搜尋房型與設施",
-        "storesN": "{n} 個房型與設施",
-        "noResults": "找不到結果",
-        "anchors": "精選",
-        "pickCat": "選擇分類，或輸入房型",
-        "focus": "聚焦 CloutHaus",
-        "away": "距離 CloutHaus",
-        "entText": "大樓入口",
-        "station": "軌道交通站",
-        "estimated": "示意位置：依建商標準層平面圖，標在該房型面向的一側。",
-        "exactSoon": "建商圖說建檔後，將標示確切位置。",
-        "about": "關於 CloutHaus",
-        "contactUs": "登記意向與洽詢",
-        "leasing": "索取價格表",
-        "why": "為什麼選擇 CloutHaus",
-        "routeMrt": "從 LRT 怎麼走",
-        "byMrt": "搭 LRT／MRT",
-        "hours": "接待中心開放時間",
-        "unit": "單位",
-        "tabVisit": "參觀",
-        "tabNews": "最新消息"
-      },
-      "about": {
-        "title": "面向雙子星塔的永久產權住宅",
-        "paragraphs": [
-          "CloutHaus Residences 位於吉隆坡城中城核心的 Jalan P. Ramlee，坐落在少數仍正面雙子星塔的基地之一。這棟永久產權大樓由 TA First Credit Sdn Bhd（TA Global 集團）開發，共 615 戶，每層 9 至 13 戶，配備分三區運行的 9 部客梯與 1 部服務梯。",
-          "共 15 種房型（A 至 N 與 L1），坪數從 549 平方英尺一房到 1,216 平方英尺三房轉角戶，包括 4 種雙鑰匙房型與 9 樓的 3 戶花園單位。住戶共享 33、33A 樓與 63A 樓頂的 25 項設施，包括面向雙子星塔的 25 公尺無邊際泳池。",
-          "同一開發案的第二棟大樓為 Paradox Hotel Kuala Lumpur，提供住戶飯店式服務。預計 2029 年完工。以上數據來自建商 2026 年 9 月的資料，最終以政府核准為準。"
-        ],
-        "factLabels": [
-          "層樓",
-          "住宅戶數",
-          "平方英尺",
-          "步行到雙子星塔"
-        ]
-      }
     }
   },
   "seo": {
     "en": {
       "title": "CloutHaus Residences · KL City Centre in 3D",
-      "description": "CloutHaus Residences, Jalan P. Ramlee: the 64-storey tower, 15 unit types, 25 facilities and the KLCC streets, LRT, MRT and Monorail around it, on a live 3D map."
+      "description": "CloutHaus Residences, Jalan P. Ramlee: the 66-storey tower, 15 unit types, 25 facilities and the KLCC streets, LRT, MRT and Monorail around it, on a live 3D map."
     },
     "zh": {
       "title": "CloutHaus Residences · 3D 吉隆坡城中城",
-      "description": "在 3D 地图上查看 CloutHaus Residences：15 种户型、25 项设施，以及周边的双峰塔、LRT、MRT、单轨列车与街道。"
-    },
-    "zh-TW": {
-      "title": "CloutHaus Residences · 3D 吉隆坡城中城",
-      "description": "在 3D 地圖上查看 CloutHaus Residences：15 種房型、25 項設施，以及周邊的雙子星塔、LRT、MRT、單軌電車與街道。"
+      "description": "在 3D 地图上查看 CloutHaus Residences：66 层大楼、15 种户型、25 项设施，以及周边的双峰塔、LRT、MRT、单轨列车与街道。"
     },
     "shareImage": "/images/clouthaus-share.jpg"
   },

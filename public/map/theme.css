@@ -1,0 +1,95 @@
+/* CloutHaus: black & gold, after the bronze-gold facade of the tower. Loaded after map.css and wins over it.
+   Frames are black at the lowest opacity that keeps white and gold text readable over the 3D city (with a blur),
+   active states are solid gold with black text. Same look by day and by night. */
+:root, .is-night {
+  --gold: #C9A46A;
+  --gold-hi: #E7CF98;
+  --gold-lo: #9C7A3F;
+  --orange: #C9A46A;
+  --navy: #0B0B0C;
+  --ink: #F4EEE2;
+  --muted: #D9CDB5;
+  --noir: rgba(8, 8, 9, .34);
+  --noir-chip: rgba(8, 8, 9, .30);
+  --noir-edge: rgba(201, 164, 106, .55);
+  --glass: var(--noir);
+  --chip: var(--noir-chip);
+  --frame: var(--noir);
+  --frame-edge: var(--noir-edge);
+  --line: rgba(201, 164, 106, .35);
+}
+/* by day the city behind is bright: the black needs a little more body to keep text readable */
+body:not(.is-night) { --noir: rgba(8, 8, 9, .48); --noir-chip: rgba(8, 8, 9, .42); }
+body { color: var(--ink); }
+.preload { background: #0B0B0C; }
+.preload b { background: linear-gradient(90deg, var(--gold-lo), var(--gold-hi)); }
+
+/* every frame: faint black, blurred, hairline gold edge */
+.langs, .chip, #daynight, .open, .notice, .compass, .dock, .route-note, .ui-toggle, .card, .toast,
+.route-btn, .hrow .chip, .store, .search, .reset, .info:not(.info--link):not(.info--hot),
+.info--fact, .info--note {
+  background: var(--noir) !important;
+  color: var(--ink) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.1) !important;
+  backdrop-filter: blur(10px) saturate(1.1) !important;
+  box-shadow: inset 0 0 0 1px var(--noir-edge) !important;
+}
+.route-btn, .hrow .chip, .store, .search, .reset, .info:not(.info--link):not(.info--hot) { background: var(--noir-chip) !important; }
+.tabs, .is-night .tabs { background: rgba(8, 8, 9, .22) !important; }
+.notice, .open, #daynight, .tabs button:not(.is-on), .madeby, .count, .hint, .route-btn, .store, .hrow .chip, .info {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .9), 0 0 8px rgba(0, 0, 0, .55) !important;
+}
+.tabs button, .langs button, .madeby, .madeby a, .search, .search::placeholder, .info small, .store small, .card p, .route-note small { color: var(--muted) !important; }
+.search::placeholder { opacity: .85; }
+.open { color: var(--gold-hi) !important; }
+.notice::before, .open::before { background: var(--gold) !important; }
+
+/* active / chosen: solid gold, black text */
+.tabs button.is-on, .is-night .tabs button.is-on, .langs button[aria-current="true"], .is-night .langs button[aria-current="true"],
+.chip.is-on, .hrow .chip.is-on, .route-btn.is-on, .store.is-on, .store:hover,
+.is-night .route-btn.is-on, .is-night .hrow .chip.is-on, .is-night .store.is-on, .is-night .store:hover {
+  background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)) !important;
+  color: #0B0B0C !important;
+  text-shadow: none !important;
+  box-shadow: 0 4px 16px rgba(201, 164, 106, .35) !important;
+}
+.store.is-on small, .store:hover small, .is-night .store.is-on small, .is-night .store:hover small { color: #2A2216 !important; }
+.hrow .chip--safe.is-on, .is-night .hrow .chip--safe.is-on { background: #2E9E5B !important; color: #fff !important; }
+
+/* buttons that carry an action */
+.card-go, .info--link, .pform .card-go, .info--hot, .ui-off .ui-toggle, .rowwrap .dock-arrow, .is-night .rowwrap .dock-arrow, .lbl-x, .is-night .lbl-x {
+  background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)) !important;
+  color: #0B0B0C !important;
+}
+.card-share { background: rgba(8, 8, 9, .35) !important; color: var(--gold-hi) !important; box-shadow: inset 0 0 0 1px var(--noir-edge) !important; }
+.card h2, .route-note b { color: #FFF8EA !important; }
+.card-tag, .info em { background: transparent !important; color: var(--gold-hi) !important; box-shadow: inset 0 0 0 1px var(--gold) !important; }
+.info em { box-shadow: none !important; }
+.card-x, .modal-x { color: var(--gold-hi) !important; background: rgba(255, 255, 255, .06) !important; }
+.compass .rose b, .compass span { color: var(--gold-hi) !important; }
+.rose i { background: linear-gradient(var(--gold) 50%, #6B6357 50%) !important; }
+#scale i { border-color: var(--gold) !important; } #scale, #scale b { color: var(--gold-hi) !important; }
+
+/* labels on the map: black pills with gold, the tower's label in solid gold */
+.lbl span, .is-night .lbl span { background: rgba(8, 8, 9, .62) !important; color: #F4EEE2 !important; box-shadow: inset 0 0 0 1px rgba(201, 164, 106, .4), 0 4px 14px rgba(0, 0, 0, .35) !important; }
+.lbl::after { background: rgba(201, 164, 106, .8) !important; }
+.lbl--mall span, .is-night .lbl--mall span {
+  background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)) !important;
+  color: #0B0B0C !important;
+  box-shadow: 0 6px 20px rgba(201, 164, 106, .45) !important;
+}
+.lbl--mall span::before { background: #0B0B0C !important; }
+.lbl--landmark span, .is-night .lbl--landmark span { color: var(--gold-hi) !important; box-shadow: inset 0 0 0 1.5px var(--gold), 0 4px 14px rgba(0, 0, 0, .35) !important; }
+.lbl--road span { background: rgba(8, 8, 9, .7) !important; color: #E9E1D2 !important; box-shadow: none !important; }
+.lbl--entrance span, .lbl--exit span, .lbl--assembly span, .lbl--station span, .lbl--green span { background: var(--c) !important; color: #fff !important; }
+
+/* popups: black glass with gold */
+.modal { background: rgba(0, 0, 0, .45) !important; }
+.modal-box { background: rgba(14, 13, 12, .92) !important; color: var(--ink) !important; box-shadow: inset 0 0 0 1px var(--noir-edge), 0 30px 80px rgba(0, 0, 0, .5) !important; }
+.modal-box h2 { color: #FFF8EA !important; }
+.modal-box p, .modal-box label { color: var(--muted) !important; }
+.modal-facts div { background: rgba(201, 164, 106, .1) !important; box-shadow: inset 0 0 0 1px rgba(201, 164, 106, .3); }
+.modal-facts b { color: var(--gold-hi) !important; }
+.pform input, .pform select, .pform textarea { background: rgba(255, 255, 255, .05) !important; color: var(--ink) !important; border-color: rgba(201, 164, 106, .35) !important; }
+.brand, .is-night .brand { color: var(--gold) !important; filter: drop-shadow(0 0 1px rgba(0, 0, 0, .9)) drop-shadow(0 1px 8px rgba(0, 0, 0, .75)) !important; }
+.brand { box-sizing: content-box; padding: 6px 14px; border-radius: 999px; background: var(--noir); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px var(--noir-edge); filter: none !important; }

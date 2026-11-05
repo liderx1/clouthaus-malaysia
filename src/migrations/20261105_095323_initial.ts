@@ -3,55 +3,55 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`CREATE SCHEMA IF NOT EXISTS "payload";
 
-   CREATE TYPE "payload"."_locales" AS ENUM('en', 'zh', 'zh-TW');
+   CREATE TYPE "payload"."_locales" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_stores_floor" AS ENUM('G', 'LOW', 'MID', '33', '33A', 'ALL', 'UP', 'HIGH', '63A');
   CREATE TYPE "payload"."enum_stores_category" AS ENUM('one', 'two', 'three', 'dualkey', 'family', 'wellness', 'rooftop');
   CREATE TYPE "payload"."enum_stores_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__stores_v_version_floor" AS ENUM('G', 'LOW', 'MID', '33', '33A', 'ALL', 'UP', 'HIGH', '63A');
   CREATE TYPE "payload"."enum__stores_v_version_category" AS ENUM('one', 'two', 'three', 'dualkey', 'family', 'wellness', 'rooftop');
   CREATE TYPE "payload"."enum__stores_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__stores_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__stores_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_events_category" AS ENUM('event', 'campaign', 'popup');
   CREATE TYPE "payload"."enum_events_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__events_v_version_category" AS ENUM('event', 'campaign', 'popup');
   CREATE TYPE "payload"."enum__events_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__events_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__events_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_highlights_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__highlights_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__highlights_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__highlights_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_notices_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__notices_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__notices_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__notices_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_facilities_icon" AS ENUM('atm', 'baby', 'stroller', 'carwash', 'parking', 'wc', 'wifi', 'alert', 'surau', 'wheel');
   CREATE TYPE "payload"."enum_facilities_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__facilities_v_version_icon" AS ENUM('atm', 'baby', 'stroller', 'carwash', 'parking', 'wc', 'wifi', 'alert', 'surau', 'wheel');
   CREATE TYPE "payload"."enum__facilities_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__facilities_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__facilities_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_facts_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__facts_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__facts_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__facts_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_entrances_kind" AS ENUM('main', 'mrt', 'bus', 'side', 'parking');
   CREATE TYPE "payload"."enum_entrances_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__entrances_v_version_kind" AS ENUM('main', 'mrt', 'bus', 'side', 'parking');
   CREATE TYPE "payload"."enum__entrances_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__entrances_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__entrances_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_exits_kind" AS ENUM('exit', 'assembly');
   CREATE TYPE "payload"."enum_exits_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__exits_v_version_kind" AS ENUM('exit', 'assembly');
   CREATE TYPE "payload"."enum__exits_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__exits_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__exits_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_routes_mode" AS ENUM('walk', 'drive');
   CREATE TYPE "payload"."enum_routes_start" AS ENUM('jalan-ampang-north', 'jalan-ampang-south');
   CREATE TYPE "payload"."enum_routes_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__routes_v_version_mode" AS ENUM('walk', 'drive');
   CREATE TYPE "payload"."enum__routes_v_version_start" AS ENUM('jalan-ampang-north', 'jalan-ampang-south');
   CREATE TYPE "payload"."enum__routes_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__routes_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__routes_v_published_locale" AS ENUM('en', 'zh');
   CREATE TYPE "payload"."enum_reports_kind" AS ENUM('error', 'slow');
   CREATE TYPE "payload"."enum_reports_device" AS ENUM('desktop', 'phone');
   CREATE TYPE "payload"."enum_site_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__site_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__site_v_published_locale" AS ENUM('en', 'zh', 'zh-TW');
+  CREATE TYPE "payload"."enum__site_v_published_locale" AS ENUM('en', 'zh');
   CREATE TABLE "payload"."stores" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"_order" varchar,

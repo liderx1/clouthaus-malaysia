@@ -168,6 +168,10 @@
               "type": "array"
             }
           }
+        },
+        "highlight": {
+          "type": "string",
+          "description": "Colour of the main building's outline, crown ribbon and pulse ring (default: magenta by day, orange by night)"
         }
       }
     },

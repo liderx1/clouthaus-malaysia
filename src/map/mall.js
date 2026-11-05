@@ -22,6 +22,8 @@ const mallMat = windowShader(
   true,
 );
 export const TOWER = CONFIG.main.style === 'tower';
+/** main.highlight: the colour of the main building's outline, crown ribbon and pulse (default magenta / orange) */
+export const HI = CONFIG.main.highlight ? new THREE.Color(CONFIG.main.highlight) : null;
 const mallGeo = buildingGeometry([{ ...MALL, h: MALL_H, type: 'commercial', kId: TOWER ? 7 : 6, exact: TOWER }]);
 {
   const c = mallGeo.attributes.color;
@@ -119,7 +121,7 @@ export const LINK_ROOF = [];
 }
 export const edges = new THREE.LineSegments(
   new THREE.EdgesGeometry(mallGeo, 20),
-  new THREE.LineBasicMaterial({ color: 0xff6a2b, transparent: true }),
+  new THREE.LineBasicMaterial({ color: HI ?? 0xff6a2b, transparent: true }),
 );
 mallGroup.add(edges);
 export const crownMat = new THREE.MeshBasicMaterial({ color: 0xff6a2b, transparent: true, side: THREE.DoubleSide });
@@ -151,7 +153,7 @@ const pulse = new THREE.Mesh(
     float w = fract(uTime * 0.35); float ringA = smoothstep(th, 0.0, abs(r - w)) * (1.0 - w);
     float w2 = fract(uTime * 0.35 + 0.5); ringA += smoothstep(th, 0.0, abs(r - w2)) * (1.0 - w2);
     float halo = smoothstep(1.0, 0.45, r) * smoothstep(0.38, 0.6, r) * (0.34 + 0.1 * sin(uTime * 2.2)) * (1.0 - uNight * 0.7);
-    vec3 col = mix(vec3(1.0, 0.0, 0.5), vec3(1.0, 0.42, 0.15), uNight);   // fluorescent magenta by day, warm orange by night
+    vec3 col = ${HI ? `vec3(${HI.r.toFixed(3)}, ${HI.g.toFixed(3)}, ${HI.b.toFixed(3)})` : 'mix(vec3(1.0, 0.0, 0.5), vec3(1.0, 0.42, 0.15), uNight)'};   // main.highlight, else fluorescent magenta by day, warm orange by night
     gl_FragColor = vec4(col, clamp(ringA * mix(1.6, 0.6, uNight) + halo * mix(1.5, 1.0, uNight) + uDim * 0.4 * ringA, 0.0, 0.95)); }`,
   }),
 );

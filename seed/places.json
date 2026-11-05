@@ -5,8 +5,7 @@
    "kind": "main",
    "name": {
     "en": "CloutHaus main lobby (indicative)",
-    "zh": "CloutHaus 主大堂（示意）",
-    "zh-TW": "CloutHaus 主大廳（示意）"
+    "zh": "CloutHaus 主大堂（示意）"
    },
    "x": 21.8,
    "y": -0.4,
@@ -17,8 +16,7 @@
    "kind": "parking",
    "name": {
     "en": "Car park entrance (indicative)",
-    "zh": "停车场入口（示意）",
-    "zh-TW": "停車場入口（示意）"
+    "zh": "停车场入口（示意）"
    },
    "x": 17.0,
    "y": 25.3,
@@ -30,8 +28,7 @@
    "id": "e1",
    "name": {
     "en": "Emergency exit (indicative)",
-    "zh": "紧急出口（示意）",
-    "zh-TW": "緊急出口（示意）"
+    "zh": "紧急出口（示意）"
    },
    "x": -18.0,
    "y": 5.5
@@ -40,8 +37,7 @@
    "id": "e2",
    "name": {
     "en": "Emergency exit (indicative)",
-    "zh": "紧急出口（示意）",
-    "zh-TW": "緊急出口（示意）"
+    "zh": "紧急出口（示意）"
    },
    "x": 7.5,
    "y": -28.0
@@ -52,8 +48,7 @@
    "id": "a1",
    "name": {
     "en": "Assembly point (indicative)",
-    "zh": "紧急集合点（示意）",
-    "zh-TW": "緊急集合點（示意）"
+    "zh": "紧急集合点（示意）"
    },
    "x": 53.8,
    "y": 4.1
