@@ -31,7 +31,8 @@ export const Stores: CollectionConfig = {
       type: 'row',
       fields: [
         { name: 'name', type: 'text', required: true, admin: { width: '50%' } },
-        { name: 'logo', type: 'upload', relationTo: 'media', admin: { width: '50%' } },
+        { name: 'logo', type: 'upload', relationTo: 'media', admin: { width: '25%' } },
+        { name: 'plan', label: 'Plan (opens full screen)', type: 'upload', relationTo: 'media', admin: { width: '25%', description: 'Floor plan or layout; tapping the picture on the card opens it.' } },
       ],
     },
     {

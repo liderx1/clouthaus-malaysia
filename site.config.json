@@ -39,7 +39,16 @@
         ]
       ]
     },
-    "highlight": "#D9B26F"
+    "highlight": "#D9B26F",
+    "routes": [
+      "carS",
+      "bus"
+    ],
+    "halo": {
+      "day": "#E3A955",
+      "night": "#F4DCA8",
+      "size": 1.7
+    }
   },
   "floors": [
     {
@@ -150,21 +159,30 @@
   ],
   "landmarks": [
     {
-      "label": "Petronas Twin Towers",
+      "label": {
+        "en": "Petronas Twin Towers",
+        "zh": "国油双峰塔"
+      },
       "at": [
         158,
         62
       ]
     },
     {
-      "label": "Merdeka 118",
+      "label": {
+        "en": "Merdeka 118",
+        "zh": "默迪卡118"
+      },
       "at": [
         -1064,
         -1729
       ]
     },
     {
-      "label": "KL Tower",
+      "label": {
+        "en": "KL Tower",
+        "zh": "吉隆坡塔"
+      },
       "at": [
         -731,
         -502
@@ -178,7 +196,10 @@
       ]
     },
     {
-      "label": "Four Seasons Place",
+      "label": {
+        "en": "Four Seasons Place",
+        "zh": "吉隆坡四季酒店"
+      },
       "at": [
         394,
         71
@@ -192,7 +213,10 @@
       ]
     },
     {
-      "label": "Pavilion Kuala Lumpur",
+      "label": {
+        "en": "Pavilion Kuala Lumpur",
+        "zh": "柏威年广场"
+      },
       "at": [
         325,
         -915
@@ -260,7 +284,11 @@
         "hours": "Sales gallery hours",
         "unit": "Unit",
         "tabVisit": "Visit",
-        "tabNews": "Updates"
+        "tabNews": "Updates",
+        "close": "Close",
+        "mainTag": "28 Jalan P. Ramlee · KL City Centre",
+        "mainText": "66 storeys, 615 freehold residences facing the Petronas Twin Towers, about 6 minutes away on foot. Completion 2029.",
+        "music": "Music"
       },
       "about": {
         "title": "Freehold residences facing the Petronas Twin Towers",
@@ -316,7 +344,11 @@
         "hours": "销售展厅开放时间",
         "unit": "单位",
         "tabVisit": "参观",
-        "tabNews": "最新消息"
+        "tabNews": "最新消息",
+        "close": "关闭",
+        "mainTag": "28 Jalan P. Ramlee · 吉隆坡城中城",
+        "mainText": "66 层，615 个永久地契住宅单位，面向国油双峰塔，步行约 6 分钟。预计 2029 年竣工。",
+        "music": "音乐"
       },
       "about": {
         "title": "面向双峰塔的永久地契住宅",
@@ -352,5 +384,47 @@
   "aboutImage": {
     "src": "/images/clouthaus-facade.jpg",
     "alt": "CloutHaus Residences and Paradox Hotel towers, architectural render (artist's impression)"
-  }
+  },
+  "names": {
+    "Ampang Park": {
+      "zh": null
+    },
+    "Persiaran KLCC": {
+      "zh": null
+    },
+    "Stadium Negara": {
+      "zh": null
+    },
+    "The Exchange 106": {
+      "zh": null
+    },
+    "Menara Ilham": {
+      "zh": null
+    }
+  },
+  "look": {
+    "horizonDay": "#D6CFC2",
+    "fogDay": "#D3CBBE",
+    "horizonNight": "#3A2A1C",
+    "fogNight": "#24190F",
+    "skyNight": "#F0C89A"
+  },
+  "routeColors": {
+    "carN": "#D9A441",
+    "carS": "#D9A441",
+    "bus": "#8FB8E8",
+    "lrt": "#E0708C",
+    "mono": "#A9CF6E"
+  },
+  "storeRoute": false,
+  "litLandmarks": [
+    {
+      "at": [
+        162,
+        58
+      ],
+      "r": 80,
+      "minH": 150
+    }
+  ]
 }

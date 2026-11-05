@@ -177,6 +177,8 @@ export const ROUTE_COL = {
   carN: '#F04A12',
   carS: '#F04A12',
 };
+// a site can give its routes their own colours (site.config.json → routeColors), e.g. car and bus clearly apart
+Object.assign(ROUTE_COL, CONFIG.routeColors ?? {});
 /** route button icon (colour, letter) by route id: MRT, LRT, Monorail, bus, car park */
 export const ROUTE_ICON = {
   mrt: ['#1565D8', 'M'],
@@ -186,3 +188,4 @@ export const ROUTE_ICON = {
   carN: ['#C2410C', 'P'],
   carS: ['#C2410C', 'P'],
 };
+for (const [id, c] of Object.entries(CONFIG.routeColors ?? {})) ROUTE_ICON[id] = [c, ROUTE_ICON[id]?.[1] ?? '•'];

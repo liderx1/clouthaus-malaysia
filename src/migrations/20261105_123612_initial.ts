@@ -57,6 +57,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_order" varchar,
   	"name" varchar,
   	"logo_id" integer,
+  	"plan_id" integer,
   	"floor" "payload"."enum_stores_floor",
   	"unit" varchar,
   	"category" "payload"."enum_stores_category" DEFAULT 'one',
@@ -82,6 +83,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version__order" varchar,
   	"version_name" varchar,
   	"version_logo_id" integer,
+  	"version_plan_id" integer,
   	"version_floor" "payload"."enum__stores_v_version_floor",
   	"version_unit" varchar,
   	"version_category" "payload"."enum__stores_v_version_category" DEFAULT 'one',
@@ -662,9 +664,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   ALTER TABLE "payload"."stores" ADD CONSTRAINT "stores_logo_id_media_id_fk" FOREIGN KEY ("logo_id") REFERENCES "payload"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "payload"."stores" ADD CONSTRAINT "stores_plan_id_media_id_fk" FOREIGN KEY ("plan_id") REFERENCES "payload"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "payload"."stores_locales" ADD CONSTRAINT "stores_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "payload"."stores"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload"."_stores_v" ADD CONSTRAINT "_stores_v_parent_id_stores_id_fk" FOREIGN KEY ("parent_id") REFERENCES "payload"."stores"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "payload"."_stores_v" ADD CONSTRAINT "_stores_v_version_logo_id_media_id_fk" FOREIGN KEY ("version_logo_id") REFERENCES "payload"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "payload"."_stores_v" ADD CONSTRAINT "_stores_v_version_plan_id_media_id_fk" FOREIGN KEY ("version_plan_id") REFERENCES "payload"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "payload"."_stores_v_locales" ADD CONSTRAINT "_stores_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "payload"."_stores_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload"."events" ADD CONSTRAINT "events_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "payload"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "payload"."events_locales" ADD CONSTRAINT "events_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "payload"."events"("id") ON DELETE cascade ON UPDATE no action;
@@ -719,6 +723,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload"."seo_locales" ADD CONSTRAINT "seo_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "payload"."seo"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "stores__order_idx" ON "payload"."stores" USING btree ("_order");
   CREATE INDEX "stores_logo_idx" ON "payload"."stores" USING btree ("logo_id");
+  CREATE INDEX "stores_plan_idx" ON "payload"."stores" USING btree ("plan_id");
   CREATE INDEX "stores_updated_at_idx" ON "payload"."stores" USING btree ("updated_at");
   CREATE INDEX "stores_created_at_idx" ON "payload"."stores" USING btree ("created_at");
   CREATE INDEX "stores__status_idx" ON "payload"."stores" USING btree ("_status");
@@ -727,6 +732,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_stores_v_parent_idx" ON "payload"."_stores_v" USING btree ("parent_id");
   CREATE INDEX "_stores_v_version_version__order_idx" ON "payload"."_stores_v" USING btree ("version__order");
   CREATE INDEX "_stores_v_version_version_logo_idx" ON "payload"."_stores_v" USING btree ("version_logo_id");
+  CREATE INDEX "_stores_v_version_version_plan_idx" ON "payload"."_stores_v" USING btree ("version_plan_id");
   CREATE INDEX "_stores_v_version_version_updated_at_idx" ON "payload"."_stores_v" USING btree ("version_updated_at");
   CREATE INDEX "_stores_v_version_version_created_at_idx" ON "payload"."_stores_v" USING btree ("version_created_at");
   CREATE INDEX "_stores_v_version_version__status_idx" ON "payload"."_stores_v" USING btree ("version__status");

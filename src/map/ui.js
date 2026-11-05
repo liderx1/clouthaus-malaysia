@@ -17,7 +17,7 @@ import { isNightAt, nowAt } from './core/hours.js';
 import { $, $$, TEST } from './env.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
-import { ROUTE_ICON } from './routes.js';
+import { ROUTE_COL, ROUTE_ICON } from './routes.js';
 import { mallMesh } from './mall.js';
 import { asmMarks, entMarks, exitMarks } from './markers.js';
 import { applyModes, focusMall } from './modes.js';
@@ -112,6 +112,7 @@ $$('[data-lang]').forEach((b) =>
       localStorage.setItem('eko-lang', S.lang);
     } catch {}
     buildUI();
+    bus.emit('lang');
   }),
 );
 /* ---------- day / night: follows the time in Kuala Lumpur (night 6pm–6am) until the visitor picks one ---------- */
@@ -177,6 +178,9 @@ function showPlace(title, tag, text) {
   $('#cardShare').hidden = !MODE.store;
   $('#cardLogo').removeAttribute('style');
   $('#cardGo').hidden = true;
+  if ($('#cardGo2')) $('#cardGo2').hidden = true;
+  zoomSrc = null;
+  $('#cardLogo').classList.remove('can-zoom');
   c.hidden = false;
   c.style.animation = 'none';
   void c.offsetWidth;
@@ -192,6 +196,10 @@ export function showStore(s) {
       (!storeSpot(s).exact ? ' ' + t('exactSoon') : storeSpot(s).est ? ' ' + t('estimated') : ''),
   );
   if (s.logo) $('#cardLogo').style.backgroundImage = `url("${s.logo}")`;
+  zoomSrc = s.plan || null;
+  $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
+  // a route to the store (from the MRT) only where the site wants one: a home in a tower has no door of its own
+  if (CONFIG.storeRoute === false) return;
   const go = $('#cardGo');
   go.textContent = t('routeMrt');
   go.hidden = false;
@@ -200,6 +208,48 @@ export function showStore(s) {
     applyModes();
   };
 }
+/** the main building's own card: its address, a line about it and its routes (site.config.json → main.routes) */
+export function showMain() {
+  lastCard = showMain;
+  showPlace(CONFIG.main.label ?? CONFIG.name, t('mainTag'), t('mainText'));
+  if (CONFIG.aboutImage?.src) $('#cardLogo').style.backgroundImage = `url("${CONFIG.aboutImage.src}")`;
+  zoomSrc = CONFIG.aboutImage?.src ?? null;
+  $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
+  const ids = /** @type {string[]} */ (CONFIG.main.routes ?? []);
+  [$('#cardGo'), $('#cardGo2')].forEach((b, i) => {
+    const r = PLACES.routes.find((x) => x.id === ids[i]);
+    if (!b || !r) return;
+    b.hidden = false;
+    b.textContent = pick(r.label);
+    b.style.setProperty('--rc', ROUTE_COL[r.id] ?? '');
+    b.dataset.route = r.id;
+    b.onclick = () => {
+      MODE.route = r.id;
+      applyModes();
+    };
+  });
+}
+// the picture on the card (a floor plan, the building) opens full screen; × or Escape closes it
+let zoomSrc = null;
+function openZoom() {
+  if (!zoomSrc) return;
+  const z = document.createElement('div');
+  z.className = 'plan-zoom';
+  z.setAttribute('role', 'dialog');
+  z.setAttribute('aria-modal', 'true');
+  z.innerHTML = `<img src="${zoomSrc}" alt="${$('#cardTitle').textContent}"><button type="button" aria-label="${t('close')}">×</button>`;
+  const close = () => {
+    z.remove();
+    removeEventListener('keydown', esc);
+  };
+  const esc = (/** @type {KeyboardEvent} */ e) => e.key === 'Escape' && close();
+  z.querySelector('button').addEventListener('click', close);
+  z.addEventListener('click', (e) => e.target === z && close());
+  addEventListener('keydown', esc);
+  document.body.append(z);
+  z.querySelector('button').focus();
+}
+$('#cardLogo').addEventListener('click', openZoom);
 
 // click a store pin
 const ray = new THREE.Raycaster(),
@@ -222,8 +272,12 @@ renderer.domElement.addEventListener('pointerup', (e) => {
     return;
   }
   if (pinGroup.visible && MODE.store && ray.intersectObject(pinSprite)[0]) return showStore(MODE.store);
-  if (ray.intersectObject(mallMesh)[0]) focusMall();
+  if (ray.intersectObject(mallMesh)[0]) {
+    focusMall();
+    showMain();
+  }
 });
 
 bus.on('place', (get) => card(() => showPlace(...get())));
+bus.on('mall:focus', () => showMain());
 bus.on('store:show', (s) => showStore(s));

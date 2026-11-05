@@ -15,7 +15,8 @@
         "x": 18.7,
         "y": -13.8,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-a.webp"
     },
     {
       "name": "Type B",
@@ -32,7 +33,8 @@
         "x": 16.3,
         "y": -4.8,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-b.webp"
     },
     {
       "name": "Type C",
@@ -49,7 +51,8 @@
         "x": 14.5,
         "y": 1.7,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-cdef.webp"
     },
     {
       "name": "Type D",
@@ -66,7 +69,8 @@
         "x": 13.3,
         "y": 6.5,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-cdef.webp"
     },
     {
       "name": "Type E",
@@ -83,7 +87,8 @@
         "x": 12.0,
         "y": 11.3,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-cdef.webp"
     },
     {
       "name": "Type F",
@@ -100,7 +105,8 @@
         "x": 10.8,
         "y": 15.8,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-cdef.webp"
     },
     {
       "name": "Type G",
@@ -117,7 +123,8 @@
         "x": 8.3,
         "y": 25.2,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-g.webp"
     },
     {
       "name": "Type H",
@@ -134,7 +141,8 @@
         "x": -5.1,
         "y": 27.1,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-h.webp"
     },
     {
       "name": "Type I",
@@ -151,7 +159,8 @@
         "x": -13.4,
         "y": 24.9,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-i.webp"
     },
     {
       "name": "Type J",
@@ -168,7 +177,8 @@
         "x": -11.4,
         "y": -13.3,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-j.webp"
     },
     {
       "name": "Type K",
@@ -185,7 +195,8 @@
         "x": -9.2,
         "y": -21.8,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-k.webp"
     },
     {
       "name": "Type L",
@@ -202,7 +213,8 @@
         "x": 3.4,
         "y": -27.6,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-l.webp"
     },
     {
       "name": "Type L1",
@@ -219,7 +231,8 @@
         "x": 3.4,
         "y": -27.6,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-l.webp"
     },
     {
       "name": "Type M",
@@ -236,7 +249,8 @@
         "x": -14.7,
         "y": -1.2,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-m.webp"
     },
     {
       "name": "Type N",
@@ -253,7 +267,8 @@
         "x": -11.4,
         "y": -13.3,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/type-n.webp"
     },
     {
       "name": "Explorer Playland",
@@ -270,7 +285,8 @@
         "x": -4.9,
         "y": 19.4,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Discovery Play Club",
@@ -286,7 +302,8 @@
         "x": 4.5,
         "y": 2.3,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Reading Lounge",
@@ -302,7 +319,8 @@
         "x": 7.4,
         "y": -5.6,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Family Lounge",
@@ -319,7 +337,8 @@
         "x": 9.7,
         "y": -14.1,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Sky Lounge",
@@ -336,7 +355,8 @@
         "x": -2.2,
         "y": -20.0,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Sky Bar",
@@ -352,7 +372,8 @@
         "x": -7.3,
         "y": -14.9,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Karaoke Lounge",
@@ -368,7 +389,8 @@
         "x": -5.2,
         "y": -11.6,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33.webp"
     },
     {
       "name": "Gym & Reformer Studio",
@@ -384,7 +406,8 @@
         "x": 4.6,
         "y": 6.1,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33a.webp"
     },
     {
       "name": "Yoga / Pilates Studio",
@@ -400,7 +423,8 @@
         "x": 9.2,
         "y": -7.2,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33a.webp"
     },
     {
       "name": "Games & Dining Lounge",
@@ -416,7 +440,8 @@
         "x": -1.9,
         "y": -21.0,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33a.webp"
     },
     {
       "name": "Mahjong Room",
@@ -432,7 +457,8 @@
         "x": -5.1,
         "y": -18.1,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33a.webp"
     },
     {
       "name": "Golf Simulator Room",
@@ -448,7 +474,8 @@
         "x": -5.4,
         "y": -13.8,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33a.webp"
     },
     {
       "name": "Music Room",
@@ -464,7 +491,8 @@
         "x": 1.5,
         "y": -11.5,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-33a.webp"
     },
     {
       "name": "Sky Pool",
@@ -481,7 +509,8 @@
         "x": 6.2,
         "y": 9.2,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Leisure Pool",
@@ -497,7 +526,8 @@
         "x": 13.4,
         "y": -17.9,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Sky Jacuzzi",
@@ -513,7 +543,8 @@
         "x": 11.4,
         "y": -10.4,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Floating Lounge",
@@ -529,7 +560,8 @@
         "x": 7.9,
         "y": -11.3,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Trellis Lounge",
@@ -546,7 +578,8 @@
         "x": -10.6,
         "y": 21.4,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Sauna & Steam Room",
@@ -562,7 +595,8 @@
         "x": -10.4,
         "y": 15.5,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Sky BBQ",
@@ -579,7 +613,8 @@
         "x": 4.5,
         "y": -21.9,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Sky Dining 1",
@@ -595,7 +630,8 @@
         "x": -1.1,
         "y": -22.9,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Sky Dining 2",
@@ -611,7 +647,8 @@
         "x": -4.1,
         "y": -11.9,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Clout Bar",
@@ -627,7 +664,8 @@
         "x": 0.5,
         "y": -10.1,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Sky DJ Deck",
@@ -643,7 +681,8 @@
         "x": -2.7,
         "y": 2.0,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     },
     {
       "name": "Pre-Function Deck",
@@ -659,7 +698,8 @@
         "x": -1.2,
         "y": 10.4,
         "estimated": true
-      }
+      },
+      "plan": "/images/plans/level-63a.webp"
     }
   ]
 }

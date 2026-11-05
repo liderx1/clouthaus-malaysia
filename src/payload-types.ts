@@ -154,6 +154,10 @@ export interface Store {
   _order?: string | null;
   name: string;
   logo?: (number | null) | Media;
+  /**
+   * Floor plan or layout; tapping the picture on the card opens it.
+   */
+  plan?: (number | null) | Media;
   floor: 'G' | 'LOW' | 'MID' | '33' | '33A' | 'ALL' | 'UP' | 'HIGH' | '63A';
   unit: string;
   category: 'one' | 'two' | 'three' | 'dualkey' | 'family' | 'wellness' | 'rooftop';
@@ -545,6 +549,7 @@ export interface StoresSelect<T extends boolean = true> {
   _order?: T;
   name?: T;
   logo?: T;
+  plan?: T;
   floor?: T;
   unit?: T;
   category?: T;

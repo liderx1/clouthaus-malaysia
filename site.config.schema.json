@@ -172,6 +172,28 @@
         "highlight": {
           "type": "string",
           "description": "Colour of the main building's outline, crown ribbon and pulse ring (default: magenta by day, orange by night)"
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Up to two route ids offered on the main building's card"
+        },
+        "halo": {
+          "type": "object",
+          "description": "A soft light around the main building: day and night colours, size (× the building's height)",
+          "properties": {
+            "day": {
+              "type": "string"
+            },
+            "night": {
+              "type": "string"
+            },
+            "size": {
+              "type": "number"
+            }
+          }
         }
       }
     },
@@ -389,6 +411,67 @@
         },
         "alt": {
           "type": "string"
+        }
+      }
+    },
+    "names": {
+      "type": "object",
+      "description": "Label names to correct, by the English (OSM) name: {\"zh\": \"…\"} sets the Chinese name, {\"zh\": null} keeps English when OSM's Chinese name is doubtful",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "look": {
+      "type": "object",
+      "description": "Tints of the 3D scene: horizonDay, horizonNight (sky at the horizon), fogDay, fogNight (haze); skyNight multiplies the night sky picture",
+      "properties": {
+        "horizonDay": {
+          "type": "string"
+        },
+        "horizonNight": {
+          "type": "string"
+        },
+        "fogDay": {
+          "type": "string"
+        },
+        "fogNight": {
+          "type": "string"
+        },
+        "skyNight": {
+          "type": "string"
+        }
+      }
+    },
+    "routeColors": {
+      "type": "object",
+      "description": "Route colours by route id (ribbon on the map and the button icon), e.g. {\"bus\": \"#8FB8E8\"}",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "storeRoute": {
+      "type": "boolean",
+      "description": "false: the store card has no route button (homes in a tower have no door of their own)"
+    },
+    "litLandmarks": {
+      "type": "array",
+      "description": "Landmarks drawn in their real night lighting and never faded: every building or part whose centre is within r metres of at [x, y] and at least minH metres tall",
+      "items": {
+        "type": "object",
+        "required": [
+          "at",
+          "r"
+        ],
+        "properties": {
+          "at": {
+            "type": "array"
+          },
+          "r": {
+            "type": "number"
+          },
+          "minH": {
+            "type": "number"
+          }
         }
       }
     }

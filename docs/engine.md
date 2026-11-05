@@ -17,6 +17,19 @@ few parts of this document still describe the mall wording.
 | `landmarks` | big labels over the tallest building at a point (Twin Towers, Merdeka 118, …) |
 | `text.<lang>.ui` | any interface wording by its key in `src/map/i18n.js` (“stores” → “unit types & facilities”) |
 | `aboutImage` | the picture at the top of the About popup |
+| `main.halo`, `main.highlight` | the warm light around the main building (behind it by night, a ring in front by day) and its outline colour |
+| `main.routes`, `storeRoute` | the routes offered on the main building's card (car, bus); `false` drops the route button from unit cards |
+| `routeColors` | each route's own colour on the map and its button |
+| `litLandmarks` | landmarks drawn in their real night lighting and never faded (the Petronas Twin Towers) |
+| `names` | corrections to OSM's Chinese names (`{"zh": null}` keeps the English where OSM's is doubtful) |
+| `look` | sky and haze tints of the 3D scene, so it takes the site's palette |
+
+Labels change language with the page: names come from OSM's `name:zh` tags (fetched by `scripts/fetch_osm.py`) and
+the landmark names in `site.config.json`. Generic names ("Tower 2", "Blok 3") are not shown; buildings, roads and
+places that are not the point of the page are drawn quieter (`lbl--minor`, `lbl--far`). Background music is generated
+in the browser (`src/music/music.js`, bundled on its own into `public/map/music.js`) and has an on/off button in the
+top bar. The black-and-gold look is `public/map/theme.css`, loaded after `map.css`. The bundle carries only what
+the site uses: `scripts/build-map.mjs` sets build flags from `site.config.json` (languages, mall or tower facade).
 
 Rail lines in tunnels (OSM `tunnel=yes` or a negative layer) are drawn as a coloured trace on the ground in the line's
 colour; the KL Monorail gets its guideway, piers and two 4-car trains; Grab and foodpanda riders join the traffic.

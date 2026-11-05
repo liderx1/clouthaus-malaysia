@@ -148,14 +148,15 @@ export const sky = new THREE.Mesh(
       uNight: U.uNight,
       uDay: { value: skyTex('sky_day') },
       uDusk: { value: skyTex('sky_night') },
-      uHorD: { value: new THREE.Color(0xb9c2c4) },
-      uHorN: { value: new THREE.Color(0x5e4f5e) },
+      uHorD: { value: new THREE.Color(CONFIG.look?.horizonDay ?? 0xb9c2c4) },
+      uHorN: { value: new THREE.Color(CONFIG.look?.horizonNight ?? 0x5e4f5e) },
+      uTintN: { value: new THREE.Color(CONFIG.look?.skyNight ?? 0xffffff) },
     },
     vertexShader:
       'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `uniform float uNight; uniform sampler2D uDay, uDusk; uniform vec3 uHorD, uHorN; varying vec3 vP;
+    fragmentShader: `uniform float uNight; uniform sampler2D uDay, uDusk; uniform vec3 uHorD, uHorN, uTintN; varying vec3 vP;
     void main(){ float h = vP.y; vec2 uv = vec2(atan(vP.z, vP.x) / 6.2831853 + 0.5, clamp(asin(clamp(h, 0.0, 1.0)) / 1.5707963, 0.002, 0.998));
-      vec3 c = mix(texture2D(uDay, uv).rgb, texture2D(uDusk, uv).rgb, uNight);
+      vec3 c = mix(texture2D(uDay, uv).rgb, texture2D(uDusk, uv).rgb * uTintN, uNight);
       c = mix(mix(uHorD, uHorN, uNight), c, smoothstep(-0.02, 0.06, h));
       gl_FragColor = vec4(c, 1.0);
 #include <colorspace_fragment>

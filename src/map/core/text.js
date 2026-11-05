@@ -35,3 +35,9 @@ export const storeSlug = (s) =>
  * @param {string} f @param {Record<string, string>} [short] code → short name
  */
 export const floorName = (f, short = {}) => short[f] ?? f;
+
+// names that tell a visitor nothing on a city map: "Tower 2", "Blok 3", "B", "East Wing", "Block A1"
+const GENERIC =
+  /^(?:(?:tower|block|blok|wing|phase|tingkat|level|annex|podium|east|west|north|south|main)\b[\s\w-]{0,6}|[\w-]{1,3}|.*\b(?:block|blok)\s*\w{1,2})$/i;
+/** @param {string} name */
+export const isGenericName = (name) => GENERIC.test(String(name ?? '').trim());

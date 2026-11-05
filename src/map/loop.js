@@ -4,7 +4,7 @@ import { sampleAt } from './geo.js';
 import { ghost } from './ghost.js';
 import { updateLabels } from './labels.js';
 import { clock, dayFog, nightFog } from './main.js';
-import { HI, crownMat, edges, mallGroup } from './mall.js';
+import { HI, crownMat, edges, mallGroup, updateHalo } from './mall.js';
 import { BEACONS } from './markers.js';
 import { pinDot, pinGroup, pinSprite } from './pin.js';
 import { bloom, composer } from './post.js';
@@ -67,6 +67,7 @@ renderer.setAnimationLoop(() => {
   mallGroup.userData.logo.material.emissiveIntensity = 0.55 * n;
   if (TRAIN) TRAIN.win.emissiveIntensity = 1.6 * n;
   if (MONO) MONO.win.emissiveIntensity = 1.6 * n;
+  updateHalo(camera, n, time);
   // the highlight on the main building: main.highlight (e.g. the facade's gold), else magenta by day / orange by night
   if (HI) crownMat.color.copy(HI);
   else crownMat.color.setRGB(1, 0.08 + 0.34 * n, 0.58 - 0.41 * n);

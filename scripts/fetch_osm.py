@@ -47,6 +47,9 @@ if SKY and SKY > R:  # tall buildings beyond the radius, e.g. the skyline landma
 def xy(lat, lon):  # local tangent plane, metres: x east, y north
     return [round((lon - LON0) * 111320 * math.cos(math.radians(LAT0)), 1), round((lat - LAT0) * 110540, 1)]
 def clean(d): return {k: v for k, v in d.items() if v is not None}
+def zh(t):  # the Simplified Chinese name OSM mappers recorded, if any (only when it differs from the default name)
+    v = t.get('name:zh-Hans') or t.get('name:zh-CN') or t.get('name:zh-SG') or t.get('name:zh-MY') or t.get('name:zh')
+    return v if v and v != t.get('name') else None
 
 out = {'origin': [LAT0, LON0], 'radius': R, 'buildings': [], 'roads': [], 'rails': [], 'areas': [], 'trees': [], 'pois': [], 'water': [], 'entrances': [], 'stops': []}
 for e in els:
@@ -61,20 +64,20 @@ for e in els:
         elif 'entrance' in t or t.get('amenity') == 'parking_entrance' or t.get('railway') == 'subway_entrance':
             out['entrances'].append(clean({'p': p, 't': t.get('entrance') or t.get('amenity') or t.get('railway'), 'name': t.get('name') or t.get('ref')}))
         elif t.get('highway') == 'bus_stop' or (t.get('public_transport') == 'platform' and t.get('bus') == 'yes'):
-            out['stops'].append(clean({'p': p, 'name': t.get('name')}))
+            out['stops'].append(clean({'p': p, 'name': t.get('name'), 'zh': zh(t)}))
         elif t.get('railway') in ('station', 'stop') or t.get('public_transport') == 'station':
-            out['pois'].append(clean({'p': p, 'name': t.get('name') or 'Station', 'kind': 'station', 'sub': t.get('network') or t.get('operator')}))
+            out['pois'].append(clean({'p': p, 'name': t.get('name') or 'Station', 'zh': zh(t), 'kind': 'station', 'sub': t.get('network') or t.get('operator')}))
         elif t.get('name'):
             kind = next((k for k in ('amenity', 'shop', 'tourism', 'leisure', 'office', 'healthcare') if k in t), 'place')
-            out['pois'].append({'p': p, 'name': t['name'], 'kind': kind, 'sub': t.get(kind)})
+            out['pois'].append(clean({'p': p, 'name': t['name'], 'zh': zh(t), 'kind': kind, 'sub': t.get(kind)}))
         continue
     if not pts or len(pts) < 2: continue
     if ('building' in t or 'building:part' in t) and len(pts) > 3:
         h = num(t.get('height')) or ((num(t.get('building:levels')) or 0) * 3.3) or None
         out['buildings'].append(clean({'id': e['id'], 'p': pts, 'h': h, 'min': num(t.get('min_height')), 'type': t.get('building') or 'part',
-            'name': t.get('name'), 'mat': t.get('building:material'), 'col': t.get('building:colour'), 'roof': t.get('roof:colour'), 'part': 1 if 'building:part' in t else None}))
+            'name': t.get('name'), 'zh': zh(t), 'mat': t.get('building:material'), 'col': t.get('building:colour'), 'roof': t.get('roof:colour'), 'part': 1 if 'building:part' in t else None}))
     elif 'highway' in t:
-        out['roads'].append(clean({'p': pts, 't': t['highway'], 'name': t.get('name'), 'bridge': 1 if t.get('bridge') in ('yes', 'viaduct') else None,
+        out['roads'].append(clean({'p': pts, 't': t['highway'], 'name': t.get('name'), 'zh': zh(t), 'bridge': 1 if t.get('bridge') in ('yes', 'viaduct') else None,
             'tunnel': 1 if t.get('tunnel') in ('yes', 'building_passage', 'culvert') or t.get('covered') == 'yes' and num(t.get('layer')) and num(t.get('layer')) < 0 else None,
             'layer': num(t.get('layer')), 'lanes': num(t.get('lanes')), 'oneway': 1 if t.get('oneway') == 'yes' else None}))
     elif 'railway' in t:
@@ -84,11 +87,11 @@ for e in els:
     elif t.get('waterway'):
         out['water'].append(clean({'p': pts, 't': t['waterway'], 'name': t.get('name')}))
     elif (t.get('landuse') or t.get('leisure') or t.get('natural') or t.get('amenity') == 'parking') and len(pts) > 3 and pts[0] == pts[-1]:
-        out['areas'].append(clean({'p': pts, 't': t.get('landuse') or t.get('leisure') or t.get('natural') or 'parking', 'name': t.get('name')}))
+        out['areas'].append(clean({'p': pts, 't': t.get('landuse') or t.get('leisure') or t.get('natural') or 'parking', 'name': t.get('name'), 'zh': zh(t)}))
     if t.get('name') and any(k in t for k in ('amenity', 'shop', 'tourism')) and 'building' not in t:
         cx = sum(q[0] for q in pts) / len(pts); cy = sum(q[1] for q in pts) / len(pts)
         k = next(k for k in ('amenity', 'shop', 'tourism') if k in t)
-        out['pois'].append({'p': [round(cx, 1), round(cy, 1)], 'name': t['name'], 'kind': k, 'sub': t.get(k)})
+        out['pois'].append(clean({'p': [round(cx, 1), round(cy, 1)], 'name': t['name'], 'zh': zh(t), 'kind': k, 'sub': t.get(k)}))
 # re-centre on the main building (main.osmName, else the largest building at the origin) so (0, 0) is its centre
 def inside(x, y, r):
     c = False

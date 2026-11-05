@@ -30,6 +30,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "plan_id": {
+          "name": "plan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "floor": {
           "name": "floor",
           "type": "enum_stores_floor",
@@ -129,6 +135,21 @@
           "method": "btree",
           "with": {}
         },
+        "stores_plan_idx": {
+          "name": "stores_plan_idx",
+          "columns": [
+            {
+              "expression": "plan_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "stores_updated_at_idx": {
           "name": "stores_updated_at_idx",
           "columns": [
@@ -183,6 +204,20 @@
           "schemaTo": "payload",
           "columnsFrom": [
             "logo_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "stores_plan_id_media_id_fk": {
+          "name": "stores_plan_id_media_id_fk",
+          "tableFrom": "stores",
+          "tableTo": "media",
+          "schemaTo": "payload",
+          "columnsFrom": [
+            "plan_id"
           ],
           "columnsTo": [
             "id"
@@ -317,6 +352,12 @@
         },
         "version_logo_id": {
           "name": "version_logo_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_plan_id": {
+          "name": "version_plan_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -462,6 +503,21 @@
           "columns": [
             {
               "expression": "version_logo_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_stores_v_version_version_plan_idx": {
+          "name": "_stores_v_version_version_plan_idx",
+          "columns": [
+            {
+              "expression": "version_plan_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -630,6 +686,20 @@
           "schemaTo": "payload",
           "columnsFrom": [
             "version_logo_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_stores_v_version_plan_id_media_id_fk": {
+          "name": "_stores_v_version_plan_id_media_id_fk",
+          "tableFrom": "_stores_v",
+          "tableTo": "media",
+          "schemaTo": "payload",
+          "columnsFrom": [
+            "version_plan_id"
           ],
           "columnsTo": [
             "id"
@@ -8610,6 +8680,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "ca6789b7-6f22-4647-9605-73200152f239",
+  "id": "67b1dba0-b322-41a7-b104-b80dfc25477f",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

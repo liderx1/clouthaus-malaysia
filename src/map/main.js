@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { CONFIG } from './config.js';
 import { readHash } from './content.js';
 import { V } from './data.js';
 import { START_HASH, TEST } from './env.js';
@@ -10,8 +11,9 @@ import { buildUI } from './ui.js';
 
 /* ---------- loop ---------- */
 export const clock = new THREE.Clock();
-export const dayFog = new THREE.Color(0xb9c2c4),
-  nightFog = new THREE.Color(0x3a3142);
+// haze toward the horizon (site.config.json → look tints it to the site's palette)
+export const dayFog = new THREE.Color(CONFIG.look?.fogDay ?? 0xb9c2c4),
+  nightFog = new THREE.Color(CONFIG.look?.fogNight ?? 0x3a3142);
 buildUI();
 // ?debug exposes the scene for inspection from the browser console
 if (location.search.includes('debug'))

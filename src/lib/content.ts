@@ -36,7 +36,7 @@ export async function build(file: string, draft = false): Promise<unknown> {
         const t: Record<string, string> = Object.fromEntries(Object.entries(other).map(([l, m]) => [l, m.get(s.id)]).filter(([, v]) => v && v !== s.desc))
         return Object.keys(t).length ? { en: s.desc, ...t } : s.desc
       }
-      return { items: (await all(p, 'stores', 'en', draft)).map((s) => ({ name: s.name, floor: s.floor, unit: s.unit, logo: url(s.logo) || s.logoPath || '', category: s.category, featured: !!s.featured,
+      return { items: (await all(p, 'stores', 'en', draft)).map((s) => ({ name: s.name, floor: s.floor, unit: s.unit, logo: url(s.logo) || s.logoPath || '', ...(url(s.plan) ? { plan: url(s.plan) } : {}), category: s.category, featured: !!s.featured,
         ...(s.desc ? { desc: desc(s) } : {}), ...(Number.isFinite(s.pin?.x) && Number.isFinite(s.pin?.y) ? { pin: { x: s.pin.x, y: s.pin.y, ...(s.pin.estimated ? { estimated: true } : {}) } } : {}) })) }
     }
     case 'topics':

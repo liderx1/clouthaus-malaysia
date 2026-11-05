@@ -36,7 +36,7 @@ const KIND_COL = { mrt: '#1565D8', bus: '#B45309', parking: '#5B3CD6', main: '#C
 export const entMarks = PLACES.entrances.map((e) => ({
   e,
   b: beacon(e.x, e.y, e.z ?? 0, KIND_COL[e.kind] || '#FF5A1F'),
-  l: label(pick(e.name), V(e.x, e.y, (e.z ?? 0) + 14), {
+  l: label(e.name, V(e.x, e.y, (e.z ?? 0) + 14), {
     kind: 'entrance',
     pri: 950,
     maxDist: 99999,
@@ -49,7 +49,7 @@ export const entMarks = PLACES.entrances.map((e) => ({
 export const exitMarks = PLACES.emergency.map((e) => ({
   e,
   b: beacon(e.x, e.y, 0, '#2EBF6B'),
-  l: label(pick(e.name), V(e.x, e.y, 14), {
+  l: label(e.name, V(e.x, e.y, 14), {
     kind: 'exit',
     pri: 960,
     maxDist: 99999,
@@ -62,7 +62,7 @@ export const exitMarks = PLACES.emergency.map((e) => ({
 export const asmMarks = PLACES.assembly.map((a) => ({
   a,
   b: beacon(a.x, a.y, 0, '#2EBF6B'),
-  l: label(pick(a.name), V(a.x, a.y, 14), {
+  l: label(a.name, V(a.x, a.y, 14), {
     kind: 'assembly',
     pri: 970,
     maxDist: 99999,

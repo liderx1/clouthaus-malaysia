@@ -71,13 +71,16 @@
   <span class="card-tag" id="cardTag"></span>
   <h2 id="cardTitle"></h2>
   <p id="cardText"></p>
-  <div class="card-art"><span class="card-pin"></span><span class="card-logo" id="cardLogo"></span></div>
-  <div class="card-actions"><button class="card-go" type="button" id="cardGo" hidden></button><button class="card-share" type="button" id="cardShare" hidden></button></div>
+  <div class="card-art"><span class="card-pin"></span><span class="card-logo" id="cardLogo" role="button" tabindex="0"></span></div>
+  <div class="card-actions"><button class="card-go" type="button" id="cardGo" hidden></button><button class="card-go" type="button" id="cardGo2" hidden></button><button class="card-share" type="button" id="cardShare" hidden></button></div>
 </article>
 
 <p class="toast" id="toast" role="status" hidden></p>
 <div class="modal" id="modal" hidden><div class="modal-box" role="dialog" aria-modal="true"><button class="modal-x" type="button" aria-label="Close">×</button><div id="modalBody"></div></div></div>
 
+<button class="music" id="music" type="button" aria-pressed="false" aria-label="Music"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path class="wave" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+
 <script type="module" src="/map/map.js"></script>
+<script type="module" src="/map/music.js"></script>
 </body>
 </html>

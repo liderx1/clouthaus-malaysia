@@ -40,3 +40,11 @@ test('fill puts values into {placeholders} and leaves unknown ones', () => {
   assert.equal(fill('{who} and {name}', { name: 'A' }), '{who} and A');
   assert.equal(fill(undefined, {}), '');
 });
+
+test('isGenericName: drops "Tower 2", "Blok 3", single letters; keeps real names', async () => {
+  const { isGenericName } = await import('../../src/map/core/text.js');
+  for (const n of ['Tower 2', 'Blok 3', 'B', 'East Wing', 'Block A1', 'Wisma X Block B', 'A-1'])
+    assert.equal(isGenericName(n), true, n);
+  for (const n of ['Menara Maxis', 'Suria KLCC', 'Tower Regency', 'ONE KL', 'Four Seasons Place Kuala Lumpur'])
+    assert.equal(isGenericName(n), false, n);
+});

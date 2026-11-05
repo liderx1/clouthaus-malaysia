@@ -273,7 +273,13 @@ const TW = {
     )
     .join(' '),
 };
+/**
+ * @param {THREE.Material} mat
+ * @param {boolean | 'lit'} mall  true: the main building; 'lit': a lit landmark (site.config.json → litLandmarks),
+ *   never faded or dimmed; false: the city
+ */
 export function windowShader(mat, mall = false) {
+  const lit = mall === 'lit';
   mat.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, { uNight: U.uNight, uTime: U.uTime, uDim: U.uDim, uCalm: U.uCalm });
     sh.vertexShader =
@@ -317,8 +323,15 @@ export function windowShader(mat, mall = false) {
           diffuseColor.rgb = mix(mix(vec3(0.86, 0.87, 0.88), vec3(0.42, 0.50, 0.56), g), vec3(0.97), max(slab, fin));
           diffuseColor.rgb *= 1.0 - rec * 0.35; win = g * (1.0 - max(slab, fin)) * step(4.0, vWall.y);
         }
-        float bandGlow = 0.0;
-        if (kind > 6.5 && wall > 0.5) {                               // main.style "tower": curtain wall with a fin at every floor
+        float bandGlow = 0.0, litGlow = 0.0;
+        if (kind > 7.5 && wall > 0.5) {                               // lit landmark: stainless steel and glass, lit at night
+          float fc = fract(vWall.x / 1.25); float fy = fract(vWall.y / 4.0);
+          float fin = step(fc, 0.32);
+          diffuseColor.rgb = mix(vec3(0.62, 0.66, 0.70), vec3(0.93, 0.93, 0.92), fin);
+          win = 0.0;
+          litGlow = (0.5 + 0.5 * fin) * (0.8 + 0.2 * step(fy, 0.12)) * (0.55 + 0.45 * smoothstep(0.0, vInfo.x, vWall.y));
+        }
+        if (kind > 6.5 && kind < 7.5 && wall > 0.5) {                 // main.style "tower": curtain wall with a fin at every floor
           float fh = ${TW.fh}; float fy = fract(vWall.y / fh); float col = fract(vWall.x / 1.6);
           float fin = step(fy, 0.1);                                  // the slab edge / sun fin along each floor
           float mull = step(col, 0.05);
@@ -336,7 +349,10 @@ export function windowShader(mat, mall = false) {
           win = (1.0 - max(fin, mull)) * (1.0 - podium) * (1.0 - crown) * (1.0 - bandGlow * colm);
           shopGlow = podium * step(vWall.y, 5.0); signGlow = crown * 0.6 + fin * (1.0 - podium) * 0.05; tealGlow = bandGlow * (1.0 - colm);
         }
-        if (kind > 5.5 && kind < 6.5 && wall > 0.5) {                 // EkoCheras Mall, as on Street View (2024)
+        ${
+          __TOWER__
+            ? ''
+            : `        if (kind > 5.5 && kind < 6.5 && wall > 0.5) {                 // EkoCheras Mall, as on Street View (2024)
           float sc = floor(vWall.x / 1.15);
           vec3 orange = mix(vec3(0.93, 0.50, 0.20), vec3(0.97, 0.66, 0.38), h31(vec3(sc, 2.0, 3.0)));
           vec3 c = mix(vec3(0.95, 0.91, 0.85), orange, step(0.36, h31(vec3(sc, 7.0, 1.0))));
@@ -355,8 +371,10 @@ export function windowShader(mat, mall = false) {
           diffuseColor.rgb = c; win = max(gf * step(0.4, vWall.y), max(teal, dark) * 0.6);
           shopGlow = gf * step(0.4, vWall.y); signGlow = sg; tealGlow = teal;
         }
+`
+        }
         roughnessFactor = mix(roughnessFactor, 0.12, win);
-        float lit = step(kind > 6.5 ? 0.76 : 0.58, h31(vec3(floor(vWall.x / sp), floor(vWall.y / fl), floor(vInfo.y * 97.0))));
+        float lit = step(kind > 6.5 ? 0.86 : 0.58, h31(vec3(floor(vWall.x / sp), floor(vWall.y / fl), floor(vInfo.y * 97.0))));
         vec3 warm = mix(vec3(1.0, 0.74, 0.42), vec3(0.85, 0.92, 1.0), step(0.8, h31(vec3(floor(vWall.y / fl), vInfo.y, 3.0))));`,
         )
         .replace(
@@ -367,15 +385,18 @@ export function windowShader(mat, mall = false) {
           '#include <emissivemap_fragment>',
           `#include <emissivemap_fragment>
         totalEmissiveRadiance += step(5.5, kind) * (win * lit * 0.3 + shopGlow * 0.5) * uNight * warm * 1.1 * (1.0 - uDim * 0.85 * step(kind, 5.5)) + step(5.5, kind) * uNight * (signGlow * vec3(1.0, 0.85, 0.7) * 0.9 + tealGlow * mix(vec3(0.2, 0.75, 0.8), vec3(1.0, 0.78, 0.5), step(6.5, kind)) * 0.5);
+        totalEmissiveRadiance += litGlow * (uNight * 0.8 + (1.0 - uNight) * 0.1) * vec3(0.98, 0.96, 0.9);
         ${
-          mall && TOWER
-            ? `float scan = smoothstep(0.0, 3.0, 3.0 - abs(vWall.y - fract(uTime * 0.12) * (vInfo.x + 6.0)));
+          lit
+            ? ''
+            : mall && TOWER
+              ? `float scan = smoothstep(0.0, 3.0, 3.0 - abs(vWall.y - fract(uTime * 0.12) * (vInfo.x + 6.0)));
         totalEmissiveRadiance += wall * vec3(1.0, 0.45, 0.16) * scan * (0.05 * uNight + uDim * 0.6);`
-            : mall
-              ? `float strip = wall * (1.0 - smoothstep(0.0, 0.07, abs(fract(vWall.y / 4.4) - 0.5) * 2.0 - 0.86) );
+              : mall
+                ? `float strip = wall * (1.0 - smoothstep(0.0, 0.07, abs(fract(vWall.y / 4.4) - 0.5) * 2.0 - 0.86) );
         float scan = smoothstep(0.0, 1.6, 1.6 - abs(vWall.y - fract(uTime * 0.18) * (vInfo.x + 6.0)));
         totalEmissiveRadiance += wall * vec3(1.0, 0.45, 0.16) * (strip * (0.35 * uNight + 0.25 * uDim) + scan * (0.05 * uNight + uDim * 0.7));`
-              : ''
+                : ''
         }`,
         )
         .replace(
@@ -385,13 +406,21 @@ export function windowShader(mat, mall = false) {
             : '#include <dithering_fragment>\n gl_FragColor.rgb = mix(gl_FragColor.rgb, mix(vec3(dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114))), gl_FragColor.rgb, 0.7) * 0.72 + vec3(0.25, 0.25, 0.24), uCalm);\n gl_FragColor.rgb = mix(gl_FragColor.rgb, mix(mix(vec3(dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114))), gl_FragColor.rgb, 0.2) * 0.25 + vec3(0.70, 0.72, 0.75), gl_FragColor.rgb * 0.07 + vec3(0.006, 0.009, 0.018), uNight), uDim);',
         );
   };
-  mat.customProgramCacheKey = () => (mall ? 'mall' : 'bld');
+  mat.customProgramCacheKey = () => (lit ? 'litlm' : mall ? 'mall' : 'bld');
   return mat;
 }
 // OSM draws a building either as its outline or as its parts, never both: drop outlines that contain parts, and exact duplicates
 const PARTS = OSM.buildings
   .filter((b) => b.part)
   .map((b) => ring(b.p).reduce((a, q, i, r) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]));
+// lit landmarks (site.config.json → litLandmarks, e.g. the Petronas Twin Towers): their own lit material, never faded
+const LIT_AT = /** @type {{ at: number[], r: number, minH?: number }[]} */ (CONFIG.litLandmarks ?? []);
+const centre = (/** @type {any} */ b) =>
+  ring(b.p).reduce((a, q, i, r) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]);
+const isLit = (/** @type {any} */ b) =>
+  LIT_AT.some(
+    ({ at, r, minH = 0 }) => Math.hypot(centre(b)[0] - at[0], centre(b)[1] - at[1]) < r && bInfo(b).h >= minH,
+  );
 const seenFoot = new Set();
 const others = OSM.buildings.filter((b) => {
   if (b === MALL || b.id === MALL.id) return false;
@@ -406,6 +435,19 @@ const others = OSM.buildings.filter((b) => {
   seenFoot.add(k);
   return true;
 }); // parts hidden inside the podium would only z-fight
+const litOnes = others.filter(isLit);
+others.splice(0, others.length, ...others.filter((b) => !litOnes.includes(b)));
+if (litOnes.length) {
+  const m = new THREE.Mesh(
+    buildingGeometry(litOnes.map((b) => ({ ...b, kId: 8 }))),
+    windowShader(
+      new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.38, metalness: 0.22, envMapIntensity: 0.9 }),
+      'lit',
+    ),
+  );
+  m.castShadow = m.receiveShadow = true;
+  scene.add(m);
+}
 const bMesh = new THREE.Mesh(
   buildingGeometry(others),
   windowShader(

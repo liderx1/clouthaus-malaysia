@@ -54,5 +54,85 @@
    "y": 4.1
   }
  ],
- "routes": []
+ "routes": [
+  {
+   "id": "lrt",
+   "mode": "walk",
+   "start": "",
+   "x": 265.0,
+   "y": 150.3,
+   "z": 0,
+   "to": "lobby",
+   "label": {
+    "en": "By LRT · KLCC",
+    "zh": "搭轻快铁 · 城中城站"
+   },
+   "note": {
+    "en": "KL City Centre station (KJ10, Kelana Jaya line) → about 9 min on foot (developer figure)",
+    "zh": "城中城站（KJ10，格拉那再也线）→ 步行约 9 分钟（发展商数据）"
+   }
+  },
+  {
+   "id": "mono",
+   "mode": "walk",
+   "start": "",
+   "x": -9.9,
+   "y": -718.0,
+   "z": 0,
+   "to": "lobby",
+   "label": {
+    "en": "By Monorail · Raja Chulan",
+    "zh": "搭单轨 · 拉惹朱兰站"
+   },
+   "note": {
+    "en": "Raja Chulan station (MR7, KL Monorail) → about 12 min on foot",
+    "zh": "拉惹朱兰站（MR7，吉隆坡单轨）→ 步行约 12 分钟"
+   }
+  },
+  {
+   "id": "bus",
+   "mode": "walk",
+   "start": "",
+   "x": 51.3,
+   "y": -39.5,
+   "z": 0,
+   "to": "lobby",
+   "label": {
+    "en": "By bus · KLCC stop",
+    "zh": "搭巴士 · KLCC 站"
+   },
+   "note": {
+    "en": "Bus stop \"KLCC\" (OpenStreetMap), a short walk to the lobby",
+    "zh": "“KLCC”巴士站（OpenStreetMap），步行即到"
+   }
+  },
+  {
+   "id": "carS",
+   "mode": "drive",
+   "start": "jalan-ampang-south",
+   "to": "park",
+   "label": {
+    "en": "By car · from the city centre",
+    "zh": "开车 · 从市中心"
+   },
+   "note": {
+    "en": "Jalan Ampang eastbound → car park entrance (indicative)",
+    "zh": "安邦路往东 → 停车场入口（示意）"
+   }
+  },
+  {
+   "id": "carN",
+   "mode": "drive",
+   "start": "jalan-ampang-north",
+   "to": "park",
+   "label": {
+    "en": "By car · from Ampang Park",
+    "zh": "开车 · 从 Ampang Park 方向"
+   },
+   "note": {
+    "en": "Jalan Ampang westbound → car park entrance (indicative)",
+    "zh": "安邦路往西 → 停车场入口（示意）"
+   }
+  }
+ ]
 }

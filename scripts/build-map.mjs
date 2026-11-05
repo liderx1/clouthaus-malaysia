@@ -6,6 +6,9 @@ import { build, context } from 'esbuild';
 // raised from 120 KB when the EZ-Tree generator (~22 KB) came in for the trees near the camera
 const BUDGET_KB = 140;
 
+// what this site uses, from site.config.json: the rest of the engine is left out of the download
+const SITE = JSON.parse(fs.readFileSync('site.config.json', 'utf8'));
+const has = (/** @type {string} */ l) => String(SITE.locales.includes(l));
 const options = {
   entryPoints: ['src/map/index.js'],
   bundle: true,
@@ -17,6 +20,12 @@ const options = {
   sourcemap: true,
   legalComments: 'none',
   logLevel: 'warning',
+  define: {
+    __TOWER__: String(SITE.main?.style === 'tower'),
+    __LANG_zh__: has('zh'),
+    __LANG_ms__: has('ms'),
+    __LANG_zhTW__: has('zh-TW'),
+  },
   plugins: [
     {
       name: 'slim',
@@ -44,11 +53,24 @@ const options = {
     },
   ],
 };
+// the background music is its own small script, loaded after the map (src/music)
+const music = {
+  entryPoints: ['src/music/music.js'],
+  bundle: true,
+  format: 'esm',
+  target: 'es2022',
+  outfile: 'public/map/music.js',
+  minify: true,
+  legalComments: 'none',
+  logLevel: 'warning',
+};
 if (process.argv.includes('--watch')) {
   await (await context(options)).watch();
+  await (await context(music)).watch();
   console.log('map: watching src/map');
 } else {
   await build(options);
+  await build(music);
   // performance budget: the map script is downloaded before anything shows, so keep it small
   const kb = fs.statSync(options.outfile).size / 1024;
   if (kb > BUDGET_KB) throw new Error(`map.js is ${kb.toFixed(0)} KB, over the ${BUDGET_KB} KB budget`);

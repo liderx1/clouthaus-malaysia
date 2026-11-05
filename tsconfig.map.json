@@ -11,5 +11,5 @@
     "types": [],
     "skipLibCheck": true
   },
-  "include": ["src/map/**/*.js"]
+  "include": ["src/map/**/*.js", "src/map/build-flags.d.ts"]
 }

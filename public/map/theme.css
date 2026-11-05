@@ -1,95 +1,180 @@
-/* CloutHaus: black & gold, after the bronze-gold facade of the tower. Loaded after map.css and wins over it.
-   Frames are black at the lowest opacity that keeps white and gold text readable over the 3D city (with a blur),
-   active states are solid gold with black text. Same look by day and by night. */
+/* CloutHaus: after the brand light. Deep umber-black, a champagne glow, warm ivory type, nothing outlined.
+   Loaded after map.css and wins over it. Frames are a thin veil of black that the city shows through; the chosen thing
+   is lit champagne. Same look by day and by night (by day the veil is a little thicker so the type still reads). */
 :root, .is-night {
-  --gold: #C9A46A;
-  --gold-hi: #E7CF98;
-  --gold-lo: #9C7A3F;
-  --orange: #C9A46A;
-  --navy: #0B0B0C;
-  --ink: #F4EEE2;
-  --muted: #D9CDB5;
-  --noir: rgba(8, 8, 9, .34);
-  --noir-chip: rgba(8, 8, 9, .30);
-  --noir-edge: rgba(201, 164, 106, .55);
-  --glass: var(--noir);
-  --chip: var(--noir-chip);
-  --frame: var(--noir);
-  --frame-edge: var(--noir-edge);
-  --line: rgba(201, 164, 106, .35);
+  --umber: #120D08;
+  --veil: rgba(16, 11, 7, .34);
+  --veil-chip: rgba(16, 11, 7, .26);
+  --veil-label: rgba(16, 11, 7, .5);
+  --champagne: #E6CFA1;
+  --champagne-hi: #F4E6C6;
+  --bronze: #A8834F;
+  --ivory: #F5EFE4;
+  --ivory-2: rgba(245, 239, 228, .72);
+  --ivory-3: rgba(245, 239, 228, .5);
+  --on-light: #1A130B;
+  --glow: 0 10px 34px rgba(230, 207, 161, .28);
+  --lift: 0 10px 30px rgba(0, 0, 0, .22);
+  /* the engine's own names, so map.css takes the palette too */
+  --orange: var(--champagne);
+  --navy: var(--umber);
+  --ink: var(--ivory);
+  --muted: var(--ivory-2);
+  --glass: var(--veil);
+  --chip: var(--veil-chip);
+  --frame: var(--veil);
+  --frame-edge: transparent;
+  --line: transparent;
+  --font: "Jost", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
 }
-/* by day the city behind is bright: the black needs a little more body to keep text readable */
-body:not(.is-night) { --noir: rgba(8, 8, 9, .48); --noir-chip: rgba(8, 8, 9, .42); }
-body { color: var(--ink); }
-.preload { background: #0B0B0C; }
-.preload b { background: linear-gradient(90deg, var(--gold-lo), var(--gold-hi)); }
+body:not(.is-night) { --veil: rgba(16, 11, 7, .46); --veil-chip: rgba(16, 11, 7, .36); --veil-label: rgba(16, 11, 7, .58); }
+html, body, .is-night { background: #0B0805; color: var(--ivory); }
+.preload { background: radial-gradient(60% 45% at 50% 42%, #3B2C1B 0%, #120D08 60%, #070504 100%); }
+.preload b { background: var(--champagne); }
 
-/* every frame: faint black, blurred, hairline gold edge */
-.langs, .chip, #daynight, .open, .notice, .compass, .dock, .route-note, .ui-toggle, .card, .toast,
-.route-btn, .hrow .chip, .store, .search, .reset, .info:not(.info--link):not(.info--hot),
-.info--fact, .info--note {
-  background: var(--noir) !important;
-  color: var(--ink) !important;
-  -webkit-backdrop-filter: blur(10px) saturate(1.1) !important;
-  backdrop-filter: blur(10px) saturate(1.1) !important;
-  box-shadow: inset 0 0 0 1px var(--noir-edge) !important;
+/* nothing on the page is outlined: frames, buttons, labels, logo, panel and cards are shapes of light and shade */
+.langs, .chip, #daynight, .open, .notice, .compass, .dock, .route-note, .ui-toggle, .card, .toast, .brand,
+.route-btn, .hrow .chip, .store, .search, .reset, .info, .info--fact, .info--note, .modal-box, .card-share, .card-x,
+.modal-x, .lbl span, .lbl-x, .rowwrap .dock-arrow, .tabs, .pform input, .pform select, .pform textarea, .music {
+  border: 0 !important;
+  outline: 0;
+  box-shadow: none !important;
 }
-.route-btn, .hrow .chip, .store, .search, .reset, .info:not(.info--link):not(.info--hot) { background: var(--noir-chip) !important; }
-.tabs, .is-night .tabs { background: rgba(8, 8, 9, .22) !important; }
-.notice, .open, #daynight, .tabs button:not(.is-on), .madeby, .count, .hint, .route-btn, .store, .hrow .chip, .info {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .9), 0 0 8px rgba(0, 0, 0, .55) !important;
+.langs, .chip, #daynight, .open, .notice, .compass, .dock, .route-note, .ui-toggle, .card, .toast, .brand, .modal-box, .music {
+  background: var(--veil) !important;
+  color: var(--ivory) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.25) !important;
+  backdrop-filter: blur(16px) saturate(1.25) !important;
 }
-.tabs button, .langs button, .madeby, .madeby a, .search, .search::placeholder, .info small, .store small, .card p, .route-note small { color: var(--muted) !important; }
-.search::placeholder { opacity: .85; }
-.open { color: var(--gold-hi) !important; }
-.notice::before, .open::before { background: var(--gold) !important; }
+.dock, .card, .modal-box, .route-note { box-shadow: var(--lift) !important; }
+.route-btn, .hrow .chip, .store, .search, .reset, .info, .info--fact, .info--note, .card-share {
+  background: var(--veil-chip) !important;
+  color: var(--ivory) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.tabs, .is-night .tabs { background: transparent !important; padding: 0 !important; gap: 2px !important; }
+.notice, .open, #daynight, .tabs button, .madeby, .count, .hint, .route-btn, .store, .hrow .chip, .info, .card, .route-note { text-shadow: none !important; }
+body * { letter-spacing: .01em; }
 
-/* active / chosen: solid gold, black text */
+/* type: ivory first, champagne for what matters, quiet ivory for the rest */
+.tabs button { color: var(--ivory-2) !important; font-weight: 500 !important; letter-spacing: .06em !important; }
+.langs button { color: var(--ivory-2) !important; font-weight: 500; }
+.store b, .info b, .card h2, .route-note b, .modal-box h2 { color: var(--ivory) !important; font-weight: 500 !important; }
+.card h2, .modal-box h2 { letter-spacing: .02em !important; }
+.store small, .info small, .info p, .card p, .route-note small, .modal-box p, .modal-box label, .madeby, .madeby a, .search, .search::placeholder { color: var(--ivory-2) !important; }
+.search::placeholder { color: var(--ivory-3) !important; }
+.open { color: var(--champagne) !important; }
+.notice::before, .open::before { color: var(--champagne) !important; background: none !important; font-size: 9px; vertical-align: 1px; }
+.madeby a { border-bottom: 0 !important; font-weight: 500 !important; }
+.card-tag, .info em { background: transparent !important; color: var(--champagne) !important; padding: 0 !important; letter-spacing: .14em !important; font-weight: 600 !important; }
+.compass .rose b, #scale, #scale span { color: var(--ivory-2) !important; }
+.rose i { background: linear-gradient(var(--champagne) 50%, rgba(245, 239, 228, .35) 50%) !important; }
+.scale i { border-color: var(--ivory-2) !important; }
+
+/* chosen and primary: lit champagne, umber type */
 .tabs button.is-on, .is-night .tabs button.is-on, .langs button[aria-current="true"], .is-night .langs button[aria-current="true"],
-.chip.is-on, .hrow .chip.is-on, .route-btn.is-on, .store.is-on, .store:hover,
-.is-night .route-btn.is-on, .is-night .hrow .chip.is-on, .is-night .store.is-on, .is-night .store:hover {
-  background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)) !important;
-  color: #0B0B0C !important;
-  text-shadow: none !important;
-  box-shadow: 0 4px 16px rgba(201, 164, 106, .35) !important;
-}
-.store.is-on small, .store:hover small, .is-night .store.is-on small, .is-night .store:hover small { color: #2A2216 !important; }
-.hrow .chip--safe.is-on, .is-night .hrow .chip--safe.is-on { background: #2E9E5B !important; color: #fff !important; }
-
-/* buttons that carry an action */
+.chip.is-on, .hrow .chip.is-on, .route-btn.is-on, .store.is-on,
+.is-night .route-btn.is-on, .is-night .hrow .chip.is-on, .is-night .store.is-on,
 .card-go, .info--link, .pform .card-go, .info--hot, .ui-off .ui-toggle, .rowwrap .dock-arrow, .is-night .rowwrap .dock-arrow, .lbl-x, .is-night .lbl-x {
-  background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)) !important;
-  color: #0B0B0C !important;
+  background: var(--champagne) !important;
+  color: var(--on-light) !important;
+  text-shadow: none !important;
+  box-shadow: var(--glow) !important;
 }
-.card-share { background: rgba(8, 8, 9, .35) !important; color: var(--gold-hi) !important; box-shadow: inset 0 0 0 1px var(--noir-edge) !important; }
-.card h2, .route-note b { color: #FFF8EA !important; }
-.card-tag, .info em { background: transparent !important; color: var(--gold-hi) !important; box-shadow: inset 0 0 0 1px var(--gold) !important; }
-.info em { box-shadow: none !important; }
-.card-x, .modal-x { color: var(--gold-hi) !important; background: rgba(255, 255, 255, .06) !important; }
-.compass .rose b, .compass span { color: var(--gold-hi) !important; }
-.rose i { background: linear-gradient(var(--gold) 50%, #6B6357 50%) !important; }
-#scale i { border-color: var(--gold) !important; } #scale, #scale b { color: var(--gold-hi) !important; }
+.store.is-on b, .store.is-on small, .is-night .store.is-on small, .tabs button.is-on { color: var(--on-light) !important; }
+.hrow .chip--safe.is-on, .is-night .hrow .chip--safe.is-on { background: #3E9B66 !important; color: #fff !important; }
+.card-share { color: var(--champagne) !important; }
+.card-x, .modal-x { color: var(--ivory-2) !important; background: rgba(245, 239, 228, .08) !important; }
 
-/* labels on the map: black pills with gold, the tower's label in solid gold */
-.lbl span, .is-night .lbl span { background: rgba(8, 8, 9, .62) !important; color: #F4EEE2 !important; box-shadow: inset 0 0 0 1px rgba(201, 164, 106, .4), 0 4px 14px rgba(0, 0, 0, .35) !important; }
-.lbl::after { background: rgba(201, 164, 106, .8) !important; }
-.lbl--mall span, .is-night .lbl--mall span {
-  background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)) !important;
-  color: #0B0B0C !important;
-  box-shadow: 0 6px 20px rgba(201, 164, 106, .45) !important;
+/* touch: the whole control answers the finger, nothing turns grey, nothing gets selected by a swipe */
+button, .lbl, .lbl span, .store, .route-btn, .chip, .info, .tabs, .dock, .top, .card, .compass, .langs, .route-note, .brand, .music, .plan-zoom {
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
 }
-.lbl--mall span::before { background: #0B0B0C !important; }
-.lbl--landmark span, .is-night .lbl--landmark span { color: var(--gold-hi) !important; box-shadow: inset 0 0 0 1.5px var(--gold), 0 4px 14px rgba(0, 0, 0, .35) !important; }
-.lbl--road span { background: rgba(8, 8, 9, .7) !important; color: #E9E1D2 !important; box-shadow: none !important; }
-.lbl--entrance span, .lbl--exit span, .lbl--assembly span, .lbl--station span, .lbl--green span { background: var(--c) !important; color: #fff !important; }
+#labels { -webkit-user-select: none; user-select: none; }
+input, textarea, select { -webkit-user-select: text; user-select: text; }
+button, .store, .route-btn, .chip, .info[data-link], .lbl { transition: transform .18s ease, background-color .25s ease, color .25s ease, opacity .25s ease; }
+@media (hover: hover) {
+  .route-btn:hover, .hrow .chip:hover, .store:hover, .info[data-link]:hover, .reset:hover, .card-share:hover { background: rgba(230, 207, 161, .16) !important; }
+  .store.is-on:hover, .route-btn.is-on:hover, .hrow .chip.is-on:hover { background: var(--champagne) !important; }
+  .tabs button:not(.is-on):hover, .langs button:not([aria-current="true"]):hover { color: var(--ivory) !important; }
+}
+button:active, .store:active, .route-btn:active, .chip:active, .info[data-link]:active, .lbl:active span { transform: scale(.96); }
+:focus-visible { outline: 2px solid var(--champagne) !important; outline-offset: 2px; }
 
-/* popups: black glass with gold */
-.modal { background: rgba(0, 0, 0, .45) !important; }
-.modal-box { background: rgba(14, 13, 12, .92) !important; color: var(--ink) !important; box-shadow: inset 0 0 0 1px var(--noir-edge), 0 30px 80px rgba(0, 0, 0, .5) !important; }
-.modal-box h2 { color: #FFF8EA !important; }
-.modal-box p, .modal-box label { color: var(--muted) !important; }
-.modal-facts div { background: rgba(201, 164, 106, .1) !important; box-shadow: inset 0 0 0 1px rgba(201, 164, 106, .3); }
-.modal-facts b { color: var(--gold-hi) !important; }
-.pform input, .pform select, .pform textarea { background: rgba(255, 255, 255, .05) !important; color: var(--ink) !important; border-color: rgba(201, 164, 106, .35) !important; }
-.brand, .is-night .brand { color: var(--gold) !important; filter: drop-shadow(0 0 1px rgba(0, 0, 0, .9)) drop-shadow(0 1px 8px rgba(0, 0, 0, .75)) !important; }
-.brand { box-sizing: content-box; padding: 6px 14px; border-radius: 999px; background: var(--noir); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px var(--noir-edge); filter: none !important; }
+/* the bottom panel, compact: one tight row of tabs, one row of choices */
+.dock { padding: 6px 6px 4px !important; border-radius: 20px !important; }
+.dock-top { margin-bottom: 4px !important; gap: 4px !important; }
+.tabs button { padding: 7px 8px !important; border-radius: 12px !important; font-size: 12.5px !important; }
+.reset { padding: 7px 12px !important; border-radius: 12px !important; font-size: 12px !important; }
+.hrow { gap: 6px !important; padding: 0 0 2px !important; }
+.route-btn { padding: 4px 12px 4px 4px !important; gap: 8px !important; border-radius: 12px !important; font-weight: 500 !important; }
+.route-btn i { width: 26px !important; height: 26px !important; border-radius: 8px !important; font-size: 12px !important; }
+.hrow .chip { padding: 7px 14px !important; font-weight: 500 !important; }
+.store { padding: 4px 12px 4px 4px !important; border-radius: 12px !important; }
+.store img, .store i { width: 36px !important; height: 36px !important; border-radius: 9px !important; box-shadow: none !important; }
+.info { padding: 8px 10px !important; border-radius: 12px !important; }
+.madeby { margin: 2px 6px 0 !important; font-size: 10px !important; opacity: .8; }
+.search { padding: 7px 14px !important; }
+
+/* labels on the map: dark veils; the tower in lit champagne, landmarks in ivory, the rest quiet */
+.lbl span, .is-night .lbl span { background: var(--veil-label) !important; color: var(--ivory) !important; font-weight: 500 !important; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.lbl span::before { background: var(--champagne) !important; }
+.lbl::after { background: rgba(230, 207, 161, .7) !important; width: 1px !important; }
+.lbl--mall span, .is-night .lbl--mall span { background: var(--champagne) !important; color: var(--on-light) !important; font-weight: 600 !important; letter-spacing: .04em !important; box-shadow: 0 0 0 6px rgba(230, 207, 161, .18), 0 8px 30px rgba(230, 207, 161, .45) !important; }
+.lbl--mall span::before { background: var(--on-light) !important; }
+.lbl--landmark span, .is-night .lbl--landmark span { color: var(--champagne-hi) !important; font-weight: 500 !important; letter-spacing: .03em !important; }
+.lbl--station span, .is-night .lbl--station span { background: var(--veil-label) !important; color: var(--ivory) !important; padding-left: 8px !important; }
+.lbl--station span::before { display: block !important; content: "" !important; width: 7px !important; height: 7px !important; border-radius: 50% !important; background: #8FB8E8 !important; }
+.lbl--road span { background: rgba(16, 11, 7, .42) !important; color: var(--ivory-2) !important; font-weight: 400 !important; }
+.lbl--minor span { background: rgba(16, 11, 7, .3) !important; color: rgba(245, 239, 228, .62) !important; font-size: 11px !important; font-weight: 400 !important; }
+.lbl--minor span::before { opacity: .5; }
+.lbl--minor::after { opacity: .35; }
+.lbl--far { opacity: .62; }
+.lbl--entrance span, .lbl--exit span, .lbl--assembly span, .lbl--green span { background: var(--c) !important; color: #fff !important; }
+.lbl--entrance span::before, .lbl--exit span::before, .lbl--assembly span::before { background: rgba(255, 255, 255, .92) !important; color: var(--c) !important; }
+
+/* popups */
+.modal { background: rgba(5, 4, 3, .55) !important; }
+.modal-box { background: rgba(18, 13, 8, .9) !important; }
+.modal-facts div { background: rgba(230, 207, 161, .08) !important; }
+.modal-facts b { color: var(--champagne) !important; font-weight: 500 !important; }
+.pform input, .pform select, .pform textarea { background: rgba(245, 239, 228, .06) !important; color: var(--ivory) !important; }
+.brand, .is-night .brand { color: var(--champagne) !important; padding: 7px 16px; border-radius: 999px; filter: none !important; box-sizing: content-box; }
+
+/* the floor plan opens full screen; × brings you back */
+.card-logo { cursor: zoom-in; }
+.plan-zoom { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(8, 6, 4, .9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); animation: lblIn .25s ease; }
+.plan-zoom img { max-width: 100%; max-height: 100%; border-radius: 14px; background: #fff; touch-action: pinch-zoom; }
+.plan-zoom button { position: fixed; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); width: 46px; height: 46px; border-radius: 50%; background: var(--veil) !important; color: var(--ivory); font-size: 26px; line-height: 1; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+
+/* the music switch sits in the top bar, next to day / night */
+.music { flex: none; width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border-radius: 50%; color: var(--champagne) !important; pointer-events: auto; }
+.music svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.music.is-on .wave { animation: breathe 2.4s ease-in-out infinite; }
+.music:not(.is-on) .wave { opacity: .3; }
+@media (max-width: 760px), (max-height: 500px) and (orientation: landscape) {
+  .brand { padding: 6px 12px; }
+  .tabs button { min-height: 40px; font-size: 12px !important; padding: 6px 4px !important; }
+  .route-btn, .hrow .chip, .reset, .store { min-height: 44px; }
+  .dock { bottom: max(8px, env(safe-area-inset-bottom, 0px)) !important; }
+  .music { width: 36px; height: 36px; }
+}
+/* narrow phones: Reset view is the ↺ icon only (its words stay for screen readers) */
+@media (max-width: 400px) {
+  .reset { width: 40px !important; min-width: 40px; padding: 0 !important; font-size: 0 !important; }
+  .reset::before { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .music.is-on .wave { animation: none; } button:active { transform: none; } }
+
+/* the card's route buttons wear their route's colour (car champagne, bus sky) */
+.card-actions { display: flex; gap: 6px; }
+.card-actions .card-go { flex: 1 1 0; min-width: 0; margin-top: 0; }
+.card-go[data-route] { background: var(--rc, var(--champagne)) !important; box-shadow: 0 8px 26px color-mix(in srgb, var(--rc, #E6CFA1) 35%, transparent) !important; }
+.card-logo.can-zoom::after { content: ""; position: absolute; right: 4px; bottom: 4px; width: 18px; height: 18px; border-radius: 50%; background: rgba(16, 11, 7, .72) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E6CFA1' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6'/%3E%3Cpath d='M15 15l5 5M10.5 8v5M8 10.5h5'/%3E%3C/svg%3E") center / 12px no-repeat; }
+@media (max-width: 760px), (max-height: 500px) and (orientation: landscape) { .card-logo { position: relative !important; } }
+
+/* the card's picture area: a warm dark stage for the image, the pin in champagne */
+.card-art { background: radial-gradient(120% 140% at 30% 100%, rgba(230, 207, 161, .22), rgba(230, 207, 161, .04) 60%) !important; }
+.card-pin { background: radial-gradient(circle at 35% 35%, var(--champagne-hi), var(--bronze)) !important; box-shadow: 0 8px 22px rgba(230, 207, 161, .35) !important; }
+.card-logo { background-color: #fff !important; }

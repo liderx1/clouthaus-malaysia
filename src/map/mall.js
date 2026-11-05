@@ -161,3 +161,85 @@ pulse.rotation.x = -Math.PI / 2;
 pulse.position.set(mallC[0], 0.4, -mallC[1]);
 pulse.scale.setScalar(mallRad * 1.45);
 scene.add(pulse);
+/* ---------- main.halo: a soft light around the main building, after the brand's lit-from-behind look ----------
+   A billboard of warm light that always stands just behind the building (seen from the camera), so the building
+   itself is drawn over its centre and the glow reads as an aura around it, by day as well as by night. */
+export const HALO = CONFIG.main.halo
+  ? (() => {
+      const c = document.createElement('canvas');
+      c.width = c.height = 256;
+      const x = c.getContext('2d');
+      const g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+      g.addColorStop(0, 'rgba(255,246,226,1)');
+      g.addColorStop(0.22, 'rgba(246,224,182,.82)');
+      g.addColorStop(0.5, 'rgba(224,186,124,.32)');
+      g.addColorStop(1, 'rgba(210,160,96,0)');
+      x.fillStyle = g;
+      x.fillRect(0, 0, 256, 256);
+      // faint rays fanning out, as in a light from behind
+      x.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < 28; i++) {
+        const a = (i / 28) * Math.PI * 2 + Math.sin(i * 7.3) * 0.08;
+        const ray = x.createLinearGradient(128, 128, 128 + Math.cos(a) * 128, 128 + Math.sin(a) * 128);
+        ray.addColorStop(0, 'rgba(255,236,200,.10)');
+        ray.addColorStop(1, 'rgba(255,236,200,0)');
+        x.strokeStyle = ray;
+        x.lineWidth = 2 + (i % 3) * 2;
+        x.beginPath();
+        x.moveTo(128, 128);
+        x.lineTo(128 + Math.cos(a) * 128, 128 + Math.sin(a) * 128);
+        x.stroke();
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      // by day the city is bright: the glow is drawn in front, as a ring that leaves the building itself clear
+      const c2 = document.createElement('canvas');
+      c2.width = c2.height = 256;
+      const x2 = c2.getContext('2d'),
+        g2 = x2.createRadialGradient(128, 128, 0, 128, 128, 128);
+      g2.addColorStop(0, 'rgba(255,236,200,.05)');
+      g2.addColorStop(0.16, 'rgba(255,230,190,.1)');
+      g2.addColorStop(0.32, 'rgba(250,214,160,.42)');
+      g2.addColorStop(0.52, 'rgba(240,196,130,.3)');
+      g2.addColorStop(0.76, 'rgba(235,190,120,.1)');
+      g2.addColorStop(1, 'rgba(230,180,110,0)');
+      x2.fillStyle = g2;
+      x2.fillRect(0, 0, 256, 256);
+      const dayTex = new THREE.CanvasTexture(c2);
+      dayTex.colorSpace = THREE.SRGBColorSpace;
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false, fog: false });
+      const s = new THREE.Sprite(mat);
+      s.renderOrder = 1;
+      scene.add(s);
+      return {
+        sprite: s,
+        day: new THREE.Color(CONFIG.main.halo.day ?? '#E9B96E'),
+        night: new THREE.Color(CONFIG.main.halo.night ?? '#F3D9A6'),
+        size: CONFIG.main.halo.size ?? 1.5,
+        r: mallRad,
+        tex,
+        dayTex,
+      };
+    })()
+  : null;
+/** keep the halo behind the building as the camera moves; brighter and additive at night */
+export function updateHalo(/** @type {THREE.Camera} */ cam, /** @type {number} */ n, /** @type {number} */ time) {
+  if (!HALO) return;
+  const { sprite: s } = HALO,
+    dx = mallC[0] - cam.position.x,
+    dz = -mallC[1] - cam.position.z,
+    d = Math.hypot(dx, dz) || 1,
+    night = n > 0.5,
+    back = night ? HALO.r + 6 : -HALO.r; // by night behind the building, by day in front of it
+  s.position.set(mallC[0] + (dx / d) * back, MALL_H * 0.56, -mallC[1] + (dz / d) * back);
+  const k = (1 + 0.035 * Math.sin(time * 0.9)) * (night ? 1 : 1.9);
+  s.scale.set(MALL_H * 0.95 * HALO.size * k, MALL_H * 1.45 * HALO.size * k, 1);
+  s.material.color.copy(HALO.day).lerp(HALO.night, n);
+  s.material.opacity = night ? 0.95 : 0.85;
+  if (s.material.map !== (night ? HALO.tex : HALO.dayTex)) {
+    s.material.map = night ? HALO.tex : HALO.dayTex;
+    s.material.blending = night ? THREE.AdditiveBlending : THREE.NormalBlending;
+    s.material.depthTest = night;
+    s.material.needsUpdate = true;
+  }
+}

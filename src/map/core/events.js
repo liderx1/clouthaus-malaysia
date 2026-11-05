@@ -11,6 +11,7 @@
  *   'map:pick': [number, number],
  *   'store:clear': void,
  *   'store:card': void,
+ *   'lang': void,
  * }} MapEvents
  * - place: a place label was clicked; () => [title, tag, text], re-read when the language changes
  * - mall:focus: the main building's label was clicked
@@ -19,6 +20,7 @@
  * - map:pick: the map was tapped in pick mode (the CMS pin picker), at [x, y] metres
  * - store:clear: take the picked store's pin off the map (the × on its label)
  * - store:card: bring back the picked store's card (a tap on its label)
+ * - lang: the visitor switched language (labels on the map rewrite their words)
  */
 
 /** @template {Record<string, any>} E */

@@ -1,5 +1,6 @@
 import { bus } from './core/events.js';
 import { placeLabels } from './core/placement.js';
+import { isGenericName } from './core/text.js';
 import { bInfo } from './buildings.js';
 import { CONFIG } from './config.js';
 import { MALL, MALL_H, OSM, V, ring } from './data.js';
@@ -16,19 +17,20 @@ import { MODE, S } from './state.js';
 export const LABELS = [];
 /**
  * a clickable HTML label pinned to a point in the scene
- * @param {string} text
+ * @param {string | Record<string, string> | (() => string)} text  words, translated ({ en, zh }) or worked out on each language change
  * @param {import('three').Vector3} pos
- * @param {{ kind?: string, pri?: number, color?: string, maxDist?: number, onClick?: () => void, group?: string, icon?: string }} [opts]
+ * @param {{ kind?: string, pri?: number, color?: string, maxDist?: number, onClick?: () => void, group?: string, icon?: string, minor?: number }} [opts]
+ *   minor: 1 for a label that is not the point of the page (shown quieter), 2 for one that is also far away
  */
 export function label(
   text,
   pos,
-  { kind = 'place', pri = 30, color, maxDist = 900, onClick, group = 'base', icon } = {},
+  { kind = 'place', pri = 30, color, maxDist = 900, onClick, group = 'base', icon, minor = 0 } = {},
 ) {
   const el = document.createElement('div');
-  el.className = `lbl lbl--${kind}`;
+  el.className = `lbl lbl--${kind}${minor ? ` lbl--minor${minor > 1 ? ' lbl--far' : ''}` : ''}`;
   const span = document.createElement('span');
-  span.textContent = text;
+  span.textContent = textOf(text);
   if (icon) span.dataset.icon = icon;
   el.append(span);
   if (color) el.style.setProperty('--c', color);
@@ -38,10 +40,27 @@ export function label(
       onClick();
     });
   $('#labels').appendChild(el);
-  const L = { el, pos, pri, maxDist, group, kind, on: true };
+  const L = { el, pos, pri, maxDist, group, kind, on: true, text };
   LABELS.push(L);
   return L;
 }
+/** a label's words in the current language: a string, { en, zh, … } (English where a language has none) or a function */
+const textOf = (/** @type {any} */ x) => (typeof x === 'function' ? x() : (pick(x) ?? ''));
+/** the visitor switched language: every label with translated words is rewritten and measured again */
+export function relabel() {
+  for (const L of LABELS)
+    if (L.text && typeof L.text !== 'string') {
+      L.el.firstChild.textContent = textOf(L.text);
+      L.w = null;
+    }
+}
+bus.on('lang', relabel);
+/** a place's name for a label: OSM's own Chinese name (name:zh), unless site.config.json → names says otherwise */
+const named = (/** @type {{ name: string, zh?: string }} */ o, name = o.name) => {
+  const fix = CONFIG.names?.[name];
+  const zh = fix && 'zh' in fix ? fix.zh : o.zh;
+  return zh ? { en: name, zh } : name;
+};
 label(CONFIG.main.label, V(mallC[0], mallC[1], MALL_H + 8), {
   kind: 'mall',
   pri: 1000,
@@ -102,25 +121,30 @@ const dist = (p) => Math.round(Math.hypot(p[0] - mallC[0], p[1] - mallC[1]));
   const seen = new Set();
   // a station is named after the lines that pass it: MRT, LRT, Monorail (OSM station names may carry a code, e.g. KJ10)
   const LINE = { subway: 'MRT', light_rail: 'LRT', monorail: 'Monorail', rail: 'KTM' };
-  const linesAt = (q) =>
-    [
+  const LINE_ZH = { MRT: '捷运', LRT: '轻快铁', Monorail: '单轨', KTM: 'KTM' };
+  const linesAt = (q) => {
+    const l = [
       ...new Set(
         OSM.rails
           .filter((r) => LINE[r.t] && r.p.some((v) => Math.hypot(v[0] - q[0], v[1] - q[1]) < 140))
           .map((r) => LINE[r.t]),
       ),
-    ].join(' · ') || 'MRT';
+    ];
+    return (l.length ? l : ['MRT']).map((x) => (S.lang.startsWith('zh') ? LINE_ZH[x] : x)).join(' · ');
+  };
   for (const p of OSM.pois.filter((p) => p.kind === 'station')) {
     const name = p.name.replace(/^[A-Z]{2}\d+[A-Z]?\s+/, '');
     if (seen.has(name)) continue;
     seen.add(name);
-    label(`${linesAt(p.p)} ${name}`, V(p.p[0], p.p[1], RAIL_Z + 9), {
+    const nm = named(p, name);
+    label(() => `${linesAt(p.p)} ${textOf(nm)}`, V(p.p[0], p.p[1], RAIL_Z + 9), {
       kind: 'station',
       pri: 900,
       color: '#1565D8',
       maxDist: 3000,
+      minor: dist(p.p) > 800 ? 1 : 0,
       onClick: () =>
-        bus.emit('place', () => [name, `${linesAt(p.p)} · ${t('station')}`, `${dist(p.p)} m ${t('away')}`]),
+        bus.emit('place', () => [textOf(nm), `${linesAt(p.p)} · ${t('station')}`, `${dist(p.p)} m ${t('away')}`]),
     });
   }
   // landmarks (site.config.json → landmarks): a name over the tallest building or part at a point, seen from far away
@@ -130,28 +154,34 @@ const dist = (p) => Math.round(Math.hypot(p[0] - mallC[0], p[1] - mallC[1]));
     if (!under.length) continue;
     const top = Math.max(...under.map((b) => bInfo(b).h));
     under.forEach((b) => b.name && seen.add(b.name));
-    label(pick(lm.label), V(x, y, top + 6), {
+    label(lm.label, V(x, y, top + 6), {
       kind: 'landmark',
       pri: 950,
       color: '#3D4A5C',
       maxDist: 6000,
       onClick: () =>
-        bus.emit('place', () => [pick(lm.label), pick(lm.kind) ?? t('place'), `${dist([x, y])} m ${t('away')}`]),
+        bus.emit('place', () => [textOf(lm.label), pick(lm.kind) ?? t('place'), `${dist([x, y])} m ${t('away')}`]),
     });
   }
-  for (const b of OSM.buildings)
-    if (b.name && !b.part && b !== MALL && (b.h || 0) > 15 && !seen.has(b.name)) {
-      seen.add(b.name);
-      const r = ring(b.p);
-      const c = r.reduce((a, q) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]);
-      label(b.name, V(c[0], c[1], bInfo(b).h + 4), {
-        kind: 'building',
-        pri: 300 + (b.h || 0),
-        color: '#7A8696',
-        maxDist: 1400,
-        onClick: () => bus.emit('place', () => [b.name, t('place'), `${dist(c)} m ${t('away')}`]),
-      });
-    }
+  // other named buildings: only real names, only the tall or near ones, and quieter than the landmarks
+  for (const b of OSM.buildings) {
+    if (!b.name || b.part || b === MALL || seen.has(b.name) || isGenericName(b.name)) continue;
+    const r = ring(b.p);
+    const c = r.reduce((a, q) => [a[0] + q[0] / r.length, a[1] + q[1] / r.length], [0, 0]),
+      d = dist(c),
+      h = b.h || 0;
+    if (d > 1100 || h < 15 || (d > 500 && h < 120)) continue;
+    seen.add(b.name);
+    const nm = named(b);
+    label(nm, V(c[0], c[1], bInfo(b).h + 4), {
+      kind: 'building',
+      pri: 300 + h - d / 10,
+      color: '#7A8696',
+      maxDist: 1400,
+      minor: d > 450 ? 2 : 1,
+      onClick: () => bus.emit('place', () => [textOf(nm), t('place'), `${d} m ${t('away')}`]),
+    });
+  }
   const byName = new Map();
   for (const r of OSM.roads)
     if (r.name && !FOOT.has(r.t) && !CONFIG.hideRoadLabels?.includes(r.name)) {
@@ -163,16 +193,22 @@ const dist = (p) => Math.round(Math.hypot(p[0] - mallC[0], p[1] - mallC[1]));
     const cum = cumulative(r.p);
     const q = sampleAt(r.p, cum, cum.at(-1) / 2);
     const pri = r.t.startsWith('trunk') ? 700 : r.t.startsWith('tertiary') ? 260 : 60;
-    label(name, V(q.x, q.y, roadZ(r) + 2), { kind: 'road', pri, maxDist: pri > 500 ? 2600 : pri > 200 ? 1100 : 520 });
+    label(named(r, name), V(q.x, q.y, roadZ(r) + 2), {
+      kind: 'road',
+      pri,
+      maxDist: pri > 500 ? 2600 : pri > 200 ? 1100 : 520,
+      minor: 1,
+    });
   }
   for (const s of OSM.stops)
     if (s.name && dist(s.p) < 700)
-      label(s.name, V(s.p[0], s.p[1], 3), {
+      label(named(s), V(s.p[0], s.p[1], 3), {
         kind: 'bus',
         pri: 200,
         color: '#F5A623',
         maxDist: 700,
-        onClick: () => bus.emit('place', () => [s.name, t('bus'), `${dist(s.p)} m ${t('away')}`]),
+        minor: 1,
+        onClick: () => bus.emit('place', () => [textOf(named(s)), t('bus'), `${dist(s.p)} m ${t('away')}`]),
       });
   const KIND = {
     amenity: '#C25B9C',
@@ -182,21 +218,26 @@ const dist = (p) => Math.round(Math.hypot(p[0] - mallC[0], p[1] - mallC[1]));
     office: '#5A6372',
     healthcare: '#D64545',
   };
+  // places nearby: only the useful kinds (hotels, malls, sights, hospitals, schools, banks…), quiet
+  const USEFUL =
+    /^(hotel|mall|museum|attraction|aquarium|gallery|hospital|clinic|school|university|bank|police|place_of_worship|park|theatre|arts_centre|embassy|supermarket)$/;
   for (const p of OSM.pois
-    .filter((p) => p.kind !== 'station' && dist(p.p) < 650)
+    .filter((p) => p.kind !== 'station' && dist(p.p) < 600 && USEFUL.test(p.sub ?? '') && !isGenericName(p.name))
     .sort((a, b) => dist(a.p) - dist(b.p))
-    .slice(0, 140)) {
+    .slice(0, 40)) {
     const pri = ['hospital', 'school', 'university', 'bank', 'fuel', 'police', 'place_of_worship', 'clinic'].includes(
       p.sub,
     )
       ? 150
       : 40;
-    label(p.name, V(p.p[0], p.p[1], 5), {
+    const nm = named(p);
+    label(nm, V(p.p[0], p.p[1], 5), {
       kind: 'poi',
       pri,
       color: KIND[p.kind] || '#5A6372',
       maxDist: pri > 100 ? 800 : 420,
-      onClick: () => bus.emit('place', () => [p.name, tagName(p.sub || p.kind), `${dist(p.p)} m ${t('away')}`]),
+      minor: 2,
+      onClick: () => bus.emit('place', () => [textOf(nm), tagName(p.sub || p.kind), `${dist(p.p)} m ${t('away')}`]),
     });
   }
 }
@@ -226,7 +267,7 @@ function pinBox(w, h) {
  * boxes of the buttons floating over the map (compass, hide-panels button, store card, top bar items), so labels and
  * their × never sit under them: on a small phone a tap meant for a label would otherwise land on the button above it
  */
-const CONTROLS = ['#compass', '#uiToggle', '#card', '.top .brand', '.top-tools', '#routeNote'];
+const CONTROLS = ['#compass', '#uiToggle', '#card', '.top .brand', '.top-tools', '#routeNote', '#music'];
 function controlBoxes() {
   const out = [];
   for (const sel of CONTROLS) {

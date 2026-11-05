@@ -7,8 +7,13 @@ export default [
   { ignores: ['src/map/vendor/**', 'public/**', '.next/**', 'node_modules/**', 'src/migrations/**', 'src/app/**', 'seed/**'] },
   js.configs.recommended,
   {
-    files: ['src/map/**/*.js'],
-    languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: { ...globals.browser } },
+    files: ['src/map/**/*.js', 'src/music/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      // build-time flags from site.config.json (scripts/build-map.mjs)
+      globals: { ...globals.browser, __TOWER__: 'readonly', __LANG_zh__: 'readonly', __LANG_ms__: 'readonly', __LANG_zhTW__: 'readonly' },
+    },
     rules: {
       'no-unused-vars': ['error', { args: 'none', caughtErrors: 'none' }],
       'no-empty': ['error', { allowEmptyCatch: true }],

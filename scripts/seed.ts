@@ -36,7 +36,7 @@ if (await empty('stores')) for (const s of stores) {
   // desc is a string, or { en, zh, … } for a translated card text
   const desc = typeof s.desc === 'object' && s.desc ? s.desc : { en: s.desc }
   const doc = await p.create({ collection: 'stores', locale: 'en', data: { ...pub, name: s.name, floor: s.floor, unit: s.unit, category: s.category ?? 'services', featured: !!s.featured,
-    logo: await upload(s.logo, s.name) as any, desc: desc.en, pin: s.pin ? { x: s.pin.x, y: s.pin.y, estimated: !!s.pin.estimated } : undefined } })
+    logo: await upload(s.logo, s.name) as any, plan: await upload(s.plan, `${s.name} plan`) as any, desc: desc.en, pin: s.pin ? { x: s.pin.x, y: s.pin.y, estimated: !!s.pin.estimated } : undefined } })
   for (const l of L) if (desc[l]) await p.update({ collection: 'stores', id: doc.id, locale: l, data: { desc: desc[l], ...pub } })
 }
 console.log('stores', stores.length)
