@@ -24,6 +24,7 @@ const W = {
     hint: 'Tap a unit, or choose a type below',
     note: 'Walls and positions from the developer’s plans; indicative.',
     notHere: 'Not on this floor: shown from its own plan.',
+    elsewhere: 'Levels {l}: in this place on the floor, with its own layout (see the plan).',
   },
   zh: {
     close: '返回地图',
@@ -39,6 +40,7 @@ const W = {
     hint: '点选单位，或在下方选择户型',
     note: '墙体与位置依建商平面图绘制，仅供参考。',
     notHere: '不在此标准层，请参阅该户型平面图。',
+    elsewhere: '{l} 楼：位于同一位置，格局请参阅该户型平面图。',
   },
 };
 const lang = () => (document.documentElement.lang.startsWith('zh') ? 'zh' : 'en');
@@ -48,11 +50,19 @@ const esc = (/** @type {string} */ s) =>
   String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c);
 
 let state = null;
+/** an open() is waiting for the floor to be ready: further taps are ignored until it is up */
+let opening = false;
+/** the tower's and landmarks' own opacity and depth writing, recorded once (never from a half-faded state) */
+let orig = /** @type {{ m: any, o: number, d: boolean }[] | null} */ (null);
+/** stops the previous opening's loop (its fade back) when the floor is opened again before that fade ends */
+let stopPrev = /** @type {(() => void) | null} */ (null);
+/** where the camera goes back to, kept while it flies back so a quick reopen returns to the map, not mid-flight */
+let returning = /** @type {{ pos: THREE.Vector3, target: THREE.Vector3, until: number } | null} */ (null);
 
 /**
  * @param {{ scene: THREE.Scene, camera: THREE.PerspectiveCamera, controls: any, S: any, centre: number[], facing: number,
  *   floorZ: number, hide: THREE.Object3D[], glass?: THREE.Material[], fade?: THREE.Material[], data: string, type: string,
- *   uplight?: any, renderer?: any,
+ *   uplight?: any, renderer?: any, level?: number, onClose?: () => void,
  *   onZoom: (src: string, alt: string) => void }} ctx
  */
 /** @type {Promise<any> | null} */
@@ -252,10 +262,11 @@ export function prepare(ctx) {
     g.add(dimLines);
     // the model is never hidden by the city: drawn after it, with no depth test (the dark slab first, then the rest)
     // a sample room pillar and foot, so their shaders are compiled now and not on the first tap
-    const sample = [
-      new THREE.Mesh(beamGeo(7, 0.05), beamMat(0.9)),
-      new THREE.Mesh(new THREE.CircleGeometry(0.35, 8), M.foot),
-    ];
+    // one beam and one foot geometry for every room, shared (nothing new is made when another unit is chosen)
+    const roomGeo = beamGeo(7, 0.05),
+      footGeo = new THREE.CircleGeometry(0.35, 20).rotateX(-Math.PI / 2);
+    dimLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(36), 3));
+    const sample = [new THREE.Mesh(roomGeo, beamMat(0.9)), new THREE.Mesh(footGeo, M.foot)];
     roomBeams.add(...sample);
     g.traverse((o) => {
       if (o instanceof THREE.Mesh) o.castShadow = o.receiveShadow = false;
@@ -268,30 +279,42 @@ export function prepare(ctx) {
 
     g.updateMatrixWorld(true);
     g.visible = true;
-    scene.add(g);
     try {
-      // compiled in the background where the browser can (parallel shader compile), else at once
+      // compiled before it joins the scene (so it never shows over the map meanwhile), in the background where the
+      // browser can (parallel shader compile), else at once; the scene only lends its lights
       if (ctx.renderer?.compileAsync) await ctx.renderer.compileAsync(g, ctx.camera, scene);
-      else ctx.renderer?.compile(scene, ctx.camera);
+      else ctx.renderer?.compile(g, ctx.camera, scene);
     } catch {}
     roomBeams.clear();
     g.visible = false;
-    return { D, g, toWorld, units, roomBeams, dimLines, beamMat, beamGeo, ROOM_H, UNIT_H, M };
+    scene.add(g);
+    return { D, g, toWorld, units, roomBeams, dimLines, beamMat, beamGeo, roomGeo, footGeo, ROOM_H, UNIT_H, M };
   })());
 }
 
 export async function open(ctx) {
-  if (state) return select(ctx.type);
-  const B = await prepare(ctx);
+  if (state) return state.select(ctx.type);
+  if (opening) return;
+  opening = true;
+  let B;
+  try {
+    B = await prepare(ctx);
+  } finally {
+    opening = false;
+  }
+  if (state) return state.select(ctx.type);
+  stopPrev?.();
   const { camera, controls, S } = ctx;
-  const { D, g, toWorld, units, roomBeams, dimLines, beamMat, beamGeo, ROOM_H, UNIT_H, M } = B;
+  const { D, g, toWorld, units, roomBeams, dimLines, beamMat, roomGeo, footGeo, ROOM_H, UNIT_H, M } = B;
   g.visible = true;
+  const prevFocus = /** @type {HTMLElement | null} */ (document.activeElement);
   let dimAt = /** @type {{ w: number[], d: number[] } | null} */ (null);
 
   // the map steps aside: the tower is opened at this floor, the halo and rings hidden
+  const back = returning && performance.now() < returning.until ? returning : null;
   const saved = {
-    pos: camera.position.clone(),
-    target: controls.target.clone(),
+    pos: back ? back.pos.clone() : camera.position.clone(),
+    target: back ? back.target.clone() : controls.target.clone(),
     near: camera.near,
     min: controls.minDistance,
     polar: controls.maxPolarAngle,
@@ -305,12 +328,13 @@ export async function open(ctx) {
   // rebuild, no stall), the lit Twin Towers step back to a ghost, and a soft light rises up the facade
   const glassMats = ctx.glass ?? [],
     fadeMats = ctx.fade ?? [];
-  const before = [...glassMats, ...fadeMats].map((m) => ({ m, o: m.opacity, d: m.depthWrite }));
+  orig ??= [...glassMats, ...fadeMats].map((m) => ({ m, o: m.opacity, d: m.depthWrite }));
   glassMats.forEach((m) => (m.depthWrite = false));
   fadeMats.forEach((m) => (m.depthWrite = false));
   const up = ctx.uplight;
   if (up) up.visible = true;
-  let fade = { t0: performance.now(), from: 0, to: 1 };
+  // from wherever an earlier fade back left it, so a quick reopen does not flash the tower solid
+  let fade = { t0: performance.now(), from: up ? up.material.uniforms.uOn.value : 0, to: 1 };
   const applyFade = (/** @type {number} */ k) => {
     // the tower as glass: a little more body by day, when the bright city behind would wash it out
     const glass = S.nightTarget > 0.5 ? 0.12 : 0.3;
@@ -376,9 +400,17 @@ export async function open(ctx) {
 
   const typeOf = (/** @type {string} */ t) => D.types[t];
   const unitFor = (/** @type {string} */ t) => units.find((x) => x.u.types.includes(t));
+  /** the type is on this floor's level (L1, N and M are only on higher floors, in the place of L, J or a new unit) */
+  const onLevel = (/** @type {string} */ t) => {
+    const [a, b] = String(D.types[t].levels).split(/[–-]/).map(Number);
+    return !ctx.level || (ctx.level >= a && ctx.level <= b);
+  };
+  /** the unit whose rooms and dimensions are drawn: only when this floor really has the type */
+  const laidOut = (/** @type {string} */ t) => (onLevel(t) ? unitFor(t) : null);
   function render() {
     const t = typeOf(current),
-      un = unitFor(current),
+      at = unitFor(current),
+      un = laidOut(current),
       zh = lang() === 'zh';
     const rows = [
       [w('size'), `${t.sqft.toLocaleString('en')} sq ft · ${t.m2} m²`],
@@ -397,8 +429,8 @@ export async function open(ctx) {
     ui.innerHTML = `
       <header class="plate-top"><div><b>${esc(tr(D.floor))}</b><small>${esc(w('note'))}</small></div><button class="plate-x" type="button" aria-label="${esc(w('close'))}">×</button></header>
       <aside class="plate-card">
-        <h2>${esc(zh ? current.replace('Type ', '') + ' 型' : current)}</h2>
-        ${un ? '' : `<p class="plate-warn">${esc(w('notHere'))}</p>`}
+        <h2 tabindex="0" role="button" aria-expanded="${cardOpen}">${esc(zh ? current.replace('Type ', '') + ' 型' : current)}</h2>
+        ${!at ? `<p class="plate-warn">${esc(w('notHere'))}</p>` : !un ? `<p class="plate-warn">${esc(w('elsewhere').replace('{l}', t.levels))}</p>` : ''}
         <dl>${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
         <ul>${t.extra.map((/** @type {any} */ e) => `<li>${esc(tr(e))}</li>`).join('')}</ul>
         <details><summary>${esc(w('every'))}</summary><ul>${D.common.map((/** @type {any} */ e) => `<li>${esc(tr(e))}</li>`).join('')}</ul></details>
@@ -410,15 +442,19 @@ export async function open(ctx) {
             `<button type="button" data-type="${k}"${k === current ? ' class="is-on"' : ''}>${k.replace('Type ', '')}</button>`,
         )
         .join('')}</nav>
-      ${units.map((x) => `<span class="plate-tag${x === un ? ' is-on' : ''}" data-u="${x.u.unit}">${esc(x.u.types.map((y) => y.replace('Type ', '')).join(' / '))}<i>${x.u.unit}</i></span>`).join('')}
+      ${units.map((x) => `<span class="plate-tag${x === at ? ' is-on' : ''}" data-u="${x.u.unit}">${esc(x.u.types.map((y) => y.replace('Type ', '')).join(' / '))}<i>${x.u.unit}</i></span>`).join('')}
 ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" data-r="${i}">${esc(D.names[rm.k][zh ? 1 : 0])}</span>`).join('') : ''}
       ${un ? `<span class="plate-dim" data-dim="w">${esc(t.dims.split(' × ')[0])} mm</span><span class="plate-dim" data-dim="d">${esc(t.dims.split(' × ')[1])} mm</span>` : ''}`;
     ui.querySelector('.plate-x')?.addEventListener('click', close);
     // phones: the name opens and closes the full details
-    ui.querySelector('.plate-card h2')?.addEventListener('click', () => {
+    const more = /** @type {HTMLElement | null} */ (ui.querySelector('.plate-card h2'));
+    const toggle = () => {
       cardOpen = !cardOpen;
       ui.querySelector('.plate-card')?.classList.toggle('is-open', cardOpen);
-    });
+      more?.setAttribute('aria-expanded', String(cardOpen));
+    };
+    more?.addEventListener('click', toggle);
+    more?.addEventListener('keydown', (e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggle()));
     ui.querySelector('.plate-card')?.classList.toggle('is-open', cardOpen);
     ui.querySelector('.plate-plan')?.addEventListener('click', () => ctx.onZoom(t.plan, current));
     ui.querySelectorAll('[data-type]').forEach((el) =>
@@ -437,11 +473,11 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     roomBeams.clear();
     if (un)
       for (const rm of un.u.rooms) {
-        const bm = new THREE.Mesh(beamGeo(ROOM_H, 0.05), beamMat(0.9));
+        const bm = new THREE.Mesh(roomGeo, beamMat(0.9));
         bm.position.set(rm.at[0], 0, -rm.at[1]);
         bm.renderOrder = 20;
         roomBeams.add(bm);
-        const foot = new THREE.Mesh(new THREE.CircleGeometry(0.35, 20).rotateX(-Math.PI / 2), M.foot);
+        const foot = new THREE.Mesh(footGeo, M.foot);
         foot.position.set(rm.at[0], 0.08, -rm.at[1]);
         foot.renderOrder = 20;
         roomBeams.add(foot);
@@ -466,7 +502,9 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
         [outU - 0.5, b0, outU + 0.5, b0],
         [outU - 0.5, b1, outU + 0.5, b1],
       ].flatMap(([x0, z0, x1, z1]) => [x0, y, -z0, x1, y, -z1]);
-      dimLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(L, 3));
+      const pos = /** @type {THREE.BufferAttribute} */ (dimLines.geometry.attributes.position);
+      /** @type {Float32Array} */ (pos.array).set(L);
+      pos.needsUpdate = true;
       dimLines.geometry.computeBoundingSphere();
       dimAt = { w: [(a0 + a1) / 2, outV + (b1 > 0 ? 1.2 : -1.2)], d: [outU + (a1 > 0 ? 1.4 : -1.4), (b0 + b1) / 2] };
     }
@@ -507,6 +545,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     frame();
   }
   state = { select, close };
+  stopPrev = () => cancelAnimationFrame(raf);
 
   // labels follow the view
   const v = new THREE.Vector3();
@@ -533,7 +572,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
       const x = units.find((y) => String(y.u.unit) === el.getAttribute('data-u'));
       if (x) place(/** @type {HTMLElement} */ (el), toWorld(x.centre, UNIT_H + 0.8));
     });
-    const un = unitFor(current);
+    const un = laidOut(current);
     if (un)
       ui.querySelectorAll('.plate-room').forEach((el) => {
         const rm = un.u.rooms[Number(el.getAttribute('data-r'))];
@@ -572,6 +611,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
   render();
   frame(true);
   raf = requestAnimationFrame(tick);
+  /** @type {HTMLElement | null} */ (ui.querySelector('.plate-x'))?.focus({ preventScroll: true });
 
   function close() {
     canvas.removeEventListener('pointerdown', onDown);
@@ -587,7 +627,12 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     camera.near = saved.near;
     camera.updateProjectionMatrix();
     controls.minDistance = saved.min;
+    controls.autoRotate = saved.rot;
+    S.zoomTo = null;
     S.plate = false;
+    ctx.onClose?.();
+    if (prevFocus?.isConnected) prevFocus.focus({ preventScroll: true });
+    returning = { pos: saved.pos.clone(), target: saved.target.clone(), until: performance.now() + 1300 };
     S.fly = {
       t0: performance.now(),
       dur: 1200,
@@ -605,7 +650,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
   function finish() {
     cancelAnimationFrame(raf);
     if (state) return;
-    for (const x of before) {
+    for (const x of orig ?? []) {
       x.m.opacity = x.o;
       x.m.depthWrite = x.d;
     }

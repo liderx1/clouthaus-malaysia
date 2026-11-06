@@ -301,3 +301,9 @@ html body .info--fact em, html body.is-night .info--fact em { color: var(--champ
   .plate-plan { min-height: 36px !important; font-size: 13px; }
   .plate-card.is-open { max-height: 52vh !important; }
 }
+
+/* phones held sideways: the route note stays centred on screen, and the unit panel leaves the floor plate in view */
+@media (max-height: 500px) and (orientation: landscape) {
+  .route-note { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; width: min(560px, 64vw) !important; max-width: calc(100vw - 32px) !important; }
+  .plate-card { max-width: min(320px, 42vw) !important; max-height: calc(100vh - 24px) !important; }
+}

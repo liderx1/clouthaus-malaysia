@@ -292,8 +292,10 @@ $('#modal').addEventListener('click', (e) => {
   if ((e.target.id === 'modal' && pressedBackdrop) || e.target.closest('.modal-x')) closePop();
 });
 addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && popOpen) closePop();
-  else if (e.key === 'Escape') clearStore();
+  if (e.key !== 'Escape') return;
+  if (popOpen) closePop();
+  // the full-screen plan and the floor plate close themselves: the chosen unit stays chosen behind them
+  else if (!S.plate && !document.querySelector('.plan-zoom')) clearStore();
 });
 document.addEventListener('click', (e) => {
   if (!(e.target instanceof HTMLElement)) return;
@@ -317,6 +319,8 @@ document.addEventListener('click', (e) => {
 $$('[data-tab]').forEach((b) =>
   b.addEventListener('click', () => {
     const dock = $('#panel');
+    // phones: the open card covers the panes, so a tab first puts the card away
+    if (MOBILE) $('#card').hidden = true;
     if (b.classList.contains('is-on')) {
       dock.classList.toggle('is-min');
       return syncDock();

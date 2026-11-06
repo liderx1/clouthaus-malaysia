@@ -15,6 +15,7 @@ import {
 import { PICK, PLACES, STORES } from './data.js';
 import { isNightAt, nowAt } from './core/hours.js';
 import { $, $$, TEST } from './env.js';
+import { esc } from './core/text.js';
 import { LIT_MATS } from './buildings.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
@@ -183,7 +184,7 @@ function showPlace(title, tag, text) {
   $('#cardGo').hidden = true;
   if ($('#cardGo2')) $('#cardGo2').hidden = true;
   zoomSrc = null;
-  $('#cardLogo').classList.remove('can-zoom');
+  syncLogo();
   c.hidden = false;
   c.style.animation = 'none';
   void c.offsetWidth;
@@ -200,7 +201,7 @@ export function showStore(s) {
   );
   if (s.logo) $('#cardLogo').style.backgroundImage = `url("${s.logo}")`;
   zoomSrc = s.plan || null;
-  $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
+  syncLogo();
   // a route to the store (from the MRT) only where the site wants one: a home in a tower has no door of its own
   if (CONFIG.storeRoute === false) return;
   const go = $('#cardGo');
@@ -257,6 +258,9 @@ export function openPlate(/** @type {string} */ type) {
     m.open({
       ...plateCtx(),
       type,
+      level: CONFIG.plate.level,
+      // the pin of the chosen unit comes back with the map (it was hidden with the city while the plate was up)
+      onClose: () => (pinGroup.visible = !!MODE.store),
       onZoom: (/** @type {string} */ src, /** @type {string} */ alt) => {
         zoomSrc = src;
         $('#cardTitle').textContent = alt;
@@ -271,7 +275,7 @@ export function showMain() {
   showPlace(pick(CONFIG.main.label) ?? CONFIG.name, t('mainTag'), t('mainText'));
   if (CONFIG.aboutImage?.src) $('#cardLogo').style.backgroundImage = `url("${CONFIG.aboutImage.src}")`;
   zoomSrc = CONFIG.aboutImage?.src ?? null;
-  $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
+  syncLogo();
   const ids = /** @type {string[]} */ (CONFIG.main.routes ?? []);
   [$('#cardGo'), $('#cardGo2')].forEach((b, i) => {
     const r = PLACES.routes.find((x) => x.id === ids[i]);
@@ -288,25 +292,41 @@ export function showMain() {
 }
 // the picture on the card (a floor plan, the building) opens full screen; × or Escape closes it
 let zoomSrc = null;
+/** the picture is a button only when it opens something: reachable by keyboard and named for screen readers */
+function syncLogo() {
+  const l = $('#cardLogo');
+  l.classList.toggle('can-zoom', !!zoomSrc);
+  l.tabIndex = zoomSrc ? 0 : -1;
+  l.role = zoomSrc ? 'button' : null;
+  l.ariaLabel = zoomSrc ? $('#cardTitle').textContent : null;
+}
 function openZoom() {
   if (!zoomSrc) return;
   const z = document.createElement('div');
   z.className = 'plan-zoom';
   z.setAttribute('role', 'dialog');
   z.setAttribute('aria-modal', 'true');
-  z.innerHTML = `<img src="${zoomSrc}" alt="${$('#cardTitle').textContent}"><button type="button" aria-label="${t('close')}">×</button>`;
+  const back = /** @type {HTMLElement | null} */ (document.activeElement);
+  z.innerHTML = `<img src="${esc(zoomSrc)}" alt="${esc($('#cardTitle').textContent ?? '')}"><button type="button" aria-label="${esc(t('close'))}">×</button>`;
   const close = () => {
     z.remove();
-    removeEventListener('keydown', esc);
+    removeEventListener('keydown', onKey);
+    if (back?.isConnected) back.focus({ preventScroll: true });
   };
-  const esc = (/** @type {KeyboardEvent} */ e) => e.key === 'Escape' && close();
+  const onKey = (/** @type {KeyboardEvent} */ e) => e.key === 'Escape' && close();
   z.querySelector('button').addEventListener('click', close);
   z.addEventListener('click', (e) => e.target === z && close());
-  addEventListener('keydown', esc);
+  addEventListener('keydown', onKey);
   document.body.append(z);
   z.querySelector('button').focus();
 }
 $('#cardLogo').addEventListener('click', openZoom);
+$('#cardLogo').addEventListener('keydown', (e) => {
+  if (zoomSrc && (e.key === 'Enter' || e.key === ' ')) {
+    e.preventDefault();
+    openZoom();
+  }
+});
 
 // click a store pin
 const ray = new THREE.Raycaster(),

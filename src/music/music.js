@@ -165,9 +165,8 @@ function play(secs = 5) {
   build();
   if (!ctx) return;
   on = true;
-  heard = true;
-  ctx.resume();
-  // if the browser will not play the <audio> element, send the sound straight out instead
+  // if the browser will not play the <audio> element, send the sound straight out instead (called at once, inside
+  // the gesture, as phone browsers require)
   out?.play().catch(() => {
     if (ctx && last && out) {
       last.connect(ctx.destination);
@@ -176,6 +175,15 @@ function play(secs = 5) {
   });
   fadeTo(VOLUME, secs);
   render();
+  return ctx.resume().then(
+    () => {
+      if (ctx?.state === 'running') heard = true;
+      else on = false;
+      render();
+      return on;
+    },
+    () => ((on = false), render(), false),
+  );
 }
 function stop() {
   on = false;
@@ -194,11 +202,15 @@ btn?.addEventListener('click', (e) => {
   } catch {}
 });
 // arrival: the first touch anywhere starts the music (unless the visitor turned it off before)
+// (a touch only counts as a gesture when it ends, and a browser may still refuse: keep listening until the sound runs)
+const GESTURES = ['pointerup', 'touchend', 'click', 'keydown'];
+const done = () => GESTURES.forEach((t) => removeEventListener(t, first, true));
 const first = (/** @type {Event} */ e) => {
-  ['pointerdown', 'keydown', 'touchend'].forEach((t) => removeEventListener(t, first, true));
-  if (wanted && !on && !(btn && btn.contains(/** @type {Node} */ (e.target)))) play();
+  if (!wanted || on) return done();
+  if (btn && btn.contains(/** @type {Node} */ (e.target))) return done();
+  play()?.then((ok) => ok && done());
 };
-if (!test) ['pointerdown', 'keydown', 'touchend'].forEach((t) => addEventListener(t, first, true));
+if (!test) GESTURES.forEach((t) => addEventListener(t, first, true));
 // quiet while the page is in the background
 document.addEventListener('visibilitychange', () => {
   if (!ctx || !on) return;

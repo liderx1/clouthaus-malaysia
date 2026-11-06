@@ -236,8 +236,8 @@
     },
     {
       "name": "Type M",
-      "floor": "HIGH",
-      "unit": "13 · 1,173 sf · L53+",
+      "floor": "M53",
+      "unit": "13 · 1,173 sf",
       "category": "dualkey",
       "logo": "/images/logos/type-m.webp",
       "featured": false,

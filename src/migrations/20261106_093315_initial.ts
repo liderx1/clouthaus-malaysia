@@ -4,10 +4,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`CREATE SCHEMA IF NOT EXISTS "payload";
 
    CREATE TYPE "payload"."_locales" AS ENUM('en', 'zh');
-  CREATE TYPE "payload"."enum_stores_floor" AS ENUM('G', 'LOW', 'MID', '33', '33A', 'ALL', 'UP', 'HIGH', '63A');
+  CREATE TYPE "payload"."enum_stores_floor" AS ENUM('G', 'LOW', 'MID', '33', '33A', 'ALL', 'UP', 'HIGH', 'M53', '63A');
   CREATE TYPE "payload"."enum_stores_category" AS ENUM('one', 'two', 'three', 'dualkey', 'family', 'wellness', 'rooftop');
   CREATE TYPE "payload"."enum_stores_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum__stores_v_version_floor" AS ENUM('G', 'LOW', 'MID', '33', '33A', 'ALL', 'UP', 'HIGH', '63A');
+  CREATE TYPE "payload"."enum__stores_v_version_floor" AS ENUM('G', 'LOW', 'MID', '33', '33A', 'ALL', 'UP', 'HIGH', 'M53', '63A');
   CREATE TYPE "payload"."enum__stores_v_version_category" AS ENUM('one', 'two', 'three', 'dualkey', 'family', 'wellness', 'rooftop');
   CREATE TYPE "payload"."enum__stores_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "payload"."enum__stores_v_published_locale" AS ENUM('en', 'zh');

@@ -101,7 +101,13 @@
       "code": "HIGH",
       "z": 218.1,
       "short": "L51–63",
-      "admin": "Levels 51–63 (Types M, N)"
+      "admin": "Levels 51–63 (Type N)"
+    },
+    {
+      "code": "M53",
+      "z": 225.7,
+      "short": "L53–63",
+      "admin": "Levels 53–63 (Type M)"
     },
     {
       "code": "63A",
@@ -263,6 +269,7 @@
         "ALL": "levels 9–63",
         "UP": "levels 36–63",
         "HIGH": "levels 51–63",
+        "M53": "levels 53–63",
         "63A": "Level 63A rooftop"
       },
       "ui": {
@@ -323,6 +330,7 @@
         "ALL": "9–63楼",
         "UP": "36–63楼",
         "HIGH": "51–63楼",
+        "M53": "53–63楼",
         "63A": "63A楼顶层"
       },
       "ui": {
