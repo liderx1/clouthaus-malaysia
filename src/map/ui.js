@@ -153,12 +153,14 @@ new ResizeObserver(() => {
   const c = $('#card');
   document.documentElement.style.setProperty('--card-h', c.hidden ? '0px' : `${c.offsetHeight + 10}px`);
 }).observe($('#card'));
-new MutationObserver(() =>
+new MutationObserver(() => {
   document.documentElement.style.setProperty(
     '--card-h',
     $('#card').hidden ? '0px' : `${$('#card').offsetHeight + 10}px`,
-  ),
-).observe($('#card'), { attributes: true, attributeFilter: ['hidden'] });
+  );
+  // phones fold the panel to its tabs while a card is open (theme.css), so the building keeps the screen
+  document.body.classList.toggle('has-card', !$('#card').hidden);
+}).observe($('#card'), { attributes: true, attributeFilter: ['hidden'] });
 // closing the card keeps the store's pin on the map (tap the pin to bring the card back; Reset view clears it)
 $('.card-x').addEventListener('click', () => {
   $('#card').hidden = true;

@@ -259,3 +259,24 @@ body:not(.is-night) .brand { color: #5E4321 !important; filter: drop-shadow(0 0 
 .plate-room { background: rgba(16, 11, 7, .62) !important; color: var(--ivory) !important; font-weight: 500 !important; box-shadow: none !important; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .plate-dim { position: absolute; left: 0; top: 0; z-index: 1; padding: 1px 6px; border-radius: 5px; background: rgba(16, 11, 7, .5); color: var(--champagne); font-size: 11px; font-weight: 600; letter-spacing: .04em; white-space: nowrap; pointer-events: none; font-variant-numeric: tabular-nums; will-change: transform; transition: opacity .25s; }
 @media (max-width: 760px) { .plate-dim { font-size: 10px; } }
+
+/* hover on a list item: champagne wash, the words stay ivory (the base sheet's night hover turned it white) */
+html body .store:hover:not(.is-on), html body.is-night .store:hover:not(.is-on) { background: rgba(230, 207, 161, .16) !important; color: var(--ivory) !important; }
+html body .store:hover:not(.is-on) b { color: var(--ivory) !important; }
+html body .store:hover:not(.is-on) small { color: var(--ivory-2) !important; }
+/* words on champagne are always dark umber, never white */
+html body .info--link, html body .info--link *, html body .info--hot, html body .info--hot *, html body .card-go, html body .card-go *, html body .plate-plan { color: var(--on-light) !important; text-shadow: none !important; }
+html body .info--fact em, html body.is-night .info--fact em { color: var(--champagne) !important; }
+/* labels on the map: no live blur behind each one (expensive on phones while the view moves); a denser veil instead */
+.lbl span, .is-night .lbl span, .plate-tag, .plate-room, .plate-dim { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.lbl span, .is-night .lbl span { background: rgba(16, 11, 7, .66) !important; }
+.lbl--minor span { background: rgba(16, 11, 7, .4) !important; }
+.lbl--mall span, .is-night .lbl--mall span { background: var(--champagne) !important; }
+/* phones: while a card is open the panel keeps only its tabs, so the building keeps the screen */
+@media (max-width: 760px), (max-height: 500px) and (orientation: landscape) {
+  body.has-card .dock .pane, body.has-card .dock .madeby { display: none !important; }
+  body.has-card .dock-top { margin-bottom: 0 !important; }
+  .card p { -webkit-line-clamp: 2 !important; }
+  .compass { width: 46px !important; height: 46px !important; }
+  .ui-toggle { width: 40px !important; height: 40px !important; }
+}

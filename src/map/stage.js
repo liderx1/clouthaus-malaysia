@@ -11,7 +11,7 @@ export const renderer = new THREE.WebGLRenderer({ antialias: false, powerPrefere
 // resolution adapts to the device: it starts modest and steps down if frames run slow (see the loop)
 // sharpest resolution tried: phones have 2–3× screens; 2× is near-indistinguishable from 3× at this scale and half
 // the pixels. core/quality.js steps down from here when a device cannot keep up.
-export const DPR_MAX = Math.min(devicePixelRatio, MOBILE ? 2 : 1.5);
+export const DPR_MAX = Math.min(devicePixelRatio, MOBILE ? 1.75 : 1.5); // 1.75× on phones: smooth, still sharp
 S.dpr = DPR_MAX;
 renderer.setPixelRatio(S.dpr);
 renderer.setSize(innerWidth, innerHeight);
@@ -52,7 +52,7 @@ const VIEW = ((CONFIG.main.view ?? 139) * Math.PI) / 180,
 export const HOME = ((k) => ({
   p: V((CONFIG.main.view == null ? 15 : 0) + 588 * k * Math.sin(VIEW), 25 + 588 * k * Math.cos(VIEW), AIM + 200 * k),
   t: V(CONFIG.main.view == null ? 15 : 0, 0, AIM),
-}))((MOBILE ? 1.75 : 1.2) * TALL);
+}))((MOBILE ? 1.45 : 1.2) * TALL); // phones a little closer: the building is the point
 camera.position.copy(HOME.p);
 export const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.copy(HOME.t);
