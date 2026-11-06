@@ -1,0 +1,1467 @@
+{
+ "source": "Developer's typical floor plan (levels 17–32) and type plans; positions indicative",
+ "px": 21.7,
+ "bbox": [
+  [
+   -26.34,
+   12.63
+  ],
+  [
+   26.34,
+   -12.63
+  ]
+ ],
+ "names": {
+  "living": [
+   "Living",
+   "客厅"
+  ],
+  "dining": [
+   "Dining",
+   "饭厅"
+  ],
+  "kitchen": [
+   "Kitchen",
+   "厨房"
+  ],
+  "master": [
+   "Master bedroom",
+   "主卧"
+  ],
+  "bed": [
+   "Bedroom",
+   "卧室"
+  ],
+  "bed2": [
+   "Bedroom 2",
+   "卧室 2"
+  ],
+  "bed3": [
+   "Bedroom 3",
+   "卧室 3"
+  ],
+  "mbath": [
+   "Master bath",
+   "主浴室"
+  ],
+  "bath": [
+   "Bathroom",
+   "浴室"
+  ],
+  "bath1": [
+   "Bath 1",
+   "浴室 1"
+  ],
+  "bath2": [
+   "Bath 2",
+   "浴室 2"
+  ],
+  "utility": [
+   "Utility room",
+   "工作间"
+  ],
+  "study": [
+   "Study",
+   "书房"
+  ],
+  "foyer": [
+   "Foyer",
+   "玄关"
+  ]
+ },
+ "dims": {
+  "Type A": "12,095 × 10,680",
+  "Type B": "9,540 × 10,680",
+  "Type C": "4,770 × 10,680",
+  "Type D": "4,770 × 10,680",
+  "Type E": "4,770 × 10,680",
+  "Type F": "4,770 × 10,680",
+  "Type G": "11,670 × 10,680",
+  "Type H": "8,720 × 9,820",
+  "Type I": "11,540 × 11,400",
+  "Type J": "7,415 × 12,530",
+  "Type K": "6,765 × 10,880",
+  "Type L": "7,770 × 16,380",
+  "Type L1": "7,770 × 16,380",
+  "Type M": "9,325 × 12,530",
+  "Type N": "6,665 × 12,530"
+ },
+ "units": [
+  {
+   "unit": 3,
+   "types": [
+    "Type G"
+   ],
+   "poly": [
+    [
+     -26.2,
+     12.49
+    ],
+    [
+     -14.91,
+     12.49
+    ],
+    [
+     -14.91,
+     2.0
+    ],
+    [
+     -17.9,
+     2.0
+    ],
+    [
+     -17.9,
+     6.5
+    ],
+    [
+     -26.2,
+     6.5
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "mbath",
+     "at": [
+      -22.59,
+      10.6
+     ]
+    },
+    {
+     "k": "bed2",
+     "at": [
+      -19.65,
+      10.81
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -16.71,
+      10.6
+     ]
+    },
+    {
+     "k": "master",
+     "at": [
+      -23.94,
+      8.09
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      -19.99,
+      7.56
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -15.92,
+      7.35
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -16.83,
+      4.63
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 2,
+   "types": [
+    "Type H"
+   ],
+   "poly": [
+    [
+     -26.2,
+     6.5
+    ],
+    [
+     -17.9,
+     6.5
+    ],
+    [
+     -17.9,
+     -3.29
+    ],
+    [
+     -26.2,
+     -3.29
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "master",
+     "at": [
+      -23.9,
+      4.44
+     ]
+    },
+    {
+     "k": "mbath",
+     "at": [
+      -19.46,
+      3.85
+     ]
+    },
+    {
+     "k": "bed2",
+     "at": [
+      -24.41,
+      1.7
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      -19.12,
+      0.92
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -24.24,
+      -1.53
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -22.02,
+      -1.83
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -19.63,
+      -1.53
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 1,
+   "types": [
+    "Type I"
+   ],
+   "poly": [
+    [
+     -26.2,
+     -3.29
+    ],
+    [
+     -17.67,
+     -3.29
+    ],
+    [
+     -17.67,
+     -1.34
+    ],
+    [
+     -15.25,
+     -1.34
+    ],
+    [
+     -15.25,
+     -12.4
+    ],
+    [
+     -26.2,
+     -12.4
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "master",
+     "at": [
+      -24.78,
+      -4.99
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      -20.84,
+      -4.99
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -16.9,
+      -4.43
+     ]
+    },
+    {
+     "k": "mbath",
+     "at": [
+      -25.21,
+      -7.75
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -16.68,
+      -6.76
+     ]
+    },
+    {
+     "k": "bed3",
+     "at": [
+      -22.7,
+      -10.41
+     ]
+    },
+    {
+     "k": "bed2",
+     "at": [
+      -19.74,
+      -10.41
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -16.9,
+      -9.63
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 4,
+   "types": [
+    "Type F"
+   ],
+   "poly": [
+    [
+     -14.79,
+     12.49
+    ],
+    [
+     -9.84,
+     12.49
+    ],
+    [
+     -9.84,
+     2.0
+    ],
+    [
+     -14.79,
+     2.0
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "bed",
+     "at": [
+      -11.62,
+      10.39
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -13.41,
+      10.39
+     ]
+    },
+    {
+     "k": "bath",
+     "at": [
+      -11.23,
+      6.3
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -13.55,
+      6.2
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -11.62,
+      3.68
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 5,
+   "types": [
+    "Type E"
+   ],
+   "poly": [
+    [
+     -9.84,
+     12.49
+    ],
+    [
+     -4.88,
+     12.49
+    ],
+    [
+     -4.88,
+     2.0
+    ],
+    [
+     -9.84,
+     2.0
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "bed",
+     "at": [
+      -8.06,
+      10.39
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -6.27,
+      10.39
+     ]
+    },
+    {
+     "k": "bath",
+     "at": [
+      -8.45,
+      6.3
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -6.12,
+      6.2
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -8.06,
+      3.68
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 6,
+   "types": [
+    "Type D"
+   ],
+   "poly": [
+    [
+     -4.88,
+     12.49
+    ],
+    [
+     0.07,
+     12.49
+    ],
+    [
+     0.07,
+     2.0
+    ],
+    [
+     -4.88,
+     2.0
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "bed",
+     "at": [
+      -1.71,
+      10.39
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -3.5,
+      10.39
+     ]
+    },
+    {
+     "k": "bath",
+     "at": [
+      -1.32,
+      6.3
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -3.65,
+      6.2
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -1.71,
+      3.68
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 7,
+   "types": [
+    "Type C"
+   ],
+   "poly": [
+    [
+     -0.39,
+     12.49
+    ],
+    [
+     4.68,
+     12.49
+    ],
+    [
+     4.68,
+     2.0
+    ],
+    [
+     -0.39,
+     2.0
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "bed",
+     "at": [
+      1.43,
+      10.39
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      3.26,
+      10.39
+     ]
+    },
+    {
+     "k": "bath",
+     "at": [
+      1.03,
+      6.3
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      3.41,
+      6.2
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      1.43,
+      3.68
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 8,
+   "types": [
+    "Type B"
+   ],
+   "poly": [
+    [
+     4.68,
+     12.49
+    ],
+    [
+     14.24,
+     12.49
+    ],
+    [
+     14.24,
+     2.0
+    ],
+    [
+     4.68,
+     2.0
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "bed",
+     "at": [
+      6.59,
+      10.39
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      6.3,
+      6.93
+     ]
+    },
+    {
+     "k": "study",
+     "at": [
+      6.59,
+      3.58
+     ]
+    },
+    {
+     "k": "foyer",
+     "at": [
+      9.46,
+      3.79
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      12.04,
+      3.79
+     ]
+    },
+    {
+     "k": "bath1",
+     "at": [
+      12.71,
+      6.93
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      10.41,
+      7.25
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      11.85,
+      10.39
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 9,
+   "types": [
+    "Type A"
+   ],
+   "poly": [
+    [
+     14.35,
+     12.49
+    ],
+    [
+     26.34,
+     12.49
+    ],
+    [
+     26.34,
+     3.85
+    ],
+    [
+     18.5,
+     3.85
+    ],
+    [
+     18.5,
+     2.0
+    ],
+    [
+     14.35,
+     2.0
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "living",
+     "at": [
+      16.15,
+      9.97
+     ]
+    },
+    {
+     "k": "bed3",
+     "at": [
+      19.03,
+      10.92
+     ]
+    },
+    {
+     "k": "bed2",
+     "at": [
+      21.78,
+      10.92
+     ]
+    },
+    {
+     "k": "mbath",
+     "at": [
+      24.84,
+      8.61
+     ]
+    },
+    {
+     "k": "utility",
+     "at": [
+      18.55,
+      7.77
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      15.55,
+      6.51
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      20.23,
+      4.73
+     ]
+    },
+    {
+     "k": "master",
+     "at": [
+      24.18,
+      5.57
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      16.51,
+      3.47
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 10,
+   "types": [
+    "Type L",
+    "Type L1"
+   ],
+   "poly": [
+    [
+     18.5,
+     3.85
+    ],
+    [
+     26.34,
+     3.85
+    ],
+    [
+     26.34,
+     -12.4
+    ],
+    [
+     21.04,
+     -12.4
+    ],
+    [
+     21.04,
+     -0.41
+    ],
+    [
+     18.5,
+     -0.41
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "bath2",
+     "at": [
+      20.62,
+      2.39
+     ]
+    },
+    {
+     "k": "foyer",
+     "at": [
+      21.09,
+      0.92
+     ]
+    },
+    {
+     "k": "bed2",
+     "at": [
+      24.85,
+      1.57
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      22.34,
+      -1.19
+     ]
+    },
+    {
+     "k": "study",
+     "at": [
+      25.4,
+      -2.0
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      22.03,
+      -4.6
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      24.22,
+      -5.09
+     ]
+    },
+    {
+     "k": "master",
+     "at": [
+      24.61,
+      -8.99
+     ]
+    },
+    {
+     "k": "mbath",
+     "at": [
+      23.12,
+      -11.42
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 11,
+   "types": [
+    "Type K"
+   ],
+   "poly": [
+    [
+     17.35,
+     -1.57
+    ],
+    [
+     21.04,
+     -1.57
+    ],
+    [
+     21.04,
+     -12.4
+    ],
+    [
+     14.59,
+     -12.4
+    ],
+    [
+     14.59,
+     -6.41
+    ],
+    [
+     17.35,
+     -6.41
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "study",
+     "at": [
+      19.94,
+      -3.19
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      18.71,
+      -4.27
+     ]
+    },
+    {
+     "k": "bath",
+     "at": [
+      16.71,
+      -7.2
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      20.0,
+      -6.66
+     ]
+    },
+    {
+     "k": "bed",
+     "at": [
+      16.59,
+      -10.01
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      20.2,
+      -9.8
+     ]
+    }
+   ]
+  },
+  {
+   "unit": 12,
+   "types": [
+    "Type J",
+    "Type N"
+   ],
+   "poly": [
+    [
+     6.52,
+     0.05
+    ],
+    [
+     14.12,
+     0.05
+    ],
+    [
+     14.12,
+     -12.4
+    ],
+    [
+     6.52,
+     -12.4
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "foyer",
+     "at": [
+      9.56,
+      -1.07
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      7.89,
+      -2.19
+     ]
+    },
+    {
+     "k": "bath1",
+     "at": [
+      12.22,
+      -2.19
+     ]
+    },
+    {
+     "k": "bed",
+     "at": [
+      8.5,
+      -7.42
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      11.54,
+      -5.18
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      11.39,
+      -7.42
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      11.69,
+      -10.28
+     ]
+    }
+   ]
+  }
+ ],
+ "types": {
+  "Type A": {
+   "sqft": 1216,
+   "m2": 113,
+   "bed": 3,
+   "bath": 2,
+   "homes": 51,
+   "unit": 9,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre & The Exchange 106 corner",
+    "zh": "KLCC 与 The Exchange 106 转角"
+   },
+   "dims": "12,095 × 10,680",
+   "plan": "/images/plans/type-a.webp",
+   "extra": [
+    {
+     "en": "Corner unit with curved glass",
+     "zh": "弧形玻璃转角单位"
+    },
+    {
+     "en": "Utility room",
+     "zh": "工作间"
+    },
+    {
+     "en": "Engineered timber floors in the bedrooms",
+     "zh": "卧室为工程木地板"
+    },
+    {
+     "en": "On levels 49–50 a 108 sq ft store comes with it",
+     "zh": "49–50 楼附 108 平方英尺储藏室"
+    },
+    {
+     "en": "Car park bay on levels 58–63",
+     "zh": "58–63 楼附车位"
+    }
+   ]
+  },
+  "Type B": {
+   "sqft": 1098,
+   "m2": 102,
+   "bed": 1,
+   "bath": 2,
+   "homes": 51,
+   "unit": 8,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre",
+    "zh": "KLCC"
+   },
+   "dims": "9,540 × 10,680",
+   "plan": "/images/plans/type-b.webp",
+   "extra": [
+    {
+     "en": "Dual key: bedroom side with study, living side",
+     "zh": "双钥匙：卧室区含书房，另一侧为客厅区"
+    },
+    {
+     "en": "Study",
+     "zh": "书房"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    },
+    {
+     "en": "The show unit at the sales gallery",
+     "zh": "销售展厅样板房"
+    },
+    {
+     "en": "On levels 49–50 a 43 sq ft store comes with it",
+     "zh": "49–50 楼附 43 平方英尺储藏室"
+    }
+   ]
+  },
+  "Type C": {
+   "sqft": 549,
+   "m2": 51,
+   "bed": 1,
+   "bath": 1,
+   "homes": 51,
+   "unit": 7,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre",
+    "zh": "KLCC"
+   },
+   "dims": "4,770 × 10,680",
+   "plan": "/images/plans/type-cdef.webp",
+   "extra": [
+    {
+     "en": "One plan for Types C to F",
+     "zh": "C 至 F 型同一平面"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  },
+  "Type D": {
+   "sqft": 549,
+   "m2": 51,
+   "bed": 1,
+   "bath": 1,
+   "homes": 51,
+   "unit": 6,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre",
+    "zh": "KLCC"
+   },
+   "dims": "4,770 × 10,680",
+   "plan": "/images/plans/type-cdef.webp",
+   "extra": [
+    {
+     "en": "One plan for Types C to F",
+     "zh": "C 至 F 型同一平面"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  },
+  "Type E": {
+   "sqft": 549,
+   "m2": 51,
+   "bed": 1,
+   "bath": 1,
+   "homes": 51,
+   "unit": 5,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre",
+    "zh": "KLCC"
+   },
+   "dims": "4,770 × 10,680",
+   "plan": "/images/plans/type-cdef.webp",
+   "extra": [
+    {
+     "en": "One plan for Types C to F",
+     "zh": "C 至 F 型同一平面"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  },
+  "Type F": {
+   "sqft": 549,
+   "m2": 51,
+   "bed": 1,
+   "bath": 1,
+   "homes": 51,
+   "unit": 4,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre",
+    "zh": "KLCC"
+   },
+   "dims": "4,770 × 10,680",
+   "plan": "/images/plans/type-cdef.webp",
+   "extra": [
+    {
+     "en": "One plan for Types C to F",
+     "zh": "C 至 F 型同一平面"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  },
+  "Type G": {
+   "sqft": 904,
+   "m2": 84,
+   "bed": 2,
+   "bath": 2,
+   "homes": 49,
+   "unit": 3,
+   "levels": "9–63",
+   "side": {
+    "en": "KL City Centre & Genting Highlands corner",
+    "zh": "KLCC 与云顶高原转角"
+   },
+   "dims": "11,670 × 10,680",
+   "plan": "/images/plans/type-g.webp",
+   "extra": [
+    {
+     "en": "Corner unit with curved glass",
+     "zh": "弧形玻璃转角单位"
+    },
+    {
+     "en": "Garden version on level 9: 538 sq ft garden",
+     "zh": "9 楼花园单位：538 平方英尺花园"
+    },
+    {
+     "en": "Engineered timber floors in the bedrooms",
+     "zh": "卧室为工程木地板"
+    }
+   ]
+  },
+  "Type H": {
+   "sqft": 904,
+   "m2": 84,
+   "bed": 2,
+   "bath": 2,
+   "homes": 48,
+   "unit": 2,
+   "levels": "9–63",
+   "side": {
+    "en": "Genting Highlands",
+    "zh": "云顶高原"
+   },
+   "dims": "8,720 × 9,820",
+   "plan": "/images/plans/type-h.webp",
+   "extra": [
+    {
+     "en": "Garden version on level 9: 818 sq ft garden",
+     "zh": "9 楼花园单位：818 平方英尺花园"
+    },
+    {
+     "en": "Engineered timber floors in the bedrooms",
+     "zh": "卧室为工程木地板"
+    }
+   ]
+  },
+  "Type I": {
+   "sqft": 1119,
+   "m2": 104,
+   "bed": 3,
+   "bath": 2,
+   "homes": 48,
+   "unit": 1,
+   "levels": "9–63",
+   "side": {
+    "en": "Genting Highlands & KL Tower corner",
+    "zh": "云顶高原与吉隆坡塔转角"
+   },
+   "dims": "11,540 × 11,400",
+   "plan": "/images/plans/type-i.webp",
+   "extra": [
+    {
+     "en": "Corner unit with curved glass",
+     "zh": "弧形玻璃转角单位"
+    },
+    {
+     "en": "Garden version on level 9: 1,206 sq ft garden",
+     "zh": "9 楼花园单位：1,206 平方英尺花园"
+    },
+    {
+     "en": "Engineered timber floors in the bedrooms",
+     "zh": "卧室为工程木地板"
+    }
+   ]
+  },
+  "Type J": {
+   "sqft": 1001,
+   "m2": 93,
+   "bed": 1,
+   "bath": 2,
+   "homes": 38,
+   "unit": 12,
+   "levels": "9–50",
+   "side": {
+    "en": "KL Tower & Merdeka 118",
+    "zh": "吉隆坡塔与默迪卡118"
+   },
+   "dims": "7,415 × 12,530",
+   "plan": "/images/plans/type-j.webp",
+   "extra": [
+    {
+     "en": "Dual key: one shared foyer opens to both sides",
+     "zh": "双钥匙：共用玄关通往两侧"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  },
+  "Type K": {
+   "sqft": 635,
+   "m2": 59,
+   "bed": 1,
+   "bath": 1,
+   "homes": 51,
+   "unit": 11,
+   "levels": "9–63",
+   "side": {
+    "en": "KL Tower & Merdeka 118",
+    "zh": "吉隆坡塔与默迪卡118"
+   },
+   "dims": "6,765 × 10,880",
+   "plan": "/images/plans/type-k.webp",
+   "extra": [
+    {
+     "en": "Study beside the kitchen and dining area",
+     "zh": "厨房与饭厅旁设书房"
+    },
+    {
+     "en": "Engineered timber floor in the bedroom",
+     "zh": "卧室为工程木地板"
+    }
+   ]
+  },
+  "Type L": {
+   "sqft": 980,
+   "m2": 91,
+   "bed": 2,
+   "bath": 2,
+   "homes": 23,
+   "unit": 10,
+   "levels": "9–32",
+   "side": {
+    "en": "The Exchange 106",
+    "zh": "The Exchange 106"
+   },
+   "dims": "7,770 × 16,380",
+   "plan": "/images/plans/type-l.webp",
+   "extra": [
+    {
+     "en": "A long plan with a study",
+     "zh": "长形平面，附书房"
+    },
+    {
+     "en": "Master bedroom with curved glass and its own bathroom",
+     "zh": "主卧弧形玻璃并附浴室"
+    },
+    {
+     "en": "Engineered timber floors in the bedrooms",
+     "zh": "卧室为工程木地板"
+    }
+   ]
+  },
+  "Type L1": {
+   "sqft": 990,
+   "m2": 92,
+   "bed": 2,
+   "bath": 2,
+   "homes": 28,
+   "unit": 10,
+   "levels": "36–63",
+   "side": {
+    "en": "The Exchange 106",
+    "zh": "The Exchange 106"
+   },
+   "dims": "7,770 × 16,380",
+   "plan": "/images/plans/type-l.webp",
+   "extra": [
+    {
+     "en": "Takes the place of Type L from level 36 up",
+     "zh": "36 楼以上取代 L 型"
+    },
+    {
+     "en": "Study",
+     "zh": "书房"
+    },
+    {
+     "en": "Engineered timber floors in the bedrooms",
+     "zh": "卧室为工程木地板"
+    }
+   ]
+  },
+  "Type M": {
+   "sqft": 1173,
+   "m2": 109,
+   "bed": 1,
+   "bath": 2,
+   "homes": 11,
+   "unit": 13,
+   "levels": "53–63",
+   "side": {
+    "en": "KL Tower & Merdeka 118",
+    "zh": "吉隆坡塔与默迪卡118"
+   },
+   "dims": "9,325 × 12,530",
+   "plan": "/images/plans/type-m.webp",
+   "extra": [
+    {
+     "en": "Dual key with a study by the foyer",
+     "zh": "双钥匙，玄关旁设书房"
+    },
+    {
+     "en": "Unit 13, added from level 53; not on the typical floor shown",
+     "zh": "第 13 号单位，53 楼起才有，不在此标准层"
+    },
+    {
+     "en": "The rarest type: 11 homes",
+     "zh": "最稀有户型：仅 11 户"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  },
+  "Type N": {
+   "sqft": 893,
+   "m2": 83,
+   "bed": 1,
+   "bath": 2,
+   "homes": 13,
+   "unit": 12,
+   "levels": "51–63",
+   "side": {
+    "en": "KL Tower & Merdeka 118",
+    "zh": "吉隆坡塔与默迪卡118"
+   },
+   "dims": "6,665 × 12,530",
+   "plan": "/images/plans/type-n.webp",
+   "extra": [
+    {
+     "en": "Dual key, in place of Type J from level 51",
+     "zh": "双钥匙，51 楼起取代 J 型"
+    },
+    {
+     "en": "Marble floors in the bedroom",
+     "zh": "卧室为大理石地板"
+    }
+   ]
+  }
+ },
+ "common": [
+  {
+   "en": "Ceiling up to 3.0 m; 3.8 m floor to floor",
+   "zh": "天花最高 3.0 米；楼层高 3.8 米"
+  },
+  {
+   "en": "Curtain wall: 26 mm double-glazed, 2.8 m glass",
+   "zh": "玻璃幕墙：26 毫米双层，玻璃高 2.8 米"
+  },
+  {
+   "en": "Marble in living, dining and kitchen",
+   "zh": "客厅、饭厅、厨房为大理石"
+  },
+  {
+   "en": "VRF air-conditioning, ceiling grilles",
+   "zh": "VRF 冷气，天花出风口"
+  },
+  {
+   "en": "Gaggenau hob, hood and combi microwave; Bosch fridge, washer and dryer",
+   "zh": "Gaggenau 炉具、抽油烟机与组合微波炉；Bosch 冰箱与洗衣烘干机"
+  },
+  {
+   "en": "Gessi fittings, Laufen sanitary ware, Yale Bespoke digital lock",
+   "zh": "Gessi 龙头、Laufen 卫浴、Yale Bespoke 电子门锁"
+  }
+ ],
+ "floor": {
+  "en": "Typical floor · levels 17–32 (developer plan)",
+  "zh": "标准层 · 17–32 楼（建商平面图）"
+ }
+}

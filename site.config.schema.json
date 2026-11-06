@@ -486,29 +486,22 @@
         }
       }
     },
-    "tours": {
-      "type": "array",
-      "description": "Units with a 3D walk-through (src/tour): id (for #tour=id links), store (its name in the directory), level, unitFrom (metres from the tower's centre along the facade where the unit starts)",
-      "items": {
-        "type": "object",
-        "required": [
-          "id",
-          "store",
-          "level"
-        ],
-        "properties": {
-          "id": {
+    "plate": {
+      "type": "object",
+      "description": "The 3D floor plate (src/plate): the typical floor's walls and units (public/map/plate.json, made by scripts/plate_walls.mjs) shown at this level when a unit type is chosen",
+      "properties": {
+        "level": {
+          "type": "number"
+        },
+        "data": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
             "type": "string"
           },
-          "store": {
-            "type": "string"
-          },
-          "level": {
-            "type": "number"
-          },
-          "unitFrom": {
-            "type": "number"
-          }
+          "description": "Directory categories whose items open on the floor plate"
         }
       }
     }

@@ -7,7 +7,7 @@ export default [
   { ignores: ['src/map/vendor/**', 'public/**', '.next/**', 'node_modules/**', 'src/migrations/**', 'src/app/**', 'seed/**'] },
   js.configs.recommended,
   {
-    files: ['src/map/**/*.js', 'src/music/**/*.js', 'src/tour/**/*.js'],
+    files: ['src/map/**/*.js', 'src/music/**/*.js', 'src/plate/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

@@ -104,6 +104,12 @@ $('#storeQ').addEventListener('input', () => {
   renderStores();
 });
 function goToStore(s) {
+  // a home type opens on the 3D floor plate (site.config.json → plate.categories) instead of a pin
+  if (CONFIG.plate?.categories?.includes(s.category)) {
+    $$('.store').forEach((b) => b.classList.toggle('is-on', STORES[+b.dataset.store] === s));
+    bus.emit('plate:open', s.name);
+    return;
+  }
   Object.assign(MODE, { route: null, safety: false, focus: false, entrances: false, store: s });
   applyModes();
   const p = showPin(s);
@@ -371,11 +377,6 @@ export function readHash(raw = location.hash) {
     return;
   }
   const [k, v] = h.split('=');
-  if (k === 'tour') {
-    const tour = (CONFIG.tours ?? []).find((/** @type {any} */ x) => x.id === v);
-    if (tour) bus.emit('tour:open', tour);
-    return;
-  }
   if (k === 'store') {
     const s = STORES.find((x) => storeSlug(x) === v);
     if (s) {

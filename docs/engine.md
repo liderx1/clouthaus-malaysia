@@ -23,7 +23,7 @@ few parts of this document still describe the mall wording.
 | `litLandmarks` | landmarks drawn in their real night lighting and never faded (the Petronas Twin Towers) |
 | `names` | corrections to OSM's Chinese names (`{"zh": null}` keeps the English where OSM's is doubtful) |
 | `look` | sky and haze tints of the 3D scene, so it takes the site's palette |
-| `tours` | units with a 3D walk-through (`src/tour/tour.js`, bundled on its own into `public/map/tour.js` and loaded when opened): the unit is modelled from the developer's floor plan and placed at its level and position in the tower, so its windows show the real 3D city; open from the unit's card or `/#tour=<id>` |
+| `plate` | the 3D floor plate: choosing a home type opens the typical floor at its height in the tower (`src/plate/plate.js`, bundled into `public/map/plate.js`, loaded when first opened). Its walls are read from the developer's typical floor plan by `scripts/plate_walls.mjs` (from `seed/typical-floor-plan.jpg` and the units, rooms and details in `seed/plate-units.json`) into `public/map/plate.json`; the chosen unit is lit, its rooms named, and a panel lists every published detail |
 
 Labels change language with the page: names come from OSM's `name:zh` tags (fetched by `scripts/fetch_osm.py`) and
 the landmark names in `site.config.json`. Generic names ("Tower 2", "Blok 3") are not shown; buildings, roads and

@@ -12,7 +12,7 @@
  *   'store:clear': void,
  *   'store:card': void,
  *   'lang': void,
- *   'tour:open': any,
+ *   'plate:open': string,
  * }} MapEvents
  * - place: a place label was clicked; () => [title, tag, text], re-read when the language changes
  * - mall:focus: the main building's label was clicked
@@ -22,7 +22,7 @@
  * - store:clear: take the picked store's pin off the map (the × on its label)
  * - store:card: bring back the picked store's card (a tap on its label)
  * - lang: the visitor switched language (labels on the map rewrite their words)
- * - tour:open: open a unit's 3D walk-through (a #tour=… link)
+ * - plate:open: show this unit type on the 3D floor plate
  */
 
 /** @template {Record<string, any>} E */

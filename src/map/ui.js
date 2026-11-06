@@ -18,7 +18,7 @@ import { $, $$, TEST } from './env.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
 import { ROUTE_COL, ROUTE_ICON } from './routes.js';
-import { TOUR_HIDE, mallC, mallMesh } from './mall.js';
+import { TOUR_HIDE, edges, mallC, mallMesh } from './mall.js';
 import { asmMarks, entMarks, exitMarks } from './markers.js';
 import { applyModes, focusMall } from './modes.js';
 import { pinGroup, pinSprite, storeSpot } from './pin.js';
@@ -198,14 +198,6 @@ export function showStore(s) {
   if (s.logo) $('#cardLogo').style.backgroundImage = `url("${s.logo}")`;
   zoomSrc = s.plan || null;
   $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
-  // a 3D walk-through of this unit, where the site has one (site.config.json → tours)
-  const tour = (CONFIG.tours ?? []).find((/** @type {any} */ x) => x.store === s.name);
-  if (tour) {
-    const go = $('#cardGo');
-    go.textContent = t('tourOpen');
-    go.hidden = false;
-    go.onclick = () => openTour(tour);
-  }
   // a route to the store (from the MRT) only where the site wants one: a home in a tower has no door of its own
   if (CONFIG.storeRoute === false) return;
   const go = $('#cardGo');
@@ -216,24 +208,28 @@ export function showStore(s) {
     applyModes();
   };
 }
-/** open a unit's 3D walk-through (its own script, public/map/tour.js, loaded the first time) */
-export function openTour(/** @type {any} */ tour) {
+/** the 3D floor plate (public/map/plate.js, loaded the first time): the unit type's place on the typical floor,
+ * its rooms and every detail the developer publishes; site.config.json → plate */
+export function openPlate(/** @type {string} */ type) {
   $('#card').hidden = true;
   const fp = CONFIG.main.footprint ?? {};
-  import(/* @vite-ignore */ new URL('tour.js', import.meta.url).href).then((m) =>
+  import(/* @vite-ignore */ new URL('plate.js', import.meta.url).href).then((m) =>
     m.open({
       scene,
       camera,
       controls,
       S,
-      U,
       centre: mallC,
       facing: fp.facing ?? 0,
-      depth: fp.d ?? 20,
-      unitFrom: tour.unitFrom ?? 0,
-      floorZ: tour.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
-      hide: [...TOUR_HIDE, pinGroup],
-      landmark: CONFIG.litLandmarks?.[0]?.at,
+      floorZ: CONFIG.plate.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
+      hide: [...TOUR_HIDE, pinGroup, mallMesh, edges],
+      data: new URL(CONFIG.plate.data.replace(/^\/map\//, ''), import.meta.url).href,
+      type,
+      onZoom: (/** @type {string} */ src, /** @type {string} */ alt) => {
+        zoomSrc = src;
+        $('#cardTitle').textContent = alt;
+        openZoom();
+      },
     }),
   );
 }
@@ -288,7 +284,7 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
   downAt = [e.clientX, e.clientY];
 });
 renderer.domElement.addEventListener('pointerup', (e) => {
-  if (S.tour) return; // inside a walk-through, a tap only looks around
+  if (S.plate) return; // the floor plate handles its own taps
   if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
   ptr.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
   ray.setFromCamera(ptr, camera);
@@ -310,5 +306,5 @@ renderer.domElement.addEventListener('pointerup', (e) => {
 
 bus.on('place', (get) => card(() => showPlace(...get())));
 bus.on('mall:focus', () => showMain());
-bus.on('tour:open', (tour) => openTour(tour));
+bus.on('plate:open', (type) => openPlate(type));
 bus.on('store:show', (s) => showStore(s));
