@@ -574,6 +574,8 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     g.visible = false; // kept, ready for next time
     ui.remove();
     document.body.classList.remove('is-plate', 'plate-day');
+    // the chosen type in the list goes back to normal
+    document.querySelectorAll('.store.is-on').forEach((el) => el.classList.remove('is-on'));
     ctx.hide.forEach((o) => (o.visible = o.userData.plateVis ?? true));
     camera.near = saved.near;
     camera.updateProjectionMatrix();

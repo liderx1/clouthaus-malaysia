@@ -179,7 +179,7 @@ export const UPLIGHT = (() => {
       'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
     // strongest at the foot, fading out as it climbs; a little stronger by day so it reads on the bright city
     fragmentShader:
-      'uniform float uOn; uniform float uNight; uniform vec3 uC; varying float vY; void main(){ float y = clamp(vY, 0.0, 1.0); float a = pow(1.0 - y, 1.8) * mix(0.42, 0.32, uNight) * uOn; gl_FragColor = vec4(uC * mix(0.85, 1.15, uNight), a); }',
+      'uniform float uOn; uniform float uNight; uniform vec3 uC; varying float vY; void main(){ float y = clamp(vY, 0.0, 1.0); float a = pow(1.0 - y, 1.6) * mix(0.72, 0.62, uNight) * uOn; gl_FragColor = vec4(uC * mix(1.0, 1.35, uNight), a); }',
   });
   const m = new THREE.Mesh(g, mat);
   m.position.set(0, 0.2, 0);
