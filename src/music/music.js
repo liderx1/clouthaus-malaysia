@@ -8,7 +8,7 @@
 // (Web Audio alone follows that switch on iPhone). Bundled on its own into public/map/music.js (scripts/build-map.mjs).
 
 const KEY = 'site-music';
-const VOLUME = 0.42;
+const VOLUME = 0.22;
 const btn = /** @type {HTMLButtonElement | null} */ (document.getElementById('music'));
 const test = new URLSearchParams(location.search).has('test');
 // the button lives in the top bar, beside day / night, so it lays out with the other controls on every screen
