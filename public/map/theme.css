@@ -205,3 +205,8 @@ body:not(.is-night) .brand { color: #5E4321 !important; filter: drop-shadow(0 0 
 /* the plan fits the screen, whole, centred */
 .plan-zoom { display: flex !important; align-items: center; justify-content: center; }
 .plan-zoom img { width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 2 * max(16px, env(safe-area-inset-top, 0px)) - 16px); max-height: calc(100dvh - 2 * max(16px, env(safe-area-inset-top, 0px)) - 16px); object-fit: contain; }
+
+/* footer: Powered by + the BLANK mark */
+.madeby { display: flex; justify-content: flex-end; align-items: center; gap: 5px; }
+.madeby .blank { display: inline-flex; align-items: center; gap: 4px; color: var(--ivory) !important; font-weight: 700 !important; letter-spacing: .08em; text-decoration: none; border: 0 !important; }
+.madeby .blank svg { width: 1.15em; height: 1.15em; flex: none; }
