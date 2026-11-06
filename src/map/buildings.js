@@ -438,6 +438,8 @@ const others = OSM.buildings.filter((b) => {
   return true;
 }); // parts hidden inside the podium would only z-fight
 const litOnes = others.filter(isLit);
+/** the lit landmarks' material (the floor plate fades them so the plan reads) */
+export const LIT_MATS = /** @type {THREE.Material[]} */ ([]);
 others.splice(0, others.length, ...others.filter((b) => !litOnes.includes(b)));
 if (litOnes.length) {
   const m = new THREE.Mesh(
@@ -449,6 +451,7 @@ if (litOnes.length) {
   );
   m.castShadow = m.receiveShadow = true;
   scene.add(m);
+  LIT_MATS.push(/** @type {THREE.Material} */ (m.material));
 }
 const bMesh = new THREE.Mesh(
   buildingGeometry(others),

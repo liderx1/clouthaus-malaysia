@@ -51,7 +51,9 @@ let state = null;
 
 /**
  * @param {{ scene: THREE.Scene, camera: THREE.PerspectiveCamera, controls: any, S: any, centre: number[], facing: number,
- *   floorZ: number, hide: THREE.Object3D[], data: string, type: string, onZoom: (src: string, alt: string) => void }} ctx
+ *   floorZ: number, hide: THREE.Object3D[], glass?: THREE.Material[], fade?: THREE.Material[], data: string, type: string,
+ *   setNight?: (night: boolean) => void,
+ *   onZoom: (src: string, alt: string) => void }} ctx
  */
 export async function open(ctx) {
   if (state) return select(ctx.type);
@@ -69,7 +71,7 @@ export async function open(ctx) {
   const P = (/** @type {number[]} */ p, y = 0) => new THREE.Vector3(p[0], y, -p[1]);
   const toWorld = (/** @type {number[]} */ p, y = 0) => P(p, y).applyMatrix4(g.matrix);
 
-  // the slab, a rounded rectangle the size of the floor
+  // the slab, a rounded rectangle the size of the floor: dark glass with a glowing rim
   const [[u0, v1], [u1, v0]] = D.bbox,
     r = 5;
   const shape = new THREE.Shape();
@@ -82,37 +84,46 @@ export async function open(ctx) {
   shape.quadraticCurveTo(u0, v1, u0, v1 - r);
   shape.lineTo(u0, v0 + r);
   shape.quadraticCurveTo(u0, v0, u0 + r, v0);
+  const GOLD = 0xe6cfa1,
+    GLOW = 0xf6e3b6;
   const slabGeo = new THREE.ExtrudeGeometry(shape, { depth: 0.35, bevelEnabled: false });
-  slabGeo.rotateX(Math.PI / 2); // extrude downward; shape y (= v) becomes −z
-  const slab = new THREE.Mesh(
-    slabGeo,
-    new THREE.MeshStandardMaterial({ color: 0xd9d2c6, roughness: 0.85, emissive: 0x6e6a63 }),
+  slabGeo.rotateX(Math.PI / 2);
+  slabGeo.scale(1, 1, -1); // extrude downward, v → −z
+  g.add(
+    new THREE.Mesh(
+      slabGeo,
+      new THREE.MeshBasicMaterial({ color: 0x1a130b, transparent: true, opacity: 0.42, depthWrite: false }),
+    ),
   );
-  g.add(slab);
-  // curtain wall: a faint glass band round the edge
-  const edgePts = shape.getSpacedPoints(160).map((q) => new THREE.Vector3(q.x, 0, -q.y));
+  const rim = shape.getSpacedPoints(200).map((q) => new THREE.Vector3(q.x, 0.03, -q.y));
+  g.add(
+    new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(rim),
+      new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.95 }),
+    ),
+  );
+  // the curtain wall, a breath of glass
   const glassGeo = new THREE.BufferGeometry();
   const gp = [];
-  for (let i = 0; i < edgePts.length - 1; i++) {
-    const a = edgePts[i],
-      c = edgePts[i + 1];
-    gp.push(a.x, 0, a.z, c.x, 0, c.z, c.x, 2.8, c.z, a.x, 0, a.z, c.x, 2.8, c.z, a.x, 2.8, a.z);
+  for (let i = 0; i < rim.length - 1; i++) {
+    const q0 = rim[i],
+      q1 = rim[i + 1];
+    gp.push(q0.x, 0, q0.z, q1.x, 0, q1.z, q1.x, 2.8, q1.z, q0.x, 0, q0.z, q1.x, 2.8, q1.z, q0.x, 2.8, q0.z);
   }
   glassGeo.setAttribute('position', new THREE.Float32BufferAttribute(gp, 3));
-  glassGeo.computeVertexNormals();
   g.add(
     new THREE.Mesh(
       glassGeo,
-      new THREE.MeshStandardMaterial({
-        color: 0xcfe0e6,
+      new THREE.MeshBasicMaterial({
+        color: GOLD,
         transparent: true,
-        opacity: 0.14,
+        opacity: 0.05,
         side: THREE.DoubleSide,
         depthWrite: false,
       }),
     ),
   );
-  // the walls, straight from the plan
+  // the walls, straight from the plan: near-clear volumes with glowing edges
   const wallGeo = mergeGeometries(
     D.walls.map((/** @type {number[]} */ [a, b2, c, d]) => {
       const bg = new THREE.BoxGeometry(c - a, WALL_H, d - b2);
@@ -121,22 +132,94 @@ export async function open(ctx) {
     }),
   );
   g.add(
-    new THREE.Mesh(wallGeo, new THREE.MeshStandardMaterial({ color: 0x3a312a, roughness: 0.7, emissive: 0x1c1712 })),
+    new THREE.Mesh(
+      wallGeo,
+      new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.08, depthWrite: false }),
+    ),
+    new THREE.LineSegments(
+      new THREE.EdgesGeometry(wallGeo, 30),
+      new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.34, depthWrite: false }),
+    ),
   );
-  // the units' floors: ivory, the chosen one lit champagne
-  const floorMat = () =>
-    new THREE.MeshStandardMaterial({ color: 0xf1ebe1, roughness: 0.6, polygonOffset: true, polygonOffsetFactor: -1 });
+  // a ring of light round the floor, and a dotted one further out
+  const R0 = Math.hypot(u1 - u0, v1 - v0) / 2 + 3;
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(R0, R0 + 0.35, 160),
+    new THREE.MeshBasicMaterial({
+      color: GOLD,
+      transparent: true,
+      opacity: 0.45,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    }),
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = -0.2;
+  g.add(ring);
+  const dots = [];
+  for (let i = 0; i < 120; i++) {
+    const a2 = (i / 120) * Math.PI * 2;
+    dots.push(Math.cos(a2) * (R0 + 6), -0.2, Math.sin(a2) * (R0 + 6));
+  }
+  const dotGeo = new THREE.BufferGeometry();
+  dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(dots, 3));
+  g.add(
+    new THREE.Points(
+      dotGeo,
+      new THREE.PointsMaterial({ color: GLOW, size: 0.55, transparent: true, opacity: 0.7, depthWrite: false }),
+    ),
+  );
+  // light pillars: a fading beam with a bright foot, for the rooms of the chosen unit and for every unit
+  const beamMat = (/** @type {number} */ k) =>
+    new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      uniforms: { uC: { value: new THREE.Color(GLOW) }, uK: { value: k } },
+      vertexShader:
+        'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader:
+        'uniform vec3 uC; uniform float uK; varying float vY; void main(){ gl_FragColor = vec4(uC, uK * pow(1.0 - vY, 1.6)); }',
+    });
+  const beamGeo = (/** @type {number} */ h, /** @type {number} */ r2) =>
+    new THREE.CylinderGeometry(r2, r2, h, 10, 1, true).translate(0, h / 2, 0);
+  const roomBeams = new THREE.Group(),
+    unitBeams = new THREE.Group();
+  g.add(roomBeams, unitBeams);
+  const ROOM_H = 7,
+    UNIT_H = 11;
+  // the units' floors: a faint wash, the chosen one lit
   const units = D.units.map((/** @type {any} */ u) => {
     const s2 = new THREE.Shape(u.poly.map((/** @type {number[]} */ q) => new THREE.Vector2(q[0], q[1])));
     const geo = new THREE.ShapeGeometry(s2);
     geo.rotateX(-Math.PI / 2);
-    geo.translate(0, 0.02, 0);
-    const mesh = new THREE.Mesh(geo, floorMat());
+    geo.translate(0, 0.04, 0);
+    const mesh = new THREE.Mesh(
+      geo,
+      new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.06, depthWrite: false }),
+    );
     mesh.userData.unit = u;
     g.add(mesh);
-    const c = u.poly.reduce((a, q) => [a[0] + q[0] / u.poly.length, a[1] + q[1] / u.poly.length], [0, 0]);
-    return { u, mesh, centre: c };
+    const outline = new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints(
+        u.poly.map((/** @type {number[]} */ q) => new THREE.Vector3(q[0], 0.06, -q[1])),
+      ),
+      new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0, depthWrite: false }),
+    );
+    g.add(outline);
+    const c = u.poly.reduce((a2, q) => [a2[0] + q[0] / u.poly.length, a2[1] + q[1] / u.poly.length], [0, 0]);
+    const beam = new THREE.Mesh(beamGeo(UNIT_H, 0.06), beamMat(0.55));
+    beam.position.set(c[0], 0, -c[1]);
+    unitBeams.add(beam);
+    return { u, mesh, outline, centre: c };
   });
+  // dimension lines along the chosen unit: the overall size from its plan
+  const dimLines = new THREE.LineSegments(
+    new THREE.BufferGeometry(),
+    new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.85, depthWrite: false }),
+  );
+  g.add(dimLines);
+  let dimAt = /** @type {{ w: number[], d: number[] } | null} */ (null);
   g.traverse((o) => {
     if (o instanceof THREE.Mesh) o.castShadow = o.receiveShadow = false;
   });
@@ -156,7 +239,27 @@ export async function open(ctx) {
     o.userData.plateVis = o.visible;
     o.visible = false;
   });
+  // the tower turns to glass: the floor is seen inside it, at its real height
+  const glassMats = ctx.glass ?? [],
+    fadeMats = ctx.fade ?? [];
+  const before = [...glassMats, ...fadeMats].map((m) => ({ m, t: m.transparent, o: m.opacity, d: m.depthWrite }));
+  for (const m of glassMats) {
+    m.transparent = true;
+    m.opacity = 0.1;
+    m.depthWrite = false;
+    m.needsUpdate = true;
+  }
+  // bright neighbours (the lit Twin Towers) step back to a ghost so the plan reads
+  for (const m of fadeMats) {
+    m.transparent = true;
+    m.opacity = 0.18;
+    m.depthWrite = false;
+    m.needsUpdate = true;
+  }
   S.plate = true;
+  // a dark stage for the hologram: night lighting while the plan is open, the visitor's day / night back on close
+  const nightWas = S.nightTarget;
+  ctx.setNight?.(true);
   S.fly = null;
   S.zoomTo = null;
   controls.autoRotate = false;
@@ -208,7 +311,8 @@ export async function open(ctx) {
         )
         .join('')}</nav>
       ${units.map((x) => `<span class="plate-tag${x === un ? ' is-on' : ''}" data-u="${x.u.unit}">${esc(x.u.types.map((y) => y.replace('Type ', '')).join(' / '))}<i>${x.u.unit}</i></span>`).join('')}
-      ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" data-r="${i}">${esc(D.names[rm.k][zh ? 1 : 0])}</span>`).join('') : ''}`;
+${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" data-r="${i}">${esc(D.names[rm.k][zh ? 1 : 0])}</span>`).join('') : ''}
+      ${un ? `<span class="plate-dim" data-dim="w">${esc(t.dims.split(' × ')[0])} mm</span><span class="plate-dim" data-dim="d">${esc(t.dims.split(' × ')[1])} mm</span>` : ''}`;
     ui.querySelector('.plate-x')?.addEventListener('click', close);
     ui.querySelector('.plate-plan')?.addEventListener('click', () => ctx.onZoom(t.plan, current));
     ui.querySelectorAll('[data-type]').forEach((el) =>
@@ -224,9 +328,48 @@ export async function open(ctx) {
     // floors: the chosen unit in champagne
     units.forEach((x) => {
       const on = x === un;
-      x.mesh.material.color.set(on ? 0xe2b25c : 0xe9e5de);
-      x.mesh.material.emissive.set(on ? 0xa27a34 : 0x76736e);
+      x.mesh.material.opacity = on ? 0.5 : 0.04;
+      x.outline.material.opacity = on ? 1 : 0.18;
     });
+    // beams on the chosen unit's rooms
+    roomBeams.clear();
+    if (un)
+      for (const rm of un.u.rooms) {
+        const bm = new THREE.Mesh(beamGeo(ROOM_H, 0.05), beamMat(0.9));
+        bm.position.set(rm.at[0], 0, -rm.at[1]);
+        roomBeams.add(bm);
+        const foot = new THREE.Mesh(
+          new THREE.CircleGeometry(0.35, 20).rotateX(-Math.PI / 2),
+          new THREE.MeshBasicMaterial({ color: GLOW, transparent: true, opacity: 0.9, depthWrite: false }),
+        );
+        foot.position.set(rm.at[0], 0.08, -rm.at[1]);
+        roomBeams.add(foot);
+      }
+    // dimension lines outside the unit's outline, with ticks at the ends
+    dimAt = null;
+    if (un) {
+      const us = un.u.poly.map((q) => q[0]),
+        vs = un.u.poly.map((q) => q[1]);
+      const a0 = Math.min(...us),
+        a1 = Math.max(...us),
+        b0 = Math.min(...vs),
+        b1 = Math.max(...vs);
+      const outV = b1 > 0 ? b1 + 1.6 : b0 - 1.6,
+        outU = a1 > 0 ? a1 + 1.6 : a0 - 1.6,
+        y = 0.1;
+      const L = [
+        [a0, outV, a1, outV],
+        [a0, outV - 0.5, a0, outV + 0.5],
+        [a1, outV - 0.5, a1, outV + 0.5],
+        [outU, b0, outU, b1],
+        [outU - 0.5, b0, outU + 0.5, b0],
+        [outU - 0.5, b1, outU + 0.5, b1],
+      ].flatMap(([x0, z0, x1, z1]) => [x0, y, -z0, x1, y, -z1]);
+      dimLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(L, 3));
+      dimLines.geometry.computeBoundingSphere();
+      dimAt = { w: [(a0 + a1) / 2, outV + (b1 > 0 ? 1.2 : -1.2)], d: [outU + (a1 > 0 ? 1.4 : -1.4), (b0 + b1) / 2] };
+    }
+    dimLines.visible = !!un;
   }
   /** fly to frame the floor with the chosen unit in front */
   function frame(first = false) {
@@ -236,15 +379,17 @@ export async function open(ctx) {
     const c = un ? un.centre : [0, 0];
     const portrait = innerWidth < innerHeight;
     // a phone shows the chosen unit up close, in the upper half of the screen (the details panel is below)
-    const target = toWorld(portrait ? [c[0], c[1] - 9] : [c[0] * 0.45, c[1] * 0.45], 0);
-    const back = toWorld([0, -1], 0)
+    // seen from the KL City Centre side, a three-quarter view: the lit Twin Towers stay behind the viewer, the chosen
+    // unit near the centre (on a phone, above the details panel)
+    const target = toWorld(portrait ? [c[0], c[1] + 7] : [c[0] * 0.7, c[1] * 0.7], 0);
+    const back = toWorld([0.35, 1], 0)
       .sub(toWorld([0, 0], 0))
       .normalize();
-    const dist = portrait ? 62 : 66;
+    const dist = portrait ? 96 : 62;
     const pos = target
       .clone()
-      .add(back.multiplyScalar(dist * (portrait ? 0.22 : 0.4)))
-      .setY(target.y + dist * 0.92);
+      .add(back.multiplyScalar(dist * (portrait ? 0.5 : 0.7)))
+      .setY(target.y + dist * (portrait ? 0.82 : 0.66));
     S.fly = {
       t0: performance.now(),
       dur: first ? 1600 : 900,
@@ -274,13 +419,18 @@ export async function open(ctx) {
   const tick = () => {
     ui.querySelectorAll('.plate-tag').forEach((el) => {
       const x = units.find((y) => String(y.u.unit) === el.getAttribute('data-u'));
-      if (x) place(/** @type {HTMLElement} */ (el), toWorld(x.centre, WALL_H + 2.2));
+      if (x) place(/** @type {HTMLElement} */ (el), toWorld(x.centre, UNIT_H + 0.8));
     });
     const un = unitFor(current);
     if (un)
       ui.querySelectorAll('.plate-room').forEach((el) => {
         const rm = un.u.rooms[Number(el.getAttribute('data-r'))];
-        if (rm) place(/** @type {HTMLElement} */ (el), toWorld(rm.at, 0.4));
+        if (rm) place(/** @type {HTMLElement} */ (el), toWorld(rm.at, ROOM_H + 0.5));
+      });
+    if (dimAt)
+      ui.querySelectorAll('.plate-dim').forEach((el) => {
+        const at = /** @type {any} */ (dimAt)[/** @type {string} */ (el.getAttribute('data-dim'))];
+        if (at) place(/** @type {HTMLElement} */ (el), toWorld(at, 0.3));
       });
     raf = requestAnimationFrame(tick);
   };
@@ -324,10 +474,17 @@ export async function open(ctx) {
     ui.remove();
     document.body.classList.remove('is-plate');
     ctx.hide.forEach((o) => (o.visible = o.userData.plateVis ?? true));
+    for (const x of before) {
+      x.m.transparent = x.t;
+      x.m.opacity = x.o;
+      x.m.depthWrite = x.d;
+      x.m.needsUpdate = true;
+    }
     camera.near = saved.near;
     camera.updateProjectionMatrix();
     controls.minDistance = saved.min;
     S.plate = false;
+    ctx.setNight?.(nightWas > 0.5);
     S.fly = {
       t0: performance.now(),
       dur: 1200,

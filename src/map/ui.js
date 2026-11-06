@@ -15,10 +15,11 @@ import {
 import { PICK, PLACES, STORES } from './data.js';
 import { isNightAt, nowAt } from './core/hours.js';
 import { $, $$, TEST } from './env.js';
+import { LIT_MATS } from './buildings.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
 import { ROUTE_COL, ROUTE_ICON } from './routes.js';
-import { TOUR_HIDE, edges, mallC, mallMesh } from './mall.js';
+import { TOUR_HIDE, mallC, mallMesh } from './mall.js';
 import { asmMarks, entMarks, exitMarks } from './markers.js';
 import { applyModes, focusMall } from './modes.js';
 import { pinGroup, pinSprite, storeSpot } from './pin.js';
@@ -222,7 +223,10 @@ export function openPlate(/** @type {string} */ type) {
       centre: mallC,
       facing: fp.facing ?? 0,
       floorZ: CONFIG.plate.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
-      hide: [...TOUR_HIDE, pinGroup, mallMesh, edges],
+      hide: [...TOUR_HIDE, pinGroup],
+      glass: [/** @type {any} */ (mallMesh.material)],
+      fade: LIT_MATS,
+      setNight: (/** @type {boolean} */ n) => setNight(n),
       data: new URL(CONFIG.plate.data.replace(/^\/?map\//, ''), import.meta.url).href, // next to map.js
       type,
       onZoom: (/** @type {string} */ src, /** @type {string} */ alt) => {

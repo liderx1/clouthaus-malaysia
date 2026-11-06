@@ -254,3 +254,8 @@ body:not(.is-night) .brand { color: #5E4321 !important; filter: drop-shadow(0 0 
 .plate-card, .plate-types, .plate-top { z-index: 3; }
 .plate-tag, .plate-room { z-index: 1; }
 .plate-tag.is-on { z-index: 2; }
+
+/* the floor plate, hologram style: labels sit on the light beams; dimensions read along their lines */
+.plate-room { background: rgba(16, 11, 7, .62) !important; color: var(--ivory) !important; font-weight: 500 !important; box-shadow: none !important; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.plate-dim { position: absolute; left: 0; top: 0; z-index: 1; padding: 1px 6px; border-radius: 5px; background: rgba(16, 11, 7, .5); color: var(--champagne); font-size: 11px; font-weight: 600; letter-spacing: .04em; white-space: nowrap; pointer-events: none; font-variant-numeric: tabular-nums; will-change: transform; transition: opacity .25s; }
+@media (max-width: 760px) { .plate-dim { font-size: 10px; } }
