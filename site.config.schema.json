@@ -3,15 +3,7 @@
   "title": "site.config.json",
   "description": "Everything specific to one site. The map, the CMS, the seed and scripts/fetch_osm.py read it.",
   "type": "object",
-  "required": [
-    "name",
-    "logo",
-    "timezone",
-    "locales",
-    "origin",
-    "main",
-    "floors"
-  ],
+  "required": ["name", "logo", "timezone", "locales", "origin", "main", "floors"],
   "properties": {
     "$schema": {
       "type": "string"
@@ -32,27 +24,13 @@
       "type": "array",
       "minItems": 1,
       "items": {
-        "enum": [
-          "en",
-          "zh-TW",
-          "zh",
-          "ms",
-          "ja",
-          "ko",
-          "th",
-          "vi",
-          "id"
-        ]
+        "enum": ["en", "zh-TW", "zh", "ms", "ja", "ko", "th", "vi", "id"]
       },
       "description": "Languages, in the order of the language buttons; the first is the default. Changing them needs a new database migration."
     },
     "origin": {
       "type": "object",
-      "required": [
-        "lat",
-        "lon",
-        "radius"
-      ],
+      "required": ["lat", "lon", "radius"],
       "properties": {
         "lat": {
           "type": "number"
@@ -77,9 +55,7 @@
     },
     "main": {
       "type": "object",
-      "required": [
-        "height"
-      ],
+      "required": ["height"],
       "properties": {
         "osmName": {
           "type": "string",
@@ -109,10 +85,7 @@
           "description": "Show a 'Green roof' label on the roof"
         },
         "style": {
-          "enum": [
-            "mall",
-            "tower"
-          ],
+          "enum": ["mall", "tower"],
           "description": "How the main building's walls are drawn: \"mall\" (default, the EkoCheras facade) or \"tower\" (curtain-wall high-rise, see tower)"
         },
         "view": {
@@ -122,10 +95,7 @@
         "footprint": {
           "type": "object",
           "description": "Draw the main building from its published floor plan instead of the OSM outline: a rounded rectangle w × d metres, corner radius r, long side facing `facing` degrees, centred on the OSM outline (+ optional shift [x, y])",
-          "required": [
-            "w",
-            "d"
-          ],
+          "required": ["w", "d"],
           "properties": {
             "w": {
               "type": "number"
@@ -351,10 +321,7 @@
       "description": "Floors stores can be on, bottom to top. code is stored with each store (changing codes needs a migration); z is the pin height in metres; short is how the store list shows it (e.g. L1, B1, 2F); admin is the name in the CMS menu.",
       "items": {
         "type": "object",
-        "required": [
-          "code",
-          "z"
-        ],
+        "required": ["code", "z"],
         "additionalProperties": false,
         "properties": {
           "code": {
@@ -377,10 +344,7 @@
       "description": "The site's own categories for the directory (replaces the mall ones: food, fashion, …); value is stored with each item (changing values needs a migration), label per language",
       "items": {
         "type": "object",
-        "required": [
-          "value",
-          "label"
-        ],
+        "required": ["value", "label"],
         "properties": {
           "value": {
             "type": "string"
@@ -396,10 +360,7 @@
       "description": "Big named labels over landmarks: label text and the point [x, y] (metres from the origin, from osm.json) of the building or part it stands on",
       "items": {
         "type": "object",
-        "required": [
-          "label",
-          "at"
-        ],
+        "required": ["label", "at"],
         "properties": {
           "label": {},
           "kind": {},
@@ -450,6 +411,43 @@
         "vividGreen": {
           "type": "boolean",
           "description": "Parks, lawns and trees keep their full green by day"
+        },
+        "calmDay": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "How much the city around the main building is faded by day (0 = full colour, 1 = fully faded; default 0.6)"
+        },
+        "nightAmbient": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Sky light on the city at night (default 0.06)"
+        },
+        "nightBody": {
+          "type": "string",
+          "description": "The city's own glow at night, brighter towards the tops of the buildings, e.g. a deep blue"
+        },
+        "windows": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 3,
+          "description": "Lit windows at night: [most, some, a few]"
+        },
+        "skyline": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 2,
+          "description": "Light along the top of some towers over 60 m at night (needs nightBody)"
+        },
+        "palette": {
+          "type": "object",
+          "description": "Facade colours by building kind (house, tall, glass, shop, industrial, finned, resi): [walls[], roofs[]]",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "array", "items": { "type": "string" } },
+            "minItems": 2,
+            "maxItems": 2
+          }
         }
       }
     },
@@ -469,10 +467,7 @@
       "description": "Landmarks drawn in their real night lighting and never faded: every building or part whose centre is within r metres of at [x, y] and at least minH metres tall",
       "items": {
         "type": "object",
-        "required": [
-          "at",
-          "r"
-        ],
+        "required": ["at", "r"],
         "properties": {
           "at": {
             "type": "array"

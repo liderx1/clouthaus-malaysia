@@ -3,10 +3,7 @@
   "name": "CloutHaus Residences",
   "logo": "/images/logo.svg",
   "timezone": "Asia/Kuala_Lumpur",
-  "locales": [
-    "en",
-    "zh"
-  ],
+  "locales": ["en", "zh"],
   "origin": {
     "lat": 3.15741,
     "lon": 101.71033,
@@ -35,18 +32,10 @@
       "crown": 7,
       "glass": "#6A4A30",
       "fin": "#C9A46A",
-      "bands": [
-        [
-          125.4,
-          133.0
-        ]
-      ]
+      "bands": [[125.4, 133.0]]
     },
     "highlight": "#D9B26F",
-    "routes": [
-      "carS",
-      "bus"
-    ],
+    "routes": ["carS", "bus"],
     "halo": {
       "day": "#E3A955",
       "night": "#F4DCA8",
@@ -173,64 +162,43 @@
         "en": "Petronas Twin Towers",
         "zh": "国油双峰塔"
       },
-      "at": [
-        158,
-        62
-      ]
+      "at": [158, 62]
     },
     {
       "label": {
         "en": "Merdeka 118",
         "zh": "默迪卡118"
       },
-      "at": [
-        -1064,
-        -1729
-      ]
+      "at": [-1064, -1729]
     },
     {
       "label": {
         "en": "KL Tower",
         "zh": "吉隆坡塔"
       },
-      "at": [
-        -731,
-        -502
-      ]
+      "at": [-731, -502]
     },
     {
       "label": "The Exchange 106",
-      "at": [
-        928,
-        -1722
-      ]
+      "at": [928, -1722]
     },
     {
       "label": {
         "en": "Four Seasons Place",
         "zh": "吉隆坡四季酒店"
       },
-      "at": [
-        394,
-        71
-      ]
+      "at": [394, 71]
     },
     {
       "label": "Menara Ilham",
-      "at": [
-        945,
-        166
-      ]
+      "at": [945, 166]
     },
     {
       "label": {
         "en": "Pavilion Kuala Lumpur",
         "zh": "柏威年广场"
       },
-      "at": [
-        325,
-        -915
-      ]
+      "at": [325, -915]
     }
   ],
   "drive": {
@@ -248,12 +216,7 @@
     ]
   },
   "extras": "clouthaus",
-  "aboutFacts": [
-    "66",
-    "615",
-    "549–1,216",
-    "6 min"
-  ],
+  "aboutFacts": ["66", "615", "549–1,216", "6 min"],
   "text": {
     "en": {
       "loading": "Building KL City Centre in 3D…",
@@ -308,12 +271,7 @@
           "Fifteen types, A to N plus L1, run from 549 sq ft one-bedroom homes to 1,216 sq ft three-bedroom corner units, including four dual-key types and three garden units on level 9. Residents share 25 facilities on levels 33, 33A and the 63A rooftop, with a 25 m infinity lap pool facing the Twin Towers.",
           "Hotel services come from Paradox Hotel Kuala Lumpur in the second tower of the same development. Completion is planned for 2029. Figures are from the developer's records as at September 2026 and remain subject to the authorities' final approval."
         ],
-        "factLabels": [
-          "Storeys",
-          "Residences",
-          "sq ft built-up",
-          "Walk to the Twin Towers"
-        ]
+        "factLabels": ["Storeys", "Residences", "sq ft built-up", "Walk to the Twin Towers"]
       }
     },
     "zh": {
@@ -369,12 +327,7 @@
           "共 15 种户型（A 至 N 及 L1），面积从 549 平方英尺一房到 1,216 平方英尺三房转角单位，包括 4 种双钥匙户型及 9 楼的 3 个花园单位。住户共享 33、33A 楼及 63A 楼顶的 25 项设施，包括面向双峰塔的 25 米无边际泳池。",
           "同一发展项目的第二座大楼为 Paradox Hotel Kuala Lumpur，为住户提供酒店式服务。预计 2029 年竣工。以上数据来自发展商 2026 年 9 月的资料，最终以政府批准为准。"
         ],
-        "factLabels": [
-          "层楼",
-          "住宅单位",
-          "平方英尺",
-          "步行至双峰塔"
-        ]
+        "factLabels": ["层楼", "住宅单位", "平方英尺", "步行至双峰塔"]
       }
     }
   },
@@ -415,12 +368,22 @@
     }
   },
   "look": {
-    "horizonDay": "#D6CFC2",
-    "fogDay": "#D3CBBE",
-    "horizonNight": "#3A2A1C",
-    "fogNight": "#24190F",
-    "skyNight": "#F0C89A",
-    "vividGreen": true
+    "horizonDay": "#BDD3E3",
+    "fogDay": "#C3D5E0",
+    "horizonNight": "#0B1638",
+    "fogNight": "#08102A",
+    "skyNight": "#4C5FAE",
+    "vividGreen": true,
+    "calmDay": 0.15,
+    "nightAmbient": 0.07,
+    "nightBody": "#0D1C4C",
+    "windows": ["#FFC266", "#F3D9A4", "#FFE9C2"],
+    "skyline": ["#E9B85C", "#F6DDA6"],
+    "palette": {
+      "tall": [["#EBDAB9", "#DFC9A6", "#F1E6D2", "#D9BE96", "#C9D6D2"], ["#8E8A82"]],
+      "glass": [["#5DA9D6", "#73B9DC", "#4A97C6"], ["#6B7780"]],
+      "shop": [["#E8D2B0", "#D9B48F", "#EEDFC6"], ["#9C8F80"]]
+    }
   },
   "routeColors": {
     "carN": "#D9A441",
@@ -432,10 +395,7 @@
   "storeRoute": false,
   "litLandmarks": [
     {
-      "at": [
-        162,
-        58
-      ],
+      "at": [162, 58],
       "r": 80,
       "minH": 150
     }
@@ -443,11 +403,6 @@
   "plate": {
     "level": 20,
     "data": "/map/plate.json",
-    "categories": [
-      "one",
-      "two",
-      "three",
-      "dualkey"
-    ]
+    "categories": ["one", "two", "three", "dualkey"]
   }
 }

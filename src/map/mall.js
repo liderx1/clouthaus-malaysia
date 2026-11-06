@@ -23,7 +23,7 @@ const mallMat = windowShader(
   }),
   true,
 );
-export const TOWER = CONFIG.main.style === 'tower';
+export const TOWER = __TOWER__; // main.style "tower" (a build flag)
 /** main.highlight: the colour of the main building's outline, crown ribbon and pulse (default magenta / orange) */
 export const HI = CONFIG.main.highlight ? new THREE.Color(CONFIG.main.highlight) : null;
 const mallGeo = buildingGeometry([{ ...MALL, h: MALL_H, type: 'commercial', kId: TOWER ? 7 : 6, exact: TOWER }]);

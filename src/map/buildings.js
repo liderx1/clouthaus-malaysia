@@ -30,14 +30,10 @@ const BCOL = {
   finned: [['#1B2638'], ['#7E868E']], // dark glass, white fins (Tower A, INNSiDE)
   resi: [['#E2E3E0', '#D9DCDD', '#E8E6E1'], ['#9DA3A8']], // white residential towers with balconies
 };
-// facades seen on Street View for the towers around the mall
-const STYLE = {
-  'Tower A': 'finned',
-  'INNSiDE by Meliá': 'finned',
-  'Tower J': 'resi',
-  'Tower H': 'resi',
-  'Tower E': 'resi',
-};
+// look.palette: the site's own facade colours for any kind, [walls[], roofs[]]
+Object.assign(BCOL, CONFIG.look?.palette);
+// look.styles: a named building's facade kind, as seen on Street View, e.g. {"Tower A": "finned"}
+const STYLE = CONFIG.look?.styles ?? {};
 const RESI = OSM.areas.filter((a) => a.t === 'residential').map((a) => ring(a.p));
 // a footprint counts as "on the podium" when its centre or any corner is inside, or within 1.5 m of, the mall outline
 function nearEdge(x, y) {
@@ -253,13 +249,29 @@ export function buildingGeometry(list) {
   return g;
 }
 /* main.style "tower": floor height, podium, crown and the lit amenity floors (main.tower), baked into the shader */
-const TOWER = CONFIG.main.style === 'tower';
+const TOWER = __TOWER__; // main.style "tower" (a build flag: the other style's code is left out)
 const TWC = CONFIG.main.tower ?? {};
 const f1 = (/** @type {number} */ v) => Number(v).toFixed(2);
 const glsl = (/** @type {string} */ hex) => {
   const c = new THREE.Color(hex);
   return `vec3(${c.r.toFixed(3)}, ${c.g.toFixed(3)}, ${c.b.toFixed(3)})`;
 };
+// look.windows: lit windows at night [most, some, a few]; look.nightBody: the city's own glow at night (sky light on
+// the facades); look.skyline: the light along the top of some tall towers
+const LK = CONFIG.look ?? {};
+const WIN = [
+  LK.windows?.[0] ?? '#FFBD6B',
+  LK.windows?.[1] ?? '#D9EBFF',
+  LK.windows?.[2] ?? LK.windows?.[1] ?? '#D9EBFF',
+].map(glsl);
+const SKY = LK.skyline ?? [];
+const NIGHT_CITY = LK.nightBody
+  ? `totalEmissiveRadiance += uNight * (1.0 - uDim * 0.8) * (${glsl(LK.nightBody)} * (0.45 + 0.75 * min(vWall.y / vInfo.x, 1.0)) * (1.0 - win * 0.8)${
+      SKY.length
+        ? ` + step(60.0, vInfo.x) * wall * step(vInfo.x - 1.6, vWall.y) * step(0.45, h31(vec3(vInfo.y, 5.0, 1.0))) * mix(${glsl(SKY[0])}, ${glsl(SKY[1] ?? SKY[0])}, step(0.5, h31(vec3(vInfo.y, 6.0, 2.0)))) * 1.6`
+        : ''
+    });`
+  : '';
 const TW = {
   fh: f1(TWC.floorHeight ?? 3.6),
   podium: f1(TWC.podium ?? 0),
@@ -377,7 +389,8 @@ export function windowShader(mat, mall = false) {
         }
         roughnessFactor = mix(roughnessFactor, 0.12, win);
         float lit = step(kind > 6.5 ? 0.86 : 0.58, h31(vec3(floor(vWall.x / sp), floor(vWall.y / fl), floor(vInfo.y * 97.0))));
-        vec3 warm = mix(vec3(1.0, 0.74, 0.42), vec3(0.85, 0.92, 1.0), step(0.8, h31(vec3(floor(vWall.y / fl), vInfo.y, 3.0))));`,
+        float wh = h31(vec3(floor(vWall.y / fl), vInfo.y, 3.0));
+        vec3 warm = mix(mix(${WIN[0]}, ${WIN[1]}, step(0.72, wh)), ${WIN[2]}, step(0.95, wh));`,
         )
         .replace(
           '#include <metalnessmap_fragment>',
@@ -398,7 +411,7 @@ export function windowShader(mat, mall = false) {
                 ? `float strip = wall * (1.0 - smoothstep(0.0, 0.07, abs(fract(vWall.y / 4.4) - 0.5) * 2.0 - 0.86) );
         float scan = smoothstep(0.0, 1.6, 1.6 - abs(vWall.y - fract(uTime * 0.18) * (vInfo.x + 6.0)));
         totalEmissiveRadiance += wall * vec3(1.0, 0.45, 0.16) * (strip * (0.35 * uNight + 0.25 * uDim) + scan * (0.05 * uNight + uDim * 0.7));`
-                : ''
+                : NIGHT_CITY
         }`,
         )
         .replace(

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { CONFIG } from './config.js';
 import { $, TEST } from './env.js';
 import { sampleAt } from './geo.js';
 import { ghost } from './ghost.js';
@@ -31,7 +32,7 @@ import { lampMat, moveCars } from './traffic.js';
 import { nearTrees } from './trees.js';
 
 /** by day the city around the mall is faded a little (softer colour, lighter) so the mall stands out: 0 = off, 1 = full fade */
-const CALM_DAY = 0.6;
+const CALM_DAY = CONFIG.look?.calmDay ?? 0.6;
 let booted = false;
 // always the sharpest resolution; it steps down only for a device that cannot reach 20 fps for 5 s in a row
 const quality = createQuality({ max: DPR_MAX, slowMs: 50, slowRun: 5 });
@@ -54,7 +55,7 @@ renderer.setAnimationLoop(() => {
   U.uCalm.value = CALM_DAY * (1 - n);
   SUN.intensity = 2.3 * (1 - n) + 0.12 * n;
   SUN.color.setRGB(1, 0.93 - 0.08 * n, 0.82 + 0.18 * n);
-  HEMI.intensity = 0.5 * (1 - n) + 0.06 * n;
+  HEMI.intensity = 0.5 * (1 - n) + (CONFIG.look?.nightAmbient ?? 0.06) * n;
   scene.environmentIntensity = 0.28 * (1 - n) + 0.03 * n;
   const wantEnv = n > 0.5 ? ENV.night : ENV.day;
   if (wantEnv && scene.environment !== wantEnv) scene.environment = wantEnv;

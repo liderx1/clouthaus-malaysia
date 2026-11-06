@@ -39,7 +39,9 @@ const options = {
                 contents: fs
                   .readFileSync(a.path, 'utf8')
                   .replace(/\n[ \t]+/g, '\n')
-                  .replace(/([;{])[ \t]+\/\/[^\n]*/g, '$1'),
+                  .replace(/([;{}),])[ \t]+\/\/[^\n]*/g, '$1')
+                  // whole-line comments too (outside strings esbuild drops them anyway; inside a shader they are text)
+                  .replace(/\n\/\/[^\n]*/g, ''),
                 loader: 'js',
               },
         );
@@ -47,6 +49,9 @@ const options = {
         b.onLoad({ filter: /site\.config\.json$/ }, (a) => {
           const c = JSON.parse(fs.readFileSync(a.path, 'utf8'));
           for (const k of ['seo', 'test', '$schema']) delete c[k];
+          // labels for the CMS only
+          for (const f of c.floors ?? []) delete f.admin;
+          if (c.drive) delete c.drive.starts;
           return { contents: JSON.stringify(c), loader: 'json' };
         });
       },
