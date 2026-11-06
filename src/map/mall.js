@@ -18,6 +18,8 @@ const mallMat = windowShader(
     polygonOffset: true,
     polygonOffsetFactor: -2,
     polygonOffsetUnits: -2,
+    // transparent from the start (opacity 1), so the floor plate can turn the tower to glass without a shader rebuild
+    transparent: true,
   }),
   true,
 );
@@ -124,22 +126,68 @@ export const edges = new THREE.LineSegments(
   new THREE.LineBasicMaterial({ color: HI ?? 0xff6a2b, transparent: true }),
 );
 mallGroup.add(edges);
+/** the bright ring at the foot of the building (the floor plate swaps it for the soft uplight below) */
+export const BASE_RIBBON = /** @type {THREE.Object3D[]} */ ([]);
 export const crownMat = new THREE.MeshBasicMaterial({ color: 0xff6a2b, transparent: true, side: THREE.DoubleSide });
 {
   const loop = MR.concat([MR[0]]);
-  for (const z of [MALL_H + 0.25, 0.35])
-    mallGroup.add(
-      new THREE.Mesh(
-        ribbon(
-          loop.map((q) => [q[0], q[1], z]),
-          z > 1 ? 1.4 : 2.4,
-          0,
-          false,
-        ),
-        crownMat,
+  for (const z of [MALL_H + 0.25, 0.35]) {
+    const m = new THREE.Mesh(
+      ribbon(
+        loop.map((q) => [q[0], q[1], z]),
+        z > 1 ? 1.4 : 2.4,
+        0,
+        false,
       ),
+      crownMat,
     );
+    mallGroup.add(m);
+    if (z < 1) BASE_RIBBON.push(m);
+  }
 }
+/** a soft wash of light rising up the facade from the ground, shown while the floor plate is open (uOn fades it) */
+export const UPLIGHT = (() => {
+  const H = Math.min(MALL_H * 0.5, 120),
+    pos = [],
+    uv = [];
+  const loop = MR.concat([MR[0]]);
+  for (let i = 0; i < loop.length - 1; i++) {
+    const [x1, y1] = loop[i],
+      [x2, y2] = loop[i + 1],
+      // a hair outside the wall, so it lies on the glass
+      nx = (y2 - y1) / (Math.hypot(x2 - x1, y2 - y1) || 1),
+      ny = -(x2 - x1) / (Math.hypot(x2 - x1, y2 - y1) || 1),
+      o = 0.4;
+    const a = [x1 + nx * o, -(y1 + ny * o)],
+      b = [x2 + nx * o, -(y2 + ny * o)];
+    pos.push(a[0], 0, a[1], b[0], 0, b[1], b[0], H, b[1], a[0], 0, a[1], b[0], H, b[1], a[0], H, a[1]);
+    uv.push(0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  const mat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    uniforms: {
+      uOn: { value: 0 },
+      uNight: U.uNight,
+      uC: { value: new THREE.Color(CONFIG.main.highlight ?? '#E6CFA1') },
+    },
+    vertexShader:
+      'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    // strongest at the foot, fading out as it climbs; a little stronger by day so it reads on the bright city
+    fragmentShader:
+      'uniform float uOn; uniform float uNight; uniform vec3 uC; varying float vY; void main(){ float y = clamp(vY, 0.0, 1.0); float a = (1.0 - y) * (1.0 - y) * mix(0.55, 0.42, uNight) * uOn; gl_FragColor = vec4(uC * mix(0.85, 1.15, uNight), a); }',
+  });
+  const m = new THREE.Mesh(g, mat);
+  m.position.set(0, 0.2, 0);
+  m.renderOrder = 3;
+  m.visible = false;
+  mallGroup.add(m);
+  return m;
+})();
 const pulse = new THREE.Mesh(
   new THREE.RingGeometry(0, 1, 96, 1),
   new THREE.ShaderMaterial({

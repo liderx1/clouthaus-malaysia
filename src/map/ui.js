@@ -19,7 +19,7 @@ import { LIT_MATS } from './buildings.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
 import { ROUTE_COL, ROUTE_ICON } from './routes.js';
-import { TOUR_HIDE, mallC, mallMesh } from './mall.js';
+import { BASE_RIBBON, TOUR_HIDE, UPLIGHT, mallC, mallMesh } from './mall.js';
 import { asmMarks, entMarks, exitMarks } from './markers.js';
 import { applyModes, focusMall } from './modes.js';
 import { pinGroup, pinSprite, storeSpot } from './pin.js';
@@ -211,23 +211,41 @@ export function showStore(s) {
 }
 /** the 3D floor plate (public/map/plate.js, loaded the first time): the unit type's place on the typical floor,
  * its rooms and every detail the developer publishes; site.config.json → plate */
+const plateCtx = () => {
+  const fp = CONFIG.main.footprint ?? {};
+  return {
+    scene,
+    camera,
+    controls,
+    renderer,
+    S,
+    centre: mallC,
+    facing: fp.facing ?? 0,
+    floorZ: CONFIG.plate.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
+    hide: [...TOUR_HIDE, pinGroup, ...BASE_RIBBON],
+    glass: [/** @type {any} */ (mallMesh.material)],
+    fade: LIT_MATS,
+    uplight: UPLIGHT,
+    data: new URL(CONFIG.plate.data.replace(/^\/?map\//, ''), import.meta.url).href, // next to map.js
+  };
+};
+const plateModule = () => import(/* @vite-ignore */ new URL('plate.js', import.meta.url).href);
+// get the floor plate ready while the visitor looks at the map, so opening a home type does not stall
+if (CONFIG.plate)
+  setTimeout(
+    () =>
+      (window.requestIdleCallback ?? ((/** @type {any} */ f) => setTimeout(f, 1)))(() =>
+        plateModule()
+          .then((m) => m.prepare(plateCtx()))
+          .catch(() => {}),
+      ),
+    TEST ? 0 : 4000,
+  );
 export function openPlate(/** @type {string} */ type) {
   $('#card').hidden = true;
-  const fp = CONFIG.main.footprint ?? {};
-  import(/* @vite-ignore */ new URL('plate.js', import.meta.url).href).then((m) =>
+  plateModule().then((m) =>
     m.open({
-      scene,
-      camera,
-      controls,
-      S,
-      centre: mallC,
-      facing: fp.facing ?? 0,
-      floorZ: CONFIG.plate.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
-      hide: [...TOUR_HIDE, pinGroup],
-      glass: [/** @type {any} */ (mallMesh.material)],
-      fade: LIT_MATS,
-      setNight: (/** @type {boolean} */ n) => setNight(n),
-      data: new URL(CONFIG.plate.data.replace(/^\/?map\//, ''), import.meta.url).href, // next to map.js
+      ...plateCtx(),
       type,
       onZoom: (/** @type {string} */ src, /** @type {string} */ alt) => {
         zoomSrc = src;

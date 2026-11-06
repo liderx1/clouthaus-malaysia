@@ -52,179 +52,226 @@ let state = null;
 /**
  * @param {{ scene: THREE.Scene, camera: THREE.PerspectiveCamera, controls: any, S: any, centre: number[], facing: number,
  *   floorZ: number, hide: THREE.Object3D[], glass?: THREE.Material[], fade?: THREE.Material[], data: string, type: string,
- *   setNight?: (night: boolean) => void,
+ *   uplight?: any, renderer?: any,
  *   onZoom: (src: string, alt: string) => void }} ctx
  */
-export async function open(ctx) {
-  if (state) return select(ctx.type);
-  const D = await (await fetch(ctx.data)).json();
-  const { scene, camera, controls, S } = ctx;
-  // plan → world: u along the long side (toward The Exchange 106), v toward KL City Centre
-  const b = (ctx.facing * Math.PI) / 180,
-    U = [Math.cos(b), -Math.sin(b)],
-    V = [Math.sin(b), Math.cos(b)];
-  const g = new THREE.Group();
-  g.matrixAutoUpdate = false;
-  g.matrix.makeBasis(new THREE.Vector3(U[0], 0, -U[1]), new THREE.Vector3(0, 1, 0), new THREE.Vector3(-V[0], 0, V[1]));
-  g.matrix.setPosition(ctx.centre[0], ctx.floorZ, -ctx.centre[1]);
-  // local frame: x = u, z = −v
-  const P = (/** @type {number[]} */ p, y = 0) => new THREE.Vector3(p[0], y, -p[1]);
-  const toWorld = (/** @type {number[]} */ p, y = 0) => P(p, y).applyMatrix4(g.matrix);
+/** @type {Promise<any> | null} */
+let built = null;
+/**
+ * Build the floor once, ahead of time (called when the map is idle), so opening it is instant: the data is fetched,
+ * the geometry made, and its shaders compiled while nothing is happening on screen.
+ * @param {any} ctx
+ */
+export function prepare(ctx) {
+  return (built ??= (async () => {
+    const D = await (await fetch(ctx.data)).json();
+    const { scene } = ctx;
+    // plan → world: u along the long side (toward The Exchange 106), v toward KL City Centre
+    const b = (ctx.facing * Math.PI) / 180,
+      U = [Math.cos(b), -Math.sin(b)],
+      V = [Math.sin(b), Math.cos(b)];
+    const g = new THREE.Group();
+    g.matrixAutoUpdate = false;
+    g.matrix.makeBasis(
+      new THREE.Vector3(U[0], 0, -U[1]),
+      new THREE.Vector3(0, 1, 0),
+      new THREE.Vector3(-V[0], 0, V[1]),
+    );
+    g.matrix.setPosition(ctx.centre[0], ctx.floorZ, -ctx.centre[1]);
+    // local frame: x = u, z = −v
+    const P = (/** @type {number[]} */ p, y = 0) => new THREE.Vector3(p[0], y, -p[1]);
+    const toWorld = (/** @type {number[]} */ p, y = 0) => P(p, y).applyMatrix4(g.matrix);
 
-  // the slab, a rounded rectangle the size of the floor: dark glass with a glowing rim
-  const [[u0, v1], [u1, v0]] = D.bbox,
-    r = 5;
-  const shape = new THREE.Shape();
-  shape.moveTo(u0 + r, v0);
-  shape.lineTo(u1 - r, v0);
-  shape.quadraticCurveTo(u1, v0, u1, v0 + r);
-  shape.lineTo(u1, v1 - r);
-  shape.quadraticCurveTo(u1, v1, u1 - r, v1);
-  shape.lineTo(u0 + r, v1);
-  shape.quadraticCurveTo(u0, v1, u0, v1 - r);
-  shape.lineTo(u0, v0 + r);
-  shape.quadraticCurveTo(u0, v0, u0 + r, v0);
-  const GOLD = 0xe6cfa1,
-    GLOW = 0xf6e3b6;
-  const slabGeo = new THREE.ExtrudeGeometry(shape, { depth: 0.35, bevelEnabled: false });
-  slabGeo.rotateX(Math.PI / 2);
-  slabGeo.scale(1, 1, -1); // extrude downward, v → −z
-  g.add(
-    new THREE.Mesh(
-      slabGeo,
-      new THREE.MeshBasicMaterial({ color: 0x1a130b, transparent: true, opacity: 0.42, depthWrite: false }),
-    ),
-  );
-  const rim = shape.getSpacedPoints(200).map((q) => new THREE.Vector3(q.x, 0.03, -q.y));
-  g.add(
-    new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(rim),
-      new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.95 }),
-    ),
-  );
-  // the curtain wall, a breath of glass
-  const glassGeo = new THREE.BufferGeometry();
-  const gp = [];
-  for (let i = 0; i < rim.length - 1; i++) {
-    const q0 = rim[i],
-      q1 = rim[i + 1];
-    gp.push(q0.x, 0, q0.z, q1.x, 0, q1.z, q1.x, 2.8, q1.z, q0.x, 0, q0.z, q1.x, 2.8, q1.z, q0.x, 2.8, q0.z);
-  }
-  glassGeo.setAttribute('position', new THREE.Float32BufferAttribute(gp, 3));
-  g.add(
-    new THREE.Mesh(
-      glassGeo,
-      new THREE.MeshBasicMaterial({
+    // the slab, a rounded rectangle the size of the floor: dark glass with a glowing rim
+    const [[u0, v1], [u1, v0]] = D.bbox,
+      r = 5;
+    const shape = new THREE.Shape();
+    shape.moveTo(u0 + r, v0);
+    shape.lineTo(u1 - r, v0);
+    shape.quadraticCurveTo(u1, v0, u1, v0 + r);
+    shape.lineTo(u1, v1 - r);
+    shape.quadraticCurveTo(u1, v1, u1 - r, v1);
+    shape.lineTo(u0 + r, v1);
+    shape.quadraticCurveTo(u0, v1, u0, v1 - r);
+    shape.lineTo(u0, v0 + r);
+    shape.quadraticCurveTo(u0, v0, u0 + r, v0);
+    const GOLD = 0xe6cfa1,
+      GLOW = 0xf6e3b6;
+    /** every material, so the look can switch between night (glowing gold) and day (deep bronze on the bright city) */
+    const M = /** @type {Record<string, any>} */ ({});
+    const slabGeo = new THREE.ExtrudeGeometry(shape, { depth: 0.35, bevelEnabled: false });
+    slabGeo.rotateX(Math.PI / 2);
+    slabGeo.scale(1, 1, -1); // extrude downward, v → −z
+    g.add(
+      new THREE.Mesh(
+        slabGeo,
+        (M.slab = new THREE.MeshBasicMaterial({
+          color: 0x1a130b,
+          transparent: true,
+          opacity: 0.42,
+          depthWrite: false,
+        })),
+      ),
+    );
+    const rim = shape.getSpacedPoints(200).map((q) => new THREE.Vector3(q.x, 0.03, -q.y));
+    g.add(
+      new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(rim),
+        (M.rim = new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.95 })),
+      ),
+    );
+    // the curtain wall, a breath of glass
+    const glassGeo = new THREE.BufferGeometry();
+    const gp = [];
+    for (let i = 0; i < rim.length - 1; i++) {
+      const q0 = rim[i],
+        q1 = rim[i + 1];
+      gp.push(q0.x, 0, q0.z, q1.x, 0, q1.z, q1.x, 2.8, q1.z, q0.x, 0, q0.z, q1.x, 2.8, q1.z, q0.x, 2.8, q0.z);
+    }
+    glassGeo.setAttribute('position', new THREE.Float32BufferAttribute(gp, 3));
+    g.add(
+      new THREE.Mesh(
+        glassGeo,
+        (M.glass = new THREE.MeshBasicMaterial({
+          color: GOLD,
+          transparent: true,
+          opacity: 0.05,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+        })),
+      ),
+    );
+    // the walls, straight from the plan: near-clear volumes with glowing edges
+    const wallGeo = mergeGeometries(
+      D.walls.map((/** @type {number[]} */ [a, b2, c, d]) => {
+        const bg = new THREE.BoxGeometry(c - a, WALL_H, d - b2);
+        bg.translate((a + c) / 2, WALL_H / 2, -(b2 + d) / 2);
+        return bg;
+      }),
+    );
+    g.add(
+      new THREE.Mesh(
+        wallGeo,
+        (M.wall = new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.08, depthWrite: false })),
+      ),
+      new THREE.LineSegments(
+        new THREE.EdgesGeometry(wallGeo, 30),
+        (M.edge = new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.34, depthWrite: false })),
+      ),
+    );
+    // a ring of light round the floor, and a dotted one further out
+    const R0 = Math.hypot(u1 - u0, v1 - v0) / 2 + 3;
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(R0, R0 + 0.35, 160),
+      (M.ring = new THREE.MeshBasicMaterial({
         color: GOLD,
         transparent: true,
-        opacity: 0.05,
+        opacity: 0.45,
         side: THREE.DoubleSide,
         depthWrite: false,
-      }),
-    ),
-  );
-  // the walls, straight from the plan: near-clear volumes with glowing edges
-  const wallGeo = mergeGeometries(
-    D.walls.map((/** @type {number[]} */ [a, b2, c, d]) => {
-      const bg = new THREE.BoxGeometry(c - a, WALL_H, d - b2);
-      bg.translate((a + c) / 2, WALL_H / 2, -(b2 + d) / 2);
-      return bg;
-    }),
-  );
-  g.add(
-    new THREE.Mesh(
-      wallGeo,
-      new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.08, depthWrite: false }),
-    ),
-    new THREE.LineSegments(
-      new THREE.EdgesGeometry(wallGeo, 30),
-      new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.34, depthWrite: false }),
-    ),
-  );
-  // a ring of light round the floor, and a dotted one further out
-  const R0 = Math.hypot(u1 - u0, v1 - v0) / 2 + 3;
-  const ring = new THREE.Mesh(
-    new THREE.RingGeometry(R0, R0 + 0.35, 160),
-    new THREE.MeshBasicMaterial({
-      color: GOLD,
-      transparent: true,
-      opacity: 0.45,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    }),
-  );
-  ring.rotation.x = -Math.PI / 2;
-  ring.position.y = -0.2;
-  g.add(ring);
-  const dots = [];
-  for (let i = 0; i < 120; i++) {
-    const a2 = (i / 120) * Math.PI * 2;
-    dots.push(Math.cos(a2) * (R0 + 6), -0.2, Math.sin(a2) * (R0 + 6));
-  }
-  const dotGeo = new THREE.BufferGeometry();
-  dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(dots, 3));
-  g.add(
-    new THREE.Points(
-      dotGeo,
-      new THREE.PointsMaterial({ color: GLOW, size: 0.55, transparent: true, opacity: 0.7, depthWrite: false }),
-    ),
-  );
-  // light pillars: a fading beam with a bright foot, for the rooms of the chosen unit and for every unit
-  const beamMat = (/** @type {number} */ k) =>
-    new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      uniforms: { uC: { value: new THREE.Color(GLOW) }, uK: { value: k } },
-      vertexShader:
-        'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-      fragmentShader:
-        'uniform vec3 uC; uniform float uK; varying float vY; void main(){ gl_FragColor = vec4(uC, uK * pow(clamp(1.0 - vY, 0.0, 1.0), 1.6)); }', // clamped: pow() of a tiny negative is NaN, which bloom smears into black blocks,
-    });
-  const beamGeo = (/** @type {number} */ h, /** @type {number} */ r2) =>
-    new THREE.CylinderGeometry(r2, r2, h, 10, 1, true).translate(0, h / 2, 0);
-  const roomBeams = new THREE.Group(),
-    unitBeams = new THREE.Group();
-  g.add(roomBeams, unitBeams);
-  const ROOM_H = 7,
-    UNIT_H = 11;
-  // the units' floors: a faint wash, the chosen one lit
-  const units = D.units.map((/** @type {any} */ u) => {
-    const s2 = new THREE.Shape(u.poly.map((/** @type {number[]} */ q) => new THREE.Vector2(q[0], q[1])));
-    const geo = new THREE.ShapeGeometry(s2);
-    geo.rotateX(-Math.PI / 2);
-    geo.translate(0, 0.04, 0);
-    const mesh = new THREE.Mesh(
-      geo,
-      new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.06, depthWrite: false }),
+      })),
     );
-    mesh.userData.unit = u;
-    g.add(mesh);
-    const outline = new THREE.LineLoop(
-      new THREE.BufferGeometry().setFromPoints(
-        u.poly.map((/** @type {number[]} */ q) => new THREE.Vector3(q[0], 0.06, -q[1])),
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = -0.2;
+    g.add(ring);
+    const dots = [];
+    for (let i = 0; i < 120; i++) {
+      const a2 = (i / 120) * Math.PI * 2;
+      dots.push(Math.cos(a2) * (R0 + 6), -0.2, Math.sin(a2) * (R0 + 6));
+    }
+    const dotGeo = new THREE.BufferGeometry();
+    dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(dots, 3));
+    g.add(
+      new THREE.Points(
+        dotGeo,
+        (M.dots = new THREE.PointsMaterial({
+          color: GLOW,
+          size: 0.55,
+          transparent: true,
+          opacity: 0.7,
+          depthWrite: false,
+        })),
       ),
-      new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0, depthWrite: false }),
     );
-    g.add(outline);
-    const c = u.poly.reduce((a2, q) => [a2[0] + q[0] / u.poly.length, a2[1] + q[1] / u.poly.length], [0, 0]);
-    const beam = new THREE.Mesh(beamGeo(UNIT_H, 0.06), beamMat(0.55));
-    beam.position.set(c[0], 0, -c[1]);
-    unitBeams.add(beam);
-    return { u, mesh, outline, centre: c };
-  });
-  // dimension lines along the chosen unit: the overall size from its plan
-  const dimLines = new THREE.LineSegments(
-    new THREE.BufferGeometry(),
-    new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.85, depthWrite: false }),
-  );
-  g.add(dimLines);
+    // light pillars: a fading beam with a bright foot, for the rooms of the chosen unit and for every unit
+    const BEAM_C = { value: new THREE.Color(GLOW) };
+    M.beamC = BEAM_C;
+    M.beams = /** @type {THREE.ShaderMaterial[]} */ ([]);
+    M.foot = new THREE.MeshBasicMaterial({ color: GLOW, transparent: true, opacity: 0.9, depthWrite: false });
+    // shared per strength, so choosing another unit makes no new shader
+    const beamCache = /** @type {Record<number, THREE.ShaderMaterial>} */ ({});
+    const beamMat = (/** @type {number} */ k) => (beamCache[k] ??= M.beams[M.beams.push(newBeam(k)) - 1]);
+    const newBeam = (/** @type {number} */ k) =>
+      new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        uniforms: { uC: BEAM_C, uK: { value: k } },
+        vertexShader:
+          'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+        fragmentShader:
+          'uniform vec3 uC; uniform float uK; varying float vY; void main(){ gl_FragColor = vec4(uC, uK * pow(clamp(1.0 - vY, 0.0, 1.0), 1.6)); }', // clamped: pow() of a tiny negative is NaN, which bloom smears into black blocks,
+      });
+    const beamGeo = (/** @type {number} */ h, /** @type {number} */ r2) =>
+      new THREE.CylinderGeometry(r2, r2, h, 10, 1, true).translate(0, h / 2, 0);
+    const roomBeams = new THREE.Group(),
+      unitBeams = new THREE.Group();
+    g.add(roomBeams, unitBeams);
+    const ROOM_H = 7,
+      UNIT_H = 11;
+    // the units' floors: a faint wash, the chosen one lit
+    const units = D.units.map((/** @type {any} */ u) => {
+      const s2 = new THREE.Shape(u.poly.map((/** @type {number[]} */ q) => new THREE.Vector2(q[0], q[1])));
+      const geo = new THREE.ShapeGeometry(s2);
+      geo.rotateX(-Math.PI / 2);
+      geo.translate(0, 0.04, 0);
+      const mesh = new THREE.Mesh(
+        geo,
+        new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.06, depthWrite: false }),
+      );
+      mesh.userData.unit = u;
+      g.add(mesh);
+      const outline = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(
+          u.poly.map((/** @type {number[]} */ q) => new THREE.Vector3(q[0], 0.06, -q[1])),
+        ),
+        new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0, depthWrite: false }),
+      );
+      g.add(outline);
+      const c = u.poly.reduce((a2, q) => [a2[0] + q[0] / u.poly.length, a2[1] + q[1] / u.poly.length], [0, 0]);
+      const beam = new THREE.Mesh(beamGeo(UNIT_H, 0.06), beamMat(0.55));
+      beam.position.set(c[0], 0, -c[1]);
+      unitBeams.add(beam);
+      return { u, mesh, outline, centre: c };
+    });
+    // dimension lines along the chosen unit: the overall size from its plan
+    const dimLines = new THREE.LineSegments(
+      new THREE.BufferGeometry(),
+      (M.dim = new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.85, depthWrite: false })),
+    );
+    g.add(dimLines);
+    g.traverse((o) => {
+      if (o instanceof THREE.Mesh) o.castShadow = o.receiveShadow = false;
+    });
+
+    g.updateMatrixWorld(true);
+    g.visible = true;
+    scene.add(g);
+    try {
+      ctx.renderer?.compile(scene, ctx.camera);
+    } catch {}
+    g.visible = false;
+    return { D, g, toWorld, units, roomBeams, dimLines, beamMat, beamGeo, ROOM_H, UNIT_H, M };
+  })());
+}
+
+export async function open(ctx) {
+  if (state) return select(ctx.type);
+  const B = await prepare(ctx);
+  const { camera, controls, S } = ctx;
+  const { D, g, toWorld, units, roomBeams, dimLines, beamMat, beamGeo, ROOM_H, UNIT_H, M } = B;
+  g.visible = true;
   let dimAt = /** @type {{ w: number[], d: number[] } | null} */ (null);
-  g.traverse((o) => {
-    if (o instanceof THREE.Mesh) o.castShadow = o.receiveShadow = false;
-  });
-  g.updateMatrixWorld(true);
-  scene.add(g);
 
   // the map steps aside: the tower is opened at this floor, the halo and rings hidden
   const saved = {
@@ -239,27 +286,63 @@ export async function open(ctx) {
     o.userData.plateVis = o.visible;
     o.visible = false;
   });
-  // the tower turns to glass: the floor is seen inside it, at its real height
+  // the tower turns to glass (its materials are transparent from the start, so only the opacity moves: no shader
+  // rebuild, no stall), the lit Twin Towers step back to a ghost, and a soft light rises up the facade
   const glassMats = ctx.glass ?? [],
     fadeMats = ctx.fade ?? [];
-  const before = [...glassMats, ...fadeMats].map((m) => ({ m, t: m.transparent, o: m.opacity, d: m.depthWrite }));
-  for (const m of glassMats) {
-    m.transparent = true;
-    m.opacity = 0.1;
-    m.depthWrite = false;
-    m.needsUpdate = true;
-  }
-  // bright neighbours (the lit Twin Towers) step back to a ghost so the plan reads
-  for (const m of fadeMats) {
-    m.transparent = true;
-    m.opacity = 0.18;
-    m.depthWrite = false;
-    m.needsUpdate = true;
-  }
+  const before = [...glassMats, ...fadeMats].map((m) => ({ m, o: m.opacity, d: m.depthWrite }));
+  glassMats.forEach((m) => (m.depthWrite = false));
+  fadeMats.forEach((m) => (m.depthWrite = false));
+  const up = ctx.uplight;
+  if (up) up.visible = true;
+  let fade = { t0: performance.now(), from: 0, to: 1 };
+  const applyFade = (/** @type {number} */ k) => {
+    for (const m of glassMats) m.opacity = 1 - 0.88 * k;
+    for (const m of fadeMats) m.opacity = 1 - 0.8 * k;
+    if (up) up.material.uniforms.uOn.value = k;
+  };
   S.plate = true;
-  // a dark stage for the hologram: night lighting while the plan is open, the visitor's day / night back on close
-  const nightWas = S.nightTarget;
-  ctx.setNight?.(true);
+  // the look follows day and night: glowing gold on the dark city, deep bronze on the bright one
+  let lookNight = -1;
+  const look = () => {
+    const night = S.nightTarget > 0.5 ? 1 : 0;
+    if (night === lookNight) return;
+    lookNight = night;
+    const N = !!night;
+    const set = (/** @type {any} */ m, c, o) => {
+      m.color?.set(c);
+      m.opacity = o;
+    };
+    set(M.slab, N ? 0x1a130b : 0x3a2a18, N ? 0.42 : 0.3);
+    set(M.rim, N ? 0xf6e3b6 : 0x7a5420, N ? 0.95 : 0.95);
+    set(M.glass, N ? 0xe6cfa1 : 0x9a7a4a, N ? 0.05 : 0.08);
+    set(M.wall, N ? 0xe6cfa1 : 0x7a5a32, N ? 0.08 : 0.14);
+    set(M.edge, N ? 0xf6e3b6 : 0x6e4a1c, N ? 0.34 : 0.62);
+    set(M.ring, N ? 0xe6cfa1 : 0x8a6228, N ? 0.45 : 0.6);
+    set(M.dots, N ? 0xf6e3b6 : 0x8a6228, N ? 0.7 : 0.8);
+    set(M.dim, N ? 0xf6e3b6 : 0x5e3e14, 0.9);
+    set(M.foot, N ? 0xf6e3b6 : 0xa8742a, 0.9);
+    M.beamC.value.set(N ? 0xf6e3b6 : 0xb07a2e);
+    for (const b of M.beams) b.blending = N ? THREE.AdditiveBlending : THREE.NormalBlending;
+    unitLook = N ? [0xe6cfa1, 0.5, 0.04, 0xf6e3b6] : [0xd9a54e, 0.55, 0.06, 0x6e4a1c];
+    paintUnits();
+    document.body.classList.toggle('plate-day', !N);
+    S.dimTarget = N ? 0 : 0.22;
+  };
+  /** chosen unit colour, its opacity, the others' opacity, outline colour */
+  let unitLook = [0xe6cfa1, 0.5, 0.04, 0xf6e3b6];
+  const paintUnits = () => {
+    const un = unitFor(current);
+    units.forEach((x) => {
+      const on = x === un;
+      x.mesh.material.color.set(unitLook[0]);
+      x.mesh.material.opacity = on ? unitLook[1] : unitLook[2];
+      x.outline.material.color.set(unitLook[3]);
+      x.outline.material.opacity = on ? 1 : 0.22;
+    });
+  };
+  // by day the city behind is calmed a little so the plan reads, never greyed out
+  const dimWas = S.dimTarget;
   S.fly = null;
   S.zoomTo = null;
   controls.autoRotate = false;
@@ -326,11 +409,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     );
     ui.querySelector('.plate-types .is-on')?.scrollIntoView({ inline: 'center', block: 'nearest' });
     // floors: the chosen unit in champagne
-    units.forEach((x) => {
-      const on = x === un;
-      x.mesh.material.opacity = on ? 0.5 : 0.04;
-      x.outline.material.opacity = on ? 1 : 0.18;
-    });
+    paintUnits();
     // beams on the chosen unit's rooms
     roomBeams.clear();
     if (un)
@@ -338,10 +417,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
         const bm = new THREE.Mesh(beamGeo(ROOM_H, 0.05), beamMat(0.9));
         bm.position.set(rm.at[0], 0, -rm.at[1]);
         roomBeams.add(bm);
-        const foot = new THREE.Mesh(
-          new THREE.CircleGeometry(0.35, 20).rotateX(-Math.PI / 2),
-          new THREE.MeshBasicMaterial({ color: GLOW, transparent: true, opacity: 0.9, depthWrite: false }),
-        );
+        const foot = new THREE.Mesh(new THREE.CircleGeometry(0.35, 20).rotateX(-Math.PI / 2), M.foot);
         foot.position.set(rm.at[0], 0.08, -rm.at[1]);
         roomBeams.add(foot);
       }
@@ -417,6 +493,17 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     el.style.transform = `translate(${((v.x + 1) / 2) * innerWidth}px, ${((1 - v.y) / 2) * innerHeight}px) translate(-50%, -50%)`;
   };
   const tick = () => {
+    if (fade) {
+      const k = Math.min(1, (performance.now() - fade.t0) / 700),
+        e = k * k * (3 - 2 * k);
+      applyFade(fade.from + (fade.to - fade.from) * e);
+      if (k >= 1) {
+        const done = fade;
+        fade = null;
+        if (done.to === 0) finish();
+      }
+    }
+    if (state) look();
     ui.querySelectorAll('.plate-tag').forEach((el) => {
       const x = units.find((y) => String(y.u.unit) === el.getAttribute('data-u'));
       if (x) place(/** @type {HTMLElement} */ (el), toWorld(x.centre, UNIT_H + 0.8));
@@ -462,29 +549,19 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
   raf = requestAnimationFrame(tick);
 
   function close() {
-    cancelAnimationFrame(raf);
     canvas.removeEventListener('pointerdown', onDown);
     canvas.removeEventListener('pointerup', onUp);
     removeEventListener('keydown', esc_);
     langObs.disconnect();
-    scene.remove(g);
-    g.traverse((o) => {
-      if (o instanceof THREE.Mesh) o.geometry.dispose();
-    });
+    g.visible = false; // kept, ready for next time
     ui.remove();
-    document.body.classList.remove('is-plate');
+    document.body.classList.remove('is-plate', 'plate-day');
     ctx.hide.forEach((o) => (o.visible = o.userData.plateVis ?? true));
-    for (const x of before) {
-      x.m.transparent = x.t;
-      x.m.opacity = x.o;
-      x.m.depthWrite = x.d;
-      x.m.needsUpdate = true;
-    }
     camera.near = saved.near;
     camera.updateProjectionMatrix();
     controls.minDistance = saved.min;
     S.plate = false;
-    ctx.setNight?.(nightWas > 0.5);
+    S.dimTarget = dimWas;
     S.fly = {
       t0: performance.now(),
       dur: 1200,
@@ -494,5 +571,18 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
       toT: saved.target,
     };
     state = null;
+    // the tower fades back from glass; the uplight goes with it
+    const k0 = up ? up.material.uniforms.uOn.value : 1;
+    fade = { t0: performance.now(), from: k0, to: 0 };
+  }
+  /** after the fade back: the tower is solid again (unless the floor was opened again meanwhile) */
+  function finish() {
+    cancelAnimationFrame(raf);
+    if (state) return;
+    for (const x of before) {
+      x.m.opacity = x.o;
+      x.m.depthWrite = x.d;
+    }
+    if (up) up.visible = false;
   }
 }

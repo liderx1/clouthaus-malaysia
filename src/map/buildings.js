@@ -445,7 +445,13 @@ if (litOnes.length) {
   const m = new THREE.Mesh(
     buildingGeometry(litOnes.map((b) => ({ ...b, kId: 8 }))),
     windowShader(
-      new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.2, metalness: 0.62, envMapIntensity: 1.8 }),
+      new THREE.MeshStandardMaterial({
+        vertexColors: true,
+        roughness: 0.2,
+        metalness: 0.62,
+        envMapIntensity: 1.8,
+        transparent: true, // so the floor plate can fade it without a shader rebuild
+      }),
       'lit',
     ),
   );
