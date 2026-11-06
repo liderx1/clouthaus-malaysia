@@ -179,7 +179,7 @@ export async function open(ctx) {
       vertexShader:
         'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
       fragmentShader:
-        'uniform vec3 uC; uniform float uK; varying float vY; void main(){ gl_FragColor = vec4(uC, uK * pow(1.0 - vY, 1.6)); }',
+        'uniform vec3 uC; uniform float uK; varying float vY; void main(){ gl_FragColor = vec4(uC, uK * pow(clamp(1.0 - vY, 0.0, 1.0), 1.6)); }', // clamped: pow() of a tiny negative is NaN, which bloom smears into black blocks,
     });
   const beamGeo = (/** @type {number} */ h, /** @type {number} */ r2) =>
     new THREE.CylinderGeometry(r2, r2, h, 10, 1, true).translate(0, h / 2, 0);
