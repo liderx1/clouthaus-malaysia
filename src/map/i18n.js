@@ -8,6 +8,7 @@ const T = {
   en: {
     dayNight: 'Day / night',
     close: 'Close',
+    tourOpen: '3D walk-through',
     mainTag: '',
     mainText: '',
     getHere: 'Getting here',

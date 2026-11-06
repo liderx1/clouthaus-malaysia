@@ -161,6 +161,8 @@ pulse.rotation.x = -Math.PI / 2;
 pulse.position.set(mallC[0], 0.4, -mallC[1]);
 pulse.scale.setScalar(CONFIG.main.pulseRadius ?? mallRad * 1.45); // a tower on a podium needs a wider ring
 scene.add(pulse);
+/** what a walk-through inside the building hides: the halo, the ground rings (filled in below) */
+export const TOUR_HIDE = /** @type {THREE.Object3D[]} */ ([pulse]);
 // among tall buildings the ground around the main building is hidden from most views: a faint second pass of the
 // same ring is drawn through them (site.config.json → main.pulseThrough, 0–1)
 if (CONFIG.main.pulseThrough) {
@@ -173,6 +175,7 @@ if (CONFIG.main.pulseThrough) {
   ghost.scale.copy(pulse.scale);
   ghost.renderOrder = 2;
   scene.add(ghost);
+  TOUR_HIDE.push(ghost);
 }
 /* ---------- main.halo: a soft light around the main building, after the brand's lit-from-behind look ----------
    A billboard of warm light that always stands just behind the building (seen from the camera), so the building
@@ -210,6 +213,7 @@ export const HALO = CONFIG.main.halo
       const s = new THREE.Sprite(mat);
       s.renderOrder = 1;
       scene.add(s);
+      TOUR_HIDE.push(s);
       return {
         sprite: s,
         day: new THREE.Color(CONFIG.main.halo.day ?? '#E9B96E'),

@@ -293,7 +293,8 @@
         "close": "Close",
         "mainTag": "28 Jalan P. Ramlee · KL City Centre",
         "mainText": "66 storeys, 615 freehold residences facing the Petronas Twin Towers, about 6 minutes away on foot. Completion 2029.",
-        "music": "Music"
+        "music": "Music",
+        "tourOpen": "3D walk-through"
       },
       "about": {
         "title": "Freehold residences facing the Petronas Twin Towers",
@@ -353,7 +354,8 @@
         "close": "关闭",
         "mainTag": "28 Jalan P. Ramlee · 吉隆坡城中城",
         "mainText": "66 层，615 个永久地契住宅单位，面向国油双峰塔，步行约 6 分钟。预计 2029 年竣工。",
-        "music": "音乐"
+        "music": "音乐",
+        "tourOpen": "3D 参观"
       },
       "about": {
         "title": "面向双峰塔的永久地契住宅",
@@ -431,6 +433,14 @@
       ],
       "r": 80,
       "minH": 150
+    }
+  ],
+  "tours": [
+    {
+      "id": "type-b",
+      "store": "Type B",
+      "level": 40,
+      "unitFrom": 4.6
     }
   ]
 }

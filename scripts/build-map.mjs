@@ -64,13 +64,17 @@ const music = {
   legalComments: 'none',
   logLevel: 'warning',
 };
+// the 3D walk-through of a unit, loaded only when opened (src/tour); three.js comes from the page's import map
+const tour = { ...music, entryPoints: ['src/tour/tour.js'], outfile: 'public/map/tour.js', external: ['three', 'three/*'] };
 if (process.argv.includes('--watch')) {
   await (await context(options)).watch();
   await (await context(music)).watch();
+  await (await context(tour)).watch();
   console.log('map: watching src/map');
 } else {
   await build(options);
   await build(music);
+  await build(tour);
   // performance budget: the map script is downloaded before anything shows, so keep it small
   const kb = fs.statSync(options.outfile).size / 1024;
   if (kb > BUDGET_KB) throw new Error(`map.js is ${kb.toFixed(0)} KB, over the ${BUDGET_KB} KB budget`);

@@ -210,3 +210,33 @@ body:not(.is-night) .brand { color: #5E4321 !important; filter: drop-shadow(0 0 
 .madeby { display: flex; justify-content: flex-end; align-items: center; gap: 5px; }
 .madeby .blank { display: inline-flex; align-items: center; gap: 4px; color: var(--ivory) !important; font-weight: 700 !important; letter-spacing: .08em; text-decoration: none; border: 0 !important; }
 .madeby .blank svg { width: 1.15em; height: 1.15em; flex: none; }
+
+/* ---------- a unit's 3D walk-through (src/tour): the map's bars step aside ---------- */
+.is-tour .top, .is-tour .dock, .is-tour #labels, .is-tour .compass, .is-tour .scale, .is-tour .ui-toggle, .is-tour #card, .is-tour .route-note, .is-tour .notice { display: none !important; }
+.tour { position: fixed; inset: 0; z-index: 30; pointer-events: none; color: var(--ivory); font-family: var(--font); }
+.tour > * { pointer-events: auto; }
+.tour-top { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; pointer-events: none; }
+.tour-top div { display: grid; gap: 2px; padding: 10px 16px; border-radius: 16px; background: var(--veil); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.tour-top b { font-size: 16px; font-weight: 500; letter-spacing: .04em; }
+.tour-top small { font-size: 11.5px; color: var(--champagne); letter-spacing: .06em; }
+.tour-x { pointer-events: auto; flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--veil) !important; color: var(--ivory); font-size: 26px; line-height: 1; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.tour-rooms { position: absolute; left: 50%; bottom: max(54px, calc(env(safe-area-inset-bottom, 0px) + 46px)); transform: translateX(-50%); display: flex; gap: 6px; max-width: calc(100% - 24px); padding: 6px; border-radius: 18px; overflow-x: auto; scrollbar-width: none; background: var(--veil); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.tour-rooms::-webkit-scrollbar { display: none; }
+.tour-rooms button { flex: none; min-height: 40px; padding: 8px 14px; border-radius: 12px; color: var(--ivory-2); font-size: 13px; font-weight: 500; letter-spacing: .03em; white-space: nowrap; }
+.tour-rooms button.is-on { background: var(--champagne) !important; color: var(--on-light) !important; }
+.tour-note { position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: min(560px, calc(100% - 32px)); margin: 0; padding: 6px 12px; border-radius: 10px; background: var(--veil-label); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 10.5px; line-height: 1.4; text-align: center; color: var(--ivory-2); }
+.tour-hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; padding: 10px 18px; border-radius: 999px; background: var(--veil-label); color: var(--champagne); font-size: 13px; letter-spacing: .04em; pointer-events: none; transition: opacity .6s; }
+.tour-hint.is-gone { opacity: 0; }
+.tour-spot { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: opacity .3s; will-change: transform; }
+.tour-spot i { flex: none; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: radial-gradient(circle, #fff 0 4px, rgba(255, 255, 255, .35) 5px 100%); box-shadow: 0 0 0 6px rgba(230, 207, 161, .22); animation: spot 2.2s ease-in-out infinite; }
+.tour-spot span { display: grid; gap: 1px; margin-top: -13px; padding: 7px 12px; border-radius: 12px; background: var(--veil-label); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); white-space: nowrap; }
+.tour-spot b { font-size: 13px; font-weight: 500; color: var(--ivory); }
+.tour-spot small { font-size: 11px; color: var(--champagne); }
+.tour-spot--far span { background: rgba(16, 11, 7, .38); }
+@keyframes spot { 50% { box-shadow: 0 0 0 11px rgba(230, 207, 161, .08); } }
+@media (max-width: 760px) {
+  .tour-spot span { display: none; }
+  .tour-spot.is-open span { display: grid; }
+  .tour-rooms { bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 56px)); }
+}
+@media (prefers-reduced-motion: reduce) { .tour-spot i { animation: none; } }

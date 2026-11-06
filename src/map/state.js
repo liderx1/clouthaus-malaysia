@@ -15,6 +15,8 @@ export const S = {
   /** …and where it was on screen at the last label placement (the sweep checks no label covers it) */
   pinRect: [],
   pinLoading: false,
+  /** a unit's 3D walk-through is open (src/tour): the map's clicks and labels stand aside */
+  tour: false,
 };
 export const MODE = {
   route: null,

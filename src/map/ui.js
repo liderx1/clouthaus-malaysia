@@ -18,11 +18,11 @@ import { $, $$, TEST } from './env.js';
 import { ground } from './ground.js';
 import { pick, t } from './i18n.js';
 import { ROUTE_COL, ROUTE_ICON } from './routes.js';
-import { mallMesh } from './mall.js';
+import { TOUR_HIDE, mallC, mallMesh } from './mall.js';
 import { asmMarks, entMarks, exitMarks } from './markers.js';
 import { applyModes, focusMall } from './modes.js';
 import { pinGroup, pinSprite, storeSpot } from './pin.js';
-import { HOME, U, camera, controls, renderer } from './stage.js';
+import { HOME, U, camera, controls, renderer, scene } from './stage.js';
 import { MODE, S } from './state.js';
 
 /* ---------- UI ---------- */
@@ -198,6 +198,14 @@ export function showStore(s) {
   if (s.logo) $('#cardLogo').style.backgroundImage = `url("${s.logo}")`;
   zoomSrc = s.plan || null;
   $('#cardLogo').classList.toggle('can-zoom', !!zoomSrc);
+  // a 3D walk-through of this unit, where the site has one (site.config.json → tours)
+  const tour = (CONFIG.tours ?? []).find((/** @type {any} */ x) => x.store === s.name);
+  if (tour) {
+    const go = $('#cardGo');
+    go.textContent = t('tourOpen');
+    go.hidden = false;
+    go.onclick = () => openTour(tour);
+  }
   // a route to the store (from the MRT) only where the site wants one: a home in a tower has no door of its own
   if (CONFIG.storeRoute === false) return;
   const go = $('#cardGo');
@@ -207,6 +215,27 @@ export function showStore(s) {
     MODE.route = 'mrt';
     applyModes();
   };
+}
+/** open a unit's 3D walk-through (its own script, public/map/tour.js, loaded the first time) */
+export function openTour(/** @type {any} */ tour) {
+  $('#card').hidden = true;
+  const fp = CONFIG.main.footprint ?? {};
+  import(/* @vite-ignore */ new URL('tour.js', import.meta.url).href).then((m) =>
+    m.open({
+      scene,
+      camera,
+      controls,
+      S,
+      U,
+      centre: mallC,
+      facing: fp.facing ?? 0,
+      depth: fp.d ?? 20,
+      unitFrom: tour.unitFrom ?? 0,
+      floorZ: tour.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
+      hide: [...TOUR_HIDE, pinGroup],
+      landmark: CONFIG.litLandmarks?.[0]?.at,
+    }),
+  );
 }
 /** the main building's own card: its address, a line about it and its routes (site.config.json → main.routes) */
 export function showMain() {
@@ -259,6 +288,7 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
   downAt = [e.clientX, e.clientY];
 });
 renderer.domElement.addEventListener('pointerup', (e) => {
+  if (S.tour) return; // inside a walk-through, a tap only looks around
   if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
   ptr.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
   ray.setFromCamera(ptr, camera);
@@ -280,4 +310,5 @@ renderer.domElement.addEventListener('pointerup', (e) => {
 
 bus.on('place', (get) => card(() => showPlace(...get())));
 bus.on('mall:focus', () => showMain());
+bus.on('tour:open', (tour) => openTour(tour));
 bus.on('store:show', (s) => showStore(s));

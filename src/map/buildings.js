@@ -329,7 +329,7 @@ export function windowShader(mat, mall = false) {
           float fin = step(fc, 0.3);
           diffuseColor.rgb = mix(vec3(0.62, 0.66, 0.71), vec3(0.95, 0.96, 0.97), max(fin, ring));
           win = 0.0;
-          litGlow = fin * 0.85 + ring * 1.2 + (1.0 - fin) * 0.18;
+          litGlow = fin * 0.62 + ring * 1.0 + (1.0 - fin) * 0.07;
           litGlow *= 0.7 + 0.3 * smoothstep(0.0, vInfo.x, vWall.y);
         }
         if (kind > 6.5 && kind < 7.5 && wall > 0.5) {                 // main.style "tower": curtain wall with a fin at every floor

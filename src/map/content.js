@@ -371,6 +371,11 @@ export function readHash(raw = location.hash) {
     return;
   }
   const [k, v] = h.split('=');
+  if (k === 'tour') {
+    const tour = (CONFIG.tours ?? []).find((/** @type {any} */ x) => x.id === v);
+    if (tour) bus.emit('tour:open', tour);
+    return;
+  }
   if (k === 'store') {
     const s = STORES.find((x) => storeSlug(x) === v);
     if (s) {
