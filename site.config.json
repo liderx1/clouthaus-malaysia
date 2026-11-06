@@ -52,8 +52,7 @@
       "night": "#F4DCA8",
       "size": 0.75
     },
-    "pulseRadius": 220,
-    "pulseThrough": 0.45
+    "pulseRadius": 220
   },
   "floors": [
     {

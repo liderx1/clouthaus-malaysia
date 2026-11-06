@@ -312,7 +312,9 @@ export async function open(ctx) {
   if (up) up.visible = true;
   let fade = { t0: performance.now(), from: 0, to: 1 };
   const applyFade = (/** @type {number} */ k) => {
-    for (const m of glassMats) m.opacity = 1 - 0.88 * k;
+    // the tower as glass: a little more body by day, when the bright city behind would wash it out
+    const glass = S.nightTarget > 0.5 ? 0.12 : 0.3;
+    for (const m of glassMats) m.opacity = 1 - (1 - glass) * k;
     for (const m of fadeMats) m.opacity = 1 - 0.8 * k;
     if (up) up.material.uniforms.uOn.value = k;
   };
@@ -329,7 +331,7 @@ export async function open(ctx) {
       m.opacity = o;
     };
     // by day the floor stands on a darker glass slab, so the gold reads as it does at night
-    set(M.slab, N ? 0x1a130b : 0x0e0a06, N ? 0.42 : 0.86);
+    set(M.slab, N ? 0x1a130b : 0x3b2e20, N ? 0.42 : 0.55);
     set(M.rim, N ? 0xf6e3b6 : 0xf0d39a, 0.95);
     set(M.glass, N ? 0xe6cfa1 : 0xc9a46a, N ? 0.05 : 0.07);
     set(M.wall, N ? 0xe6cfa1 : 0xe6cfa1, N ? 0.08 : 0.1);
