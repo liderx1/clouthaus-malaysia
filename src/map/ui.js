@@ -223,7 +223,7 @@ export function openPlate(/** @type {string} */ type) {
       facing: fp.facing ?? 0,
       floorZ: CONFIG.plate.level * (CONFIG.main.tower?.floorHeight ?? 3.8),
       hide: [...TOUR_HIDE, pinGroup, mallMesh, edges],
-      data: new URL(CONFIG.plate.data.replace(/^\/map\//, ''), import.meta.url).href,
+      data: new URL(CONFIG.plate.data.replace(/^\/?map\//, ''), import.meta.url).href, // next to map.js
       type,
       onZoom: (/** @type {string} */ src, /** @type {string} */ alt) => {
         zoomSrc = src;
