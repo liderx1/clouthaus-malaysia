@@ -250,16 +250,31 @@ export function prepare(ctx) {
       (M.dim = new THREE.LineBasicMaterial({ color: GLOW, transparent: true, opacity: 0.85, depthWrite: false })),
     );
     g.add(dimLines);
+    // the model is never hidden by the city: drawn after it, with no depth test (the dark slab first, then the rest)
+    // a sample room pillar and foot, so their shaders are compiled now and not on the first tap
+    const sample = [
+      new THREE.Mesh(beamGeo(7, 0.05), beamMat(0.9)),
+      new THREE.Mesh(new THREE.CircleGeometry(0.35, 8), M.foot),
+    ];
+    roomBeams.add(...sample);
     g.traverse((o) => {
       if (o instanceof THREE.Mesh) o.castShadow = o.receiveShadow = false;
+      const m = /** @type {any} */ (o).material;
+      if (m) m.depthTest = false;
+      o.renderOrder = /** @type {any} */ (o).material === M.slab ? 19 : 20;
     });
+    M.beams.forEach((b) => (b.depthTest = false));
+    M.foot.depthTest = false;
 
     g.updateMatrixWorld(true);
     g.visible = true;
     scene.add(g);
     try {
-      ctx.renderer?.compile(scene, ctx.camera);
+      // compiled in the background where the browser can (parallel shader compile), else at once
+      if (ctx.renderer?.compileAsync) await ctx.renderer.compileAsync(g, ctx.camera, scene);
+      else ctx.renderer?.compile(scene, ctx.camera);
     } catch {}
+    roomBeams.clear();
     g.visible = false;
     return { D, g, toWorld, units, roomBeams, dimLines, beamMat, beamGeo, ROOM_H, UNIT_H, M };
   })());
@@ -313,21 +328,21 @@ export async function open(ctx) {
       m.color?.set(c);
       m.opacity = o;
     };
-    set(M.slab, N ? 0x1a130b : 0x3a2a18, N ? 0.42 : 0.3);
-    set(M.rim, N ? 0xf6e3b6 : 0x7a5420, N ? 0.95 : 0.95);
-    set(M.glass, N ? 0xe6cfa1 : 0x9a7a4a, N ? 0.05 : 0.08);
-    set(M.wall, N ? 0xe6cfa1 : 0x7a5a32, N ? 0.08 : 0.14);
-    set(M.edge, N ? 0xf6e3b6 : 0x6e4a1c, N ? 0.34 : 0.62);
-    set(M.ring, N ? 0xe6cfa1 : 0x8a6228, N ? 0.45 : 0.6);
-    set(M.dots, N ? 0xf6e3b6 : 0x8a6228, N ? 0.7 : 0.8);
-    set(M.dim, N ? 0xf6e3b6 : 0x5e3e14, 0.9);
-    set(M.foot, N ? 0xf6e3b6 : 0xa8742a, 0.9);
-    M.beamC.value.set(N ? 0xf6e3b6 : 0xb07a2e);
-    for (const b of M.beams) b.blending = N ? THREE.AdditiveBlending : THREE.NormalBlending;
-    unitLook = N ? [0xe6cfa1, 0.5, 0.04, 0xf6e3b6] : [0xd9a54e, 0.55, 0.06, 0x6e4a1c];
+    // by day the floor stands on a darker glass slab, so the gold reads as it does at night
+    set(M.slab, N ? 0x1a130b : 0x0e0a06, N ? 0.42 : 0.86);
+    set(M.rim, N ? 0xf6e3b6 : 0xf0d39a, 0.95);
+    set(M.glass, N ? 0xe6cfa1 : 0xc9a46a, N ? 0.05 : 0.07);
+    set(M.wall, N ? 0xe6cfa1 : 0xe6cfa1, N ? 0.08 : 0.1);
+    set(M.edge, N ? 0xf6e3b6 : 0xf0d39a, N ? 0.34 : 0.5);
+    set(M.ring, N ? 0xe6cfa1 : 0xa77a34, N ? 0.45 : 0.7);
+    set(M.dots, N ? 0xf6e3b6 : 0xa77a34, N ? 0.7 : 0.85);
+    set(M.dim, N ? 0xf6e3b6 : 0xf0d39a, 0.9);
+    set(M.foot, N ? 0xf6e3b6 : 0xf6e3b6, 0.9);
+    M.beamC.value.set(N ? 0xf6e3b6 : 0xf0d39a);
+    for (const b2 of M.beams) b2.blending = THREE.AdditiveBlending;
+    unitLook = [0xe6cfa1, 0.5, N ? 0.04 : 0.05, 0xf6e3b6];
     paintUnits();
     document.body.classList.toggle('plate-day', !N);
-    S.dimTarget = N ? 0 : 0.22;
   };
   /** chosen unit colour, its opacity, the others' opacity, outline colour */
   let unitLook = [0xe6cfa1, 0.5, 0.04, 0xf6e3b6];
@@ -342,7 +357,6 @@ export async function open(ctx) {
     });
   };
   // by day the city behind is calmed a little so the plan reads, never greyed out
-  const dimWas = S.dimTarget;
   S.fly = null;
   S.zoomTo = null;
   controls.autoRotate = false;
@@ -416,9 +430,11 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
       for (const rm of un.u.rooms) {
         const bm = new THREE.Mesh(beamGeo(ROOM_H, 0.05), beamMat(0.9));
         bm.position.set(rm.at[0], 0, -rm.at[1]);
+        bm.renderOrder = 20;
         roomBeams.add(bm);
         const foot = new THREE.Mesh(new THREE.CircleGeometry(0.35, 20).rotateX(-Math.PI / 2), M.foot);
         foot.position.set(rm.at[0], 0.08, -rm.at[1]);
+        foot.renderOrder = 20;
         roomBeams.add(foot);
       }
     // dimension lines outside the unit's outline, with ticks at the ends
@@ -561,7 +577,6 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     camera.updateProjectionMatrix();
     controls.minDistance = saved.min;
     S.plate = false;
-    S.dimTarget = dimWas;
     S.fly = {
       t0: performance.now(),
       dur: 1200,

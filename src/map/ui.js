@@ -239,8 +239,16 @@ if (CONFIG.plate)
           .then((m) => m.prepare(plateCtx()))
           .catch(() => {}),
       ),
-    TEST ? 0 : 4000,
+    TEST ? 0 : 1500,
   );
+// …and at once if the visitor heads for the units before that
+const warmPlate = () =>
+  CONFIG.plate &&
+  plateModule()
+    .then((m) => m.prepare(plateCtx()))
+    .catch(() => {});
+$('[data-tab="stores"]')?.addEventListener('pointerenter', warmPlate, { once: true });
+$('[data-tab="stores"]')?.addEventListener('pointerdown', warmPlate, { once: true });
 export function openPlate(/** @type {string} */ type) {
   $('#card').hidden = true;
   plateModule().then((m) =>
