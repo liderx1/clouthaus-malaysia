@@ -147,7 +147,7 @@ export const crownMat = new THREE.MeshBasicMaterial({ color: 0xff6a2b, transpare
 }
 /** a soft wash of light rising up the facade from the ground, shown while the floor plate is open (uOn fades it) */
 export const UPLIGHT = (() => {
-  const H = Math.min(MALL_H * 0.5, 120),
+  const H = 5 * (CONFIG.main.tower?.floorHeight ?? 3.8), // up to about level 5
     pos = [],
     uv = [];
   const loop = MR.concat([MR[0]]);
@@ -179,7 +179,7 @@ export const UPLIGHT = (() => {
       'varying float vY; void main(){ vY = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
     // strongest at the foot, fading out as it climbs; a little stronger by day so it reads on the bright city
     fragmentShader:
-      'uniform float uOn; uniform float uNight; uniform vec3 uC; varying float vY; void main(){ float y = clamp(vY, 0.0, 1.0); float a = (1.0 - y) * (1.0 - y) * mix(0.55, 0.42, uNight) * uOn; gl_FragColor = vec4(uC * mix(0.85, 1.15, uNight), a); }',
+      'uniform float uOn; uniform float uNight; uniform vec3 uC; varying float vY; void main(){ float y = clamp(vY, 0.0, 1.0); float a = pow(1.0 - y, 1.8) * mix(0.42, 0.32, uNight) * uOn; gl_FragColor = vec4(uC * mix(0.85, 1.15, uNight), a); }',
   });
   const m = new THREE.Mesh(g, mat);
   m.position.set(0, 0.2, 0);
