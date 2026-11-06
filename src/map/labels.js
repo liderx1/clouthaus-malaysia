@@ -336,7 +336,10 @@ export function updateLabels(now) {
     vis.forEach((L, i) => Object.assign(L, { shown: spots[i].shown, dx: spots[i].dx, dy: spots[i].dy }));
   }
   for (const L of LABELS) {
-    const on = L.vis && L.shown;
+    // a label the de-clutter drops stays a moment (0.4 s) before it goes, so labels do not blink as the view moves
+    const want = L.vis && L.shown;
+    if (want) L.lastOn = now;
+    const on = want || (L.vis && L.was && now - (L.lastOn || 0) < 400);
     if (on !== L.was) {
       L.el.classList.toggle('is-hidden', !on);
       L.was = on;

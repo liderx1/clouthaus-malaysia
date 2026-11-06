@@ -372,6 +372,7 @@ export async function open(ctx) {
   document.body.append(ui);
   document.body.classList.add('is-plate');
   let current = ctx.type;
+  let cardOpen = false;
 
   const typeOf = (/** @type {string} */ t) => D.types[t];
   const unitFor = (/** @type {string} */ t) => units.find((x) => x.u.types.includes(t));
@@ -413,6 +414,12 @@ export async function open(ctx) {
 ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" data-r="${i}">${esc(D.names[rm.k][zh ? 1 : 0])}</span>`).join('') : ''}
       ${un ? `<span class="plate-dim" data-dim="w">${esc(t.dims.split(' × ')[0])} mm</span><span class="plate-dim" data-dim="d">${esc(t.dims.split(' × ')[1])} mm</span>` : ''}`;
     ui.querySelector('.plate-x')?.addEventListener('click', close);
+    // phones: the name opens and closes the full details
+    ui.querySelector('.plate-card h2')?.addEventListener('click', () => {
+      cardOpen = !cardOpen;
+      ui.querySelector('.plate-card')?.classList.toggle('is-open', cardOpen);
+    });
+    ui.querySelector('.plate-card')?.classList.toggle('is-open', cardOpen);
     ui.querySelector('.plate-plan')?.addEventListener('click', () => ctx.onZoom(t.plan, current));
     ui.querySelectorAll('[data-type]').forEach((el) =>
       el.addEventListener('click', () => select(/** @type {string} */ (el.getAttribute('data-type')))),

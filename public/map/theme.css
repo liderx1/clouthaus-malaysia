@@ -93,7 +93,9 @@ button, .lbl, .lbl span, .store, .route-btn, .chip, .info, .tabs, .dock, .top, .
 }
 #labels { -webkit-user-select: none; user-select: none; }
 input, textarea, select { -webkit-user-select: text; user-select: text; }
-button, .store, .route-btn, .chip, .info[data-link], .lbl { transition: transform .18s ease, background-color .25s ease, color .25s ease, opacity .25s ease; }
+button, .store, .route-btn, .chip, .info[data-link] { transition: transform .18s ease, background-color .25s ease, color .25s ease, opacity .25s ease; }
+.lbl { transition: opacity .2s ease !important; animation: none !important; } /* follows the camera each frame: no easing of its position, no replayed fade */
+.lbl span { transition: transform .18s ease; }
 @media (hover: hover) {
   .route-btn:hover, .hrow .chip:hover, .store:hover, .info[data-link]:hover, .reset:hover, .card-share:hover { background: rgba(230, 207, 161, .16) !important; }
   .store.is-on:hover, .route-btn.is-on:hover, .hrow .chip.is-on:hover { background: var(--champagne) !important; }
@@ -279,4 +281,23 @@ html body .info--fact em, html body.is-night .info--fact em { color: var(--champ
   .card p { -webkit-line-clamp: 2 !important; }
   .compass { width: 46px !important; height: 46px !important; }
   .ui-toggle { width: 40px !important; height: 40px !important; }
+}
+
+/* the About popup: the picture runs the full width of the box (the page reset caps images at 100%), figures centred */
+.modal-box .modal-img { max-width: none !important; width: calc(100% + 56px) !important; margin-left: -28px !important; margin-right: -28px !important; }
+@media (max-width: 760px) { .modal-box .modal-img { width: calc(100% + 36px) !important; margin-left: -18px !important; margin-right: -18px !important; } }
+.modal-facts div { display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 14px 8px !important; }
+.modal-facts b { display: block; width: 100%; text-align: center; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.modal-facts span { display: block; width: 100%; text-align: center; color: var(--ivory-2) !important; font-weight: 500 !important; }
+
+/* phones: the unit panel starts compact (name, size, rooms, the plan button); tap the name to see everything */
+@media (max-width: 760px) {
+  .plate-card { max-height: 30vh !important; padding: 10px 14px !important; }
+  .plate-card h2 { display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 17px !important; margin-bottom: 4px !important; }
+  .plate-card h2::after { content: "⌃"; font-size: 14px; color: var(--ivory-2); transform: rotate(180deg); transition: transform .2s; }
+  .plate-card.is-open h2::after { transform: none; }
+  .plate-card:not(.is-open) dl > :nth-child(n+5), .plate-card:not(.is-open) ul, .plate-card:not(.is-open) details, .plate-card:not(.is-open) .plate-warn { display: none; }
+  .plate-card dl { margin-bottom: 6px !important; font-size: 12px !important; gap: 3px 10px !important; }
+  .plate-plan { min-height: 36px !important; font-size: 13px; }
+  .plate-card.is-open { max-height: 52vh !important; }
 }
