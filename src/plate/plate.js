@@ -25,6 +25,7 @@ const W = {
     note: 'Walls and positions from the developer’s plans; indicative.',
     notHere: 'Not on this floor: shown from its own plan.',
     elsewhere: 'Levels {l}: in this place on the floor, with its own layout (see the plan).',
+    upper: 'Levels {l} only: shown in its place over this typical floor (indicative, from the plan).',
   },
   zh: {
     close: '返回地图',
@@ -41,6 +42,7 @@ const W = {
     note: '墙体与位置依建商平面图绘制，仅供参考。',
     notHere: '不在此标准层，请参阅该户型平面图。',
     elsewhere: '{l} 楼：位于同一位置，格局请参阅该户型平面图。',
+    upper: '仅 {l} 楼才有：依平面图示意叠在此标准层的相同位置。',
   },
 };
 const lang = () => (document.documentElement.lang.startsWith('zh') ? 'zh' : 'en');
@@ -252,7 +254,7 @@ export function prepare(ctx) {
       const beam = new THREE.Mesh(beamGeo(UNIT_H, 0.06), beamMat(0.55));
       beam.position.set(c[0], 0, -c[1]);
       unitBeams.add(beam);
-      return { u, mesh, outline, centre: c };
+      return { u, mesh, outline, beam, centre: c };
     });
     // dimension lines along the chosen unit: the overall size from its plan
     const dimLines = new THREE.LineSegments(
@@ -376,6 +378,8 @@ export async function open(ctx) {
     const un = unitFor(current);
     units.forEach((x) => {
       const on = x === un;
+      // a unit only on higher floors (upper) is drawn only while it is the one chosen
+      x.mesh.visible = x.outline.visible = x.beam.visible = on || !x.u.upper;
       x.mesh.material.color.set(unitLook[0]);
       x.mesh.material.opacity = on ? unitLook[1] : unitLook[2];
       x.outline.material.color.set(unitLook[3]);
@@ -406,7 +410,7 @@ export async function open(ctx) {
     return !ctx.level || (ctx.level >= a && ctx.level <= b);
   };
   /** the unit whose rooms and dimensions are drawn: only when this floor really has the type */
-  const laidOut = (/** @type {string} */ t) => (onLevel(t) ? unitFor(t) : null);
+  const laidOut = (/** @type {string} */ t) => (onLevel(t) || unitFor(t)?.u.upper ? unitFor(t) : null);
   function render() {
     const t = typeOf(current),
       at = unitFor(current),
@@ -430,7 +434,7 @@ export async function open(ctx) {
       <header class="plate-top"><div><b>${esc(tr(D.floor))}</b><small>${esc(w('note'))}</small></div><button class="plate-x" type="button" aria-label="${esc(w('close'))}">×</button></header>
       <aside class="plate-card">
         <h2 tabindex="0" role="button" aria-expanded="${cardOpen}">${esc(zh ? current.replace('Type ', '') + ' 型' : current)}</h2>
-        ${!at ? `<p class="plate-warn">${esc(w('notHere'))}</p>` : !un ? `<p class="plate-warn">${esc(w('elsewhere').replace('{l}', t.levels))}</p>` : ''}
+        ${!at ? `<p class="plate-warn">${esc(w('notHere'))}</p>` : !un || at.u.upper ? `<p class="plate-warn">${esc(w(at.u.upper ? 'upper' : 'elsewhere').replace('{l}', t.levels))}</p>` : ''}
         <dl>${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
         <ul>${t.extra.map((/** @type {any} */ e) => `<li>${esc(tr(e))}</li>`).join('')}</ul>
         <details><summary>${esc(w('every'))}</summary><ul>${D.common.map((/** @type {any} */ e) => `<li>${esc(tr(e))}</li>`).join('')}</ul></details>
@@ -442,7 +446,13 @@ export async function open(ctx) {
             `<button type="button" data-type="${k}"${k === current ? ' class="is-on"' : ''}>${k.replace('Type ', '')}</button>`,
         )
         .join('')}</nav>
-      ${units.map((x) => `<span class="plate-tag${x === at ? ' is-on' : ''}" data-u="${x.u.unit}">${esc(x.u.types.map((y) => y.replace('Type ', '')).join(' / '))}<i>${x.u.unit}</i></span>`).join('')}
+      ${units
+        .filter((x) => x === at || !x.u.upper)
+        .map(
+          (x) =>
+            `<span class="plate-tag${x === at ? ' is-on' : ''}" data-u="${x.u.unit}">${esc(x.u.types.map((y) => y.replace('Type ', '')).join(' / '))}<i>${x.u.unit}</i></span>`,
+        )
+        .join('')}
 ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" data-r="${i}">${esc(D.names[rm.k][zh ? 1 : 0])}</span>`).join('') : ''}
       ${un ? `<span class="plate-dim" data-dim="w">${esc(t.dims.split(' × ')[0])} mm</span><span class="plate-dim" data-dim="d">${esc(t.dims.split(' × ')[1])} mm</span>` : ''}`;
     ui.querySelector('.plate-x')?.addEventListener('click', close);
@@ -595,7 +605,7 @@ ${un ? un.u.rooms.map((/** @type {any} */ rm, i) => `<span class="plate-room" da
     ptr.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
     ray.setFromCamera(ptr, camera);
     const hit = ray.intersectObjects(
-      units.map((x) => x.mesh),
+      units.filter((x) => x.mesh.visible).map((x) => x.mesh),
       false,
     )[0];
     if (hit) select(hit.object.userData.unit.types[0]);

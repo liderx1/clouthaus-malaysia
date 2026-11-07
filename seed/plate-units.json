@@ -1007,6 +1007,97 @@
      ]
     }
    ]
+  },
+  {
+   "unit": 13,
+   "types": [
+    "Type M"
+   ],
+   "upper": true,
+   "poly": [
+    [
+     -7.3,
+     0.05
+    ],
+    [
+     2.02,
+     0.05
+    ],
+    [
+     2.02,
+     -9.94
+    ],
+    [
+     -0.97,
+     -9.94
+    ],
+    [
+     -0.97,
+     -12.4
+    ],
+    [
+     -7.3,
+     -12.4
+    ]
+   ],
+   "rooms": [
+    {
+     "k": "foyer",
+     "at": [
+      -2.25,
+      -1.97
+     ]
+    },
+    {
+     "k": "bath1",
+     "at": [
+      -6.14,
+      -1.31
+     ]
+    },
+    {
+     "k": "study",
+     "at": [
+      0.17,
+      -1.46
+     ]
+    },
+    {
+     "k": "kitchen",
+     "at": [
+      -5.5,
+      -4.09
+     ]
+    },
+    {
+     "k": "bath2",
+     "at": [
+      -2.26,
+      -4.22
+     ]
+    },
+    {
+     "k": "bed",
+     "at": [
+      0.08,
+      -4.73
+     ]
+    },
+    {
+     "k": "dining",
+     "at": [
+      -5.59,
+      -7.16
+     ]
+    },
+    {
+     "k": "living",
+     "at": [
+      -5.59,
+      -10.5
+     ]
+    }
+   ]
   }
  ],
  "types": {
@@ -1395,8 +1486,8 @@
      "zh": "双钥匙，玄关旁设书房"
     },
     {
-     "en": "Unit 13, added from level 53; not on the typical floor shown",
-     "zh": "第 13 号单位，53 楼起才有，不在此标准层"
+     "en": "Unit 13, added from level 53: shown in its place over the typical floor (from the plan’s key plan)",
+     "zh": "第 13 号单位，53 楼起才有：依平面图索引图，示意叠在标准层的相同位置"
     },
     {
      "en": "The rarest type: 11 homes",
